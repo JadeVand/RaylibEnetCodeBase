@@ -78,7 +78,9 @@ void DrawGame(void)
     ClearBackground(RAYWHITE);
     
     g.draw();
-    
+    float delta = GetFrameTime();
+    int fps = GetFPS();
+    DrawText(TextFormat("%d",fps),10,10,20,RED);
     EndDrawing();
 }
 
