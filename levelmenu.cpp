@@ -7,7 +7,7 @@ LevelMenu::LevelMenu(AbstractGame* g){
 void LevelMenu::input(){
     if(IsKeyReleased(KEY_S)){
         index++;
-        index%=2;
+        index%=3;
     }
     if(IsKeyReleased(KEY_ENTER)){
         switch(index){
@@ -29,7 +29,7 @@ void LevelMenu::update(){
 }
 void LevelMenu::draw(){
     
-    char* buffers[] = {"Game","NOP"};
+    char* buffers[] = {"Host","Join","Queue"};
 
     for(int i = 0; i < sizeof(buffers)/sizeof(void*);++i){
         Color text = { 130, 130, 130, 255 };
@@ -39,7 +39,7 @@ void LevelMenu::draw(){
             text.b = 55;
             
         }
-        DrawText(buffers[i], g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50) ,20, text);
+        DrawText(buffers[i], g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50)-25 ,20, text);
     }
     
     //DrawText("NOP", screenWidth/2 , screenHeight/2+50 , 20, text);

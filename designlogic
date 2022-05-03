@@ -1,0 +1,31 @@
+Classes:
+
+ENetInterface 
+    Interfaces with the ENet library for I/O and packets queing
+
+Entity
+    Holds player state information
+HostLogic
+    Runs server sided game logic (host only)
+ClientLogiic
+    Runs client sided game logic (client only)
+
+Game
+    Instantiates level pointers for which level is currently being draw
+Level 
+    The current level being rendered/drawn
+
+
+
+
+
+
+Main instantiates two classes game and gamelogic
+
+The reason these two need to be created separately is because gamelogic needs to be able to run its updates faster than game
+
+Game takes a pointer to gamelogic and passes the pointer to level classes
+
+When the correct level is created (gamelevel) it will call startlogic on the gamelogic object
+
+Gamelogic will instantiate ENetInterface and handle packet I/O

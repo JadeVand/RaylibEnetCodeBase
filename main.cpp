@@ -1,14 +1,11 @@
-#include <enet/enet.h>
-#include <stdio.h>
-#include <raylib.h>
 #include <game.h>
 
 
 //------------------------------------------------------------------------------------
 // Global Variables Declaration
 //------------------------------------------------------------------------------------
-static const int screenWidth = 800;
-static const int screenHeight = 450;
+static const int screenWidth = 1080;
+static const int screenHeight = 720;
 
 static int framesCounter = 0;
 
@@ -26,6 +23,7 @@ static void UpdateDrawFrame(void);  // Update and Draw (one frame)
 // Program main entry point
 //------------------------------------------------------------------------------------
 Game g(screenWidth,screenHeight);
+ENetInterface in;
 int main(void)
 {
     // Initialization (Note windowTitle is unused on Android)
