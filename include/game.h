@@ -7,8 +7,9 @@ private:
     std::shared_ptr<Level> stage;
     int screenWidth;
     int screenHeight;
+    GameLogic* logic;
 public:
-    Game(int screenWidth,int screenHeight);
+    Game(int screenWidth,int screenHeight,GameLogic* logic);
     ~Game();
     void update();
     void draw();

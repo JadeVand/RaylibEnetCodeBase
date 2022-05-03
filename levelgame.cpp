@@ -1,9 +1,10 @@
 
 #include <levelgame.h>
-LevelGame::LevelGame(AbstractGame* g){
+LevelGame::LevelGame(AbstractGame* g,GameLogic* logic){
     l = 1;
     this->g = g;
     index = 0;
+    this->logic = logic;
 }
 void LevelGame::input(){
     if(IsKeyReleased(KEY_ENTER)){

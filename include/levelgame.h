@@ -6,8 +6,9 @@ private:
     int l;
     int index;
     AbstractGame* g;
+    GameLogic* logic;
 public:
-    LevelGame(AbstractGame* g);
+    LevelGame(AbstractGame* g,GameLogic* logic);
     void input();
     void update();
     void draw();

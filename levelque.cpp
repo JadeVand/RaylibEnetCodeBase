@@ -1,10 +1,11 @@
 
 #include <levelque.h>
 
-LevelQue::LevelQue(AbstractGame* g){
+LevelQue::LevelQue(AbstractGame* g,GameLogic* logic){
     l = 2;
     this->g = g;
     index = 0;
+    this->logic = logic;
 }
 void LevelQue::input(){
     if(IsKeyReleased(KEY_ENTER)){

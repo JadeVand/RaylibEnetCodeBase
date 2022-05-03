@@ -1,8 +1,9 @@
 #include <leveljoin.h>
-LevelJoin::LevelJoin(AbstractGame* g){
+LevelJoin::LevelJoin(AbstractGame* g,GameLogic* logic){
     l = 3;
     this->g = g;
     index = 0;
+    this->logic = logic;
 }
 void LevelJoin::input(){
     if(IsKeyReleased(KEY_ENTER)){
