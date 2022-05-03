@@ -1,0 +1,18 @@
+#ifndef _levelmenu_h
+#define _levelmenu_h
+
+#include <level.h>
+class LevelMenu : public Level{
+private:
+    int index;
+    int l;
+    AbstractGame* g;
+public:
+    LevelMenu(AbstractGame* g);
+    void input();
+    void update();
+    void draw();
+    int getlevel();
+
+};
+#endif
