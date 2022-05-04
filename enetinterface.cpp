@@ -9,9 +9,69 @@ ENetInterface::ENetInterface(){
                                );
     assert(client);
     
+}
+
+bool ENetInterface::dedicatedconnect(uint64_t hn){
+    
+    uint64_t p = hn;
+    
     ENetAddress dedicatedaddress;
     enet_address_set_host (& dedicatedaddress, "18.168.115.193");
     dedicatedaddress.port = 8011;
+    dedicatedpeer = enet_host_connect (client, & dedicatedaddress, 2, 0);
     
+    assert(dedicatedpeer);
     
+    if (enet_host_service(client, &event, 1000) > 0 &&
+        event.type == ENET_EVENT_TYPE_CONNECT) {
+        
+        ENetPacket * packet = enet_packet_create (&p,
+                                                  sizeof(p),
+                                                  ENET_PACKET_FLAG_RELIABLE);
+        
+        enet_peer_send (dedicatedpeer, 0, packet);
+        enet_host_flush (client);
+        
+        return true;
+        
+    } else {
+        enet_peer_reset(dedicatedpeer);
+        return false;
+    }
+    
+    return false;
+}
+
+bool ENetInterface::dedicatedconnect(bool ishost){
+    ENetAddress dedicatedaddress;
+    enet_address_set_host (& dedicatedaddress, "18.168.115.193");
+    dedicatedaddress.port = 8011;
+    dedicatedpeer = enet_host_connect (client, & dedicatedaddress, 2, 0);
+    
+    assert(dedicatedpeer);
+    
+    if (enet_host_service(client, &event, 1000) > 0 &&
+        event.type == ENET_EVENT_TYPE_CONNECT) {
+        uint8_t p = 0;
+        
+        if(ishost){
+            p = 1;//premade host
+        }else{
+            p = 2;//joining queue
+        }
+        ENetPacket * packet = enet_packet_create (&p,
+                                                  sizeof(p),
+                                                  ENET_PACKET_FLAG_RELIABLE);
+        
+        enet_peer_send (dedicatedpeer, 0, packet);
+        enet_host_flush (client);
+        
+        return true;
+        
+    } else {
+        enet_peer_reset(dedicatedpeer);
+        return false;
+    }
+    
+    return false;
 }

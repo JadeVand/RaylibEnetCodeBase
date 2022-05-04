@@ -9,8 +9,11 @@ private:
     ENetHost* client;
     ENetPeer* dedicatedpeer;
     ENetPeer* natpeer;
+    ENetEvent event;
 public:
     ENetInterface();
     void quecompletion();
+    bool dedicatedconnect(uint64_t hostname);
+    bool dedicatedconnect(bool ishost);
 };
 #endif

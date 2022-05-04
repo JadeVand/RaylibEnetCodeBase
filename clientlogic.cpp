@@ -12,3 +12,7 @@ void ClientLogic::stoplogic(){
 void ClientLogic::update(float deltatime){
     
 }
+
+void ClientLogic::draw(int screenWidth,int screenHeight){
+    
+}

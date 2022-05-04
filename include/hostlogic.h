@@ -7,5 +7,6 @@ public:
     void startlogic();
     void stoplogic();
     void update(float deltatime);
+    void draw(int screenWidth,int screenHeight);
 };
 #endif
