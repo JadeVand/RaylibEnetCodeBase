@@ -11,7 +11,6 @@ ENetInterface::ENetInterface(){
                                0 /* assume any amount of outgoing bandwidth */
                                );
     assert(client);
-    natpunched = false;
     
 }
 
@@ -98,7 +97,7 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                     remotehost = ENET_NET_TO_HOST_32(remotehost);
                     natpeer = natpeer  = enet_host_connect (client, &natpeeraddress, 2, 0);
                     assert(natpeer);
-                    int count = 10;
+                    int count = 20;
                     while(count >= 0){
                         --count ;
                         struct PacketHeader s = {0};
@@ -109,7 +108,7 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                                                                       sizeof(s),
                                                                       ENET_PACKET_FLAG_RELIABLE);
                             enet_peer_send (natpeer, 0, packet);
-                        enet_host_flush (client);//host)
+                       // enet_host_flush (client);//host)
                         ENetEvent ev ;
                         /*
                          With a 1000 delay and 10 packets being asent
@@ -120,7 +119,11 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                         int r = enet_host_service (client, & ev, 1000);
                         if(r>0){
                             if (ev.type == ENET_EVENT_TYPE_RECEIVE){
-                                //printf("received packet\n");
+                                printf("received packet\n");
+                                struct PacketHeader* header = (struct PacketHeader*)event.packet -> data;
+                                if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
+
+                                }
                                 //printf("nat punched\n");
                                 enet_packet_destroy (ev.packet);
                               //  break;
@@ -129,9 +132,7 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                     }
                     
                 }else if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
-                    //peer sent nat message
-                    //printf("nat message\n");
-                    natpunched = true;
+
                 }
                 
             }

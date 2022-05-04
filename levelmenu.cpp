@@ -11,16 +11,7 @@ void LevelMenu::input(){
         index%=3;
     }
     if(IsKeyReleased(KEY_ENTER)){
-        switch(index){
-            case 0:
-                g->inputcallback(0);
-                break;
-            case 1:
-                break;
-            default:
-                break;
-                
-        }
+        g->inputcallback(index);
     }
 }
 void LevelMenu::update(){
