@@ -5,7 +5,7 @@
 #include <assert.h>
 #include <functional>
 
-struct Something{
+struct PacketHeader{
     uint16_t signature;
     uint16_t packettype;
 };

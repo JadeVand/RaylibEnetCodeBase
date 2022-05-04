@@ -24,7 +24,7 @@ static void UpdateDrawFrame(void);  // Update and Draw (one frame)
 //------------------------------------------------------------------------------------
 
 Game* g;
-HostLogic* h;
+ClientLogic* h;
 int main(void)
 {
     // Initialization (Note windowTitle is unused on Android)
@@ -64,8 +64,8 @@ void InitGame(void)
 {
     framesCounter = 0;
     
-    h = new HostLogic;
-    h->host();
+    h = new ClientLogic;
+    h->join(0x55a88f32ffc0);
     
     g = new Game(screenWidth,screenHeight,h);
 }
