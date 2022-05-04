@@ -111,10 +111,17 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                             enet_peer_send (natpeer, 0, packet);
                         enet_host_flush (client);//host)
                         ENetEvent ev ;
+                        /*
+                         With a 1000 delay and 10 packets being asent
+                         assume after 10 packets the nat has been punched
+                         since right now we have no real way of verifying..
+                         
+                         */
                         int r = enet_host_service (client, & ev, 1000);
                         if(r>0){
                             if (ev.type == ENET_EVENT_TYPE_RECEIVE){
                                 //printf("received packet\n");
+                                //printf("nat punched\n");
                                 enet_packet_destroy (ev.packet);
                               //  break;
                             }
