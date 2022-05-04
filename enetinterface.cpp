@@ -11,7 +11,7 @@ ENetInterface::ENetInterface(){
                                0 /* assume any amount of outgoing bandwidth */
                                );
     assert(client);
-    
+    natpunched = false;
     
 }
 
@@ -88,7 +88,7 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
             
             if(event.packet -> dataLength>=sizeof(struct PacketHeader)){
                 struct PacketHeader* header = (struct PacketHeader*)event.packet -> data;
-                if(header->packettype == kPeerId&&header->signature == natsignature){
+                if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
                     ENetAddress natpeeraddress = {0};
                     CustomENet remote = {0};
                     memcpy(&remote,event.packet -> data+sizeof(struct PacketHeader),sizeof(CustomENet));
@@ -102,8 +102,8 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                     while(count >= 0){
                         --count ;
                         struct PacketHeader s = {0};
-                        s.signature = gamesignature;
-                        s.packettype = 5;
+                        s.signature = GAMESIGNATURE;
+                        s.packettype = kNatReserved;
                             /* Create a reliable packet of size 7 containing "packet\0" */
                             ENetPacket * packet = enet_packet_create (&s,
                                                                       sizeof(s),
@@ -128,9 +128,10 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                         }
                     }
                     
-                }else if(header->signature == gamesignature && header->packettype == 5){
+                }else if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
                     //peer sent nat message
                     //printf("nat message\n");
+                    natpunched = true;
                 }
                 
             }

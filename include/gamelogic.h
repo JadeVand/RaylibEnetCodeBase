@@ -2,10 +2,13 @@
 #ifndef _gamelogic_h
 #define _gamelogic_h
 #include <entity.h>
+
 class GameLogic{
 protected:
     ENetInterface interface;
     bool updating;
+    Entity* me;
+    Entity* apponent;
 public:
     virtual void startlogic(){
         updating = true;
@@ -24,6 +27,13 @@ public:
     virtual void que(){
         interface.dedicatedconnect(false);
     }
+    Entity* getself(){
+        return me;
+    }
+    Entity* getapponent(){
+        return apponent;
+    }
+    virtual void send(uint8_t* packet,uint32_t size) = 0;//subject to change
 };
 
 #endif

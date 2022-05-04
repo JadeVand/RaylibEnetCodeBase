@@ -14,9 +14,15 @@ enum Pid : uint16_t{
     kHostname = 2,
     kPeerId = 3,
 };
+enum GamePid : uint16_t{
+    
+  kNatReserved = 5,
+};
 struct CustomENet{
     ENetAddress host;
 };
+#define GAMESIGNATURE 0x4843
+#define NATSIGNATURE 0x4E53
 class ENetInterface{
 private:
     
@@ -24,15 +30,13 @@ private:
     ENetPeer* dedicatedpeer;
     ENetPeer* natpeer;
     ENetEvent event;
+    bool natpunched ;
 public:
     ENetInterface();
     void quecompletion();
     bool dedicatedconnect(uint64_t hostname);
     bool dedicatedconnect(bool ishost);
     void quecompletion(std::function<void(uint8_t* data,size_t length,int result)> callback,uint32_t timeout);
-    
-    
-    uint16_t gamesignature = 0x4843;
-    uint16_t natsignature = 0x4E53;
+
 };
 #endif
