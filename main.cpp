@@ -65,7 +65,7 @@ void InitGame(void)
     framesCounter = 0;
     
     h = new ClientLogic;
-    h->join(0x55a88f32ffc0);
+    h->join(0x5593d0d0bfc0);
     
     g = new Game(screenWidth,screenHeight,h);
 }

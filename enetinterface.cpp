@@ -99,7 +99,8 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                     natpeer = natpeer  = enet_host_connect (client, &natpeeraddress, 2, 0);
                     assert(natpeer);
                     int count = 10;
-                    while(count > 0){
+                    while(count >= 0){
+                        --count ;
                         struct PacketHeader s = {0};
                         s.signature = gamesignature;
                         s.packettype = 5;
@@ -110,12 +111,12 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                             enet_peer_send (natpeer, 0, packet);
                         enet_host_flush (client);//host)
                         ENetEvent ev ;
-                        int r = enet_host_service (client, & ev, 1000000000);
+                        int r = enet_host_service (client, & ev, 1000);
                         if(r>0){
                             if (ev.type == ENET_EVENT_TYPE_RECEIVE){
                                 printf("received packet\n");
                                 enet_packet_destroy (ev.packet);
-                                printf("received other client's address from server, connecting...\n");
+                              //  break;
                             }
                         }
                     }
