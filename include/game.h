@@ -10,7 +10,7 @@ private:
     std::shared_ptr<Level> stage;
     int screenWidth;
     int screenHeight;
-    std::shared_ptr<GameLogic> logic;
+    NetLogic nl;
 public:
     Game(int screenWidth,int screenHeight);
     ~Game();

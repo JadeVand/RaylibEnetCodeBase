@@ -3,7 +3,7 @@
 #include <gamelogic.h>
 class HostLogic : public GameLogic{
 public:
-    HostLogic();
+    HostLogic(ENetInterface* interface);
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
     void host();

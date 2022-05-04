@@ -38,3 +38,9 @@ Main will instantiate game
 Game will instantiate Gamelogic
 Gamelogic will have a separate method just for updating gamelogicn and nothing else
 This will allow Gamelogic to run its own updates separate from the levels draws / levels update
+
+
+EDIT: 
+Issue with latter design ,since Gamelogic contains network , this means network will keep getting reset every time game spawns a new logic object
+We need a separate contains which will instantiate the network layer just once but is allowed to spawn new logic objects
+NetLogic class can solve this

@@ -4,7 +4,7 @@
 #include <gamelogic.h>
 class ClientLogic : public GameLogic{
 public:
-    ClientLogic();
+    ClientLogic(ENetInterface* interface);
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
     void join(uint64_t hostname);

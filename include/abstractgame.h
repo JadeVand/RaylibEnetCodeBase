@@ -1,7 +1,6 @@
 #ifndef _abstractgame_h
 #define _abstractgame_h
-#include <hostlogic.h>
-#include <clientlogic.h>
+#include <netlogic.h>
 class AbstractGame{
 public:
     virtual void inputcallback(int input) = 0;

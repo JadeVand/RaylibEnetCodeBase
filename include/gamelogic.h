@@ -5,7 +5,7 @@
 
 class GameLogic{
 protected:
-    ENetInterface interface;
+    ENetInterface* interface;
     bool updating;
     Entity* me;
     Entity* apponent;
@@ -20,12 +20,12 @@ public:
         auto lambda = [this](uint8_t* data,size_t length, int result){
             
         };
-        interface.quecompletion(lambda,0);
+        interface->quecompletion(lambda,0);
         
     }
     virtual void draw(int screenWidth,int screenHeight) = 0;
     virtual void que(){
-        interface.dedicatedconnect(false);
+        interface->dedicatedconnect(false);
     }
     Entity* getself(){
         return me;
