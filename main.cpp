@@ -24,7 +24,7 @@ static void UpdateDrawFrame(void);  // Update and Draw (one frame)
 //------------------------------------------------------------------------------------
 
 Game* g;
-GameLogic* h;
+HostLogic* h;
 int main(void)
 {
     // Initialization (Note windowTitle is unused on Android)
@@ -63,13 +63,19 @@ int main(void)
 void InitGame(void)
 {
     framesCounter = 0;
+    
     h = new HostLogic;
+    h->host();
+    
     g = new Game(screenWidth,screenHeight,h);
 }
 
 // Update game (one frame)
 void UpdateGame(void)
 {
+    float deltatime = GetFrameTime();
+    h->update(deltatime);
+    
     g->update();
 }
 
@@ -81,9 +87,7 @@ void DrawGame(void)
     ClearBackground(RAYWHITE);
     
     g->draw();
-    float delta = GetFrameTime();
-    int fps = GetFPS();
-    DrawText(TextFormat("%d",fps),10,10,20,RED);
+
     EndDrawing();
 }
 
@@ -96,6 +100,7 @@ void UnloadGame(void)
 // Update and Draw (one frame)
 void UpdateDrawFrame(void)
 {
+
     UpdateGame();
     DrawGame();
 }

@@ -7,5 +7,6 @@ public:
     ClientLogic();
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
+    void join(uint64_t hostname);
 };
 #endif

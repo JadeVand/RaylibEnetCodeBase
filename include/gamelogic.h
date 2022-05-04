@@ -15,6 +15,9 @@ public:
     }
     virtual void update(float deltatime) = 0;
     virtual void draw(int screenWidth,int screenHeight) = 0;
+    virtual void que(){
+        interface.dedicatedconnect(false);
+    }
 };
 
 #endif
