@@ -114,7 +114,7 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                         int r = enet_host_service (client, & ev, 1000);
                         if(r>0){
                             if (ev.type == ENET_EVENT_TYPE_RECEIVE){
-                                printf("received packet\n");
+                                //printf("received packet\n");
                                 enet_packet_destroy (ev.packet);
                               //  break;
                             }
@@ -123,7 +123,7 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                     
                 }else if(header->signature == gamesignature && header->packettype == 5){
                     //peer sent nat message
-                    printf("nat message\n");
+                    //printf("nat message\n");
                 }
                 
             }
