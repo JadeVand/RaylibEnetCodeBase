@@ -15,6 +15,7 @@ public:
     Game(int screenWidth,int screenHeight);
     ~Game();
     void update();
+    void updategamelogic(float deltatime);
     void draw();
     void inputcallback(int action);
     int getscreenwidth();

@@ -8,6 +8,9 @@ Game::Game(int screenWidth,int screenHeight){
 Game::~Game(){
 
 }
+void Game::updategamelogic(float deltatime){
+    
+}
 void Game::update(){
     stage->update();
 }
@@ -45,3 +48,4 @@ int Game::getscreenwidth(){
 int Game::getscreenheight(){
     return screenHeight;
 }
+
