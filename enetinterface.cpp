@@ -53,7 +53,6 @@ bool ENetInterface::dedicatedconnect(bool ishost){
     if (enet_host_service(client, &event, 1000) > 0 &&
         event.type == ENET_EVENT_TYPE_CONNECT) {
         uint8_t p = 0;
-        
         if(ishost){
             p = 1;//premade host
         }else{
@@ -75,12 +74,14 @@ bool ENetInterface::dedicatedconnect(bool ishost){
     
     return false;
 }
+
 void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length,int result)> callback,uint32_t timeout){
 
     int result = enet_host_service(client,&event,timeout);
-    
-    if(result>0&&ENET_EVENT_TYPE_RECEIVE){
-        callback(event.packet -> data,event.packet -> dataLength, result);
-        enet_packet_destroy (event.packet);
+    if(result > 0){
+        if(event.type == ENET_EVENT_TYPE_RECEIVE){
+            callback(event.packet -> data,event.packet -> dataLength, result);
+            enet_packet_destroy (event.packet);
+        }
     }
 }

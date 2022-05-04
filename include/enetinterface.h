@@ -4,8 +4,22 @@
 #include <enet/enet.h>
 #include <assert.h>
 #include <functional>
+
+struct Something{
+    uint16_t signature;
+    uint16_t packettype;
+};
+enum Pid : uint16_t{
+    kInvalidHost = 1,
+    kHostname = 2,
+    kPeerId = 3,
+};
+struct CustomENet{
+    ENetAddress host;
+};
 class ENetInterface{
 private:
+    
     ENetHost* client;
     ENetPeer* dedicatedpeer;
     ENetPeer* natpeer;
@@ -16,5 +30,9 @@ public:
     bool dedicatedconnect(uint64_t hostname);
     bool dedicatedconnect(bool ishost);
     void quecompletion(std::function<void(uint8_t* data,size_t length,int result)> callback,uint32_t timeout);
+    
+    
+    uint16_t gamesignature = 0x4843;
+    uint16_t natsignature = 0x4E53;
 };
 #endif
