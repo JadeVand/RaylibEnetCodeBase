@@ -13,7 +13,13 @@ public:
     virtual void stoplogic(){
         updating = false;
     }
-    virtual void update(float deltatime) = 0;
+    virtual void update(float deltatime){
+        auto lambda = [this](uint8_t* data,size_t length, int result){
+            
+        };
+        interface.quecompletion(lambda,0);
+        
+    }
     virtual void draw(int screenWidth,int screenHeight) = 0;
     virtual void que(){
         interface.dedicatedconnect(false);
