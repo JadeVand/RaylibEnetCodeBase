@@ -11,8 +11,7 @@ ENetInterface::ENetInterface(){
                                0 /* assume any amount of outgoing bandwidth */
                                );
     assert(client);
-    natpunched = false;
-    natpacketid = 0;
+    
     
 }
 
@@ -81,20 +80,7 @@ bool ENetInterface::dedicatedconnect(bool ishost){
 }
 
 void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length,int result)> callback,uint32_t timeout){
-    if(!natpunched&&natpeer != NULL){
-        printf("packetid:%d\n",natpacketid);
-        struct NatPunchPacket s = {0};
-        s.p.signature = gamesignature;
-        s.p.packettype = 5;
-        s.extra = natpacketid;
-            /* Create a reliable packet of size 7 containing "packet\0" */
-            ENetPacket * packet = enet_packet_create (&s,
-                                                      sizeof(s),
-                                                      ENET_PACKET_FLAG_RELIABLE);
-            enet_peer_send (natpeer, 0, packet);
-
-    }
-
+    
     int result = enet_host_service(client,&event,timeout);
     if(result > 0){
         if(event.type == ENET_EVENT_TYPE_RECEIVE){
@@ -103,7 +89,6 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
             if(event.packet -> dataLength>=sizeof(struct PacketHeader)){
                 struct PacketHeader* header = (struct PacketHeader*)event.packet -> data;
                 if(header->packettype == kPeerId&&header->signature == natsignature){
-                    
                     ENetAddress natpeeraddress = {0};
                     CustomENet remote = {0};
                     memcpy(&remote,event.packet -> data+sizeof(struct PacketHeader),sizeof(CustomENet));
@@ -111,26 +96,34 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                     uint32_t remotehost = 0;
                     remotehost = natpeeraddress.host;
                     remotehost = ENET_NET_TO_HOST_32(remotehost);
-                    natpeer  = enet_host_connect (client, &natpeeraddress, 2, 0);
+                    natpeer = natpeer  = enet_host_connect (client, &natpeeraddress, 2, 0);
                     assert(natpeer);
-                    
+                    int count = 10;
+                    while(count >= 0){
+                        --count ;
+                        struct PacketHeader s = {0};
+                        s.signature = gamesignature;
+                        s.packettype = 5;
+                            /* Create a reliable packet of size 7 containing "packet\0" */
+                            ENetPacket * packet = enet_packet_create (&s,
+                                                                      sizeof(s),
+                                                                      ENET_PACKET_FLAG_RELIABLE);
+                            enet_peer_send (natpeer, 0, packet);
+                        enet_host_flush (client);//host)
+                        ENetEvent ev ;
+                        int r = enet_host_service (client, & ev, 1000);
+                        if(r>0){
+                            if (ev.type == ENET_EVENT_TYPE_RECEIVE){
+                                //printf("received packet\n");
+                                enet_packet_destroy (ev.packet);
+                              //  break;
+                            }
+                        }
+                    }
                     
                 }else if(header->signature == gamesignature && header->packettype == 5){
-                    /*
-                     Both peers will send their punch count (peerpunchcount)(the amount of time they've received a punch from the other
-                     
-                     if peerpunchcount exceeds 10 we stop sending; however, they still keep sending until
-                     our punch count exceeds 10 on their side,
-                     when both peers have received 10 punches we stop punching because that's just overkill
-                     inducing mental and physical trauma to the machines
-                     */
                     //peer sent nat message
-                    struct NatPunchPacket* p = (struct NatPunchPacket*)event.packet -> data;
-                    printf("nat:%d\n",p->extra);
-                    natpacketid = 0xAD;
-                    if(p->extra==0xAD){
-                        natpunched = true;
-                    }
+                    //printf("nat message\n");
                 }
                 
             }

@@ -17,10 +17,6 @@ enum Pid : uint16_t{
 struct CustomENet{
     ENetAddress host;
 };
-struct NatPunchPacket{
-    struct PacketHeader p;
-    uint32_t extra;
-};
 class ENetInterface{
 private:
     
@@ -28,9 +24,6 @@ private:
     ENetPeer* dedicatedpeer;
     ENetPeer* natpeer;
     ENetEvent event;
-    bool natpunched;
-    uint32_t natpacketid;
-    
 public:
     ENetInterface();
     void quecompletion();
