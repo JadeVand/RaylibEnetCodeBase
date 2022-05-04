@@ -17,7 +17,7 @@ public:
         auto lambda = [this](uint8_t* data,size_t length, int result){
             
         };
-        interface.quecompletion(lambda,0);
+       // interface.quecompletion(lambda,0);
         
     }
     virtual void draw(int screenWidth,int screenHeight) = 0;
