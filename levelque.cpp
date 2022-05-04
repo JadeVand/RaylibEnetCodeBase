@@ -1,11 +1,10 @@
 
 #include <levelque.h>
 
-LevelQue::LevelQue(AbstractGame* g,GameLogic* logic){
+LevelQue::LevelQue(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(logic) {
     l = 2;
     this->g = g;
     index = 0;
-    this->logic = logic;
 }
 void LevelQue::input(){
     if(IsKeyReleased(KEY_ENTER)){

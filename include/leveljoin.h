@@ -9,7 +9,7 @@ private:
     AbstractGame* g;
     GameLogic* logic;
 public:
-    LevelJoin(AbstractGame* g,GameLogic* logic);
+    LevelJoin(AbstractGame* g,std::weak_ptr<GameLogic> logic);
     void input();
     void update();
     void draw();

@@ -1,9 +1,8 @@
 #include <levelmenu.h>
-LevelMenu::LevelMenu(AbstractGame* g,GameLogic* logic){
+LevelMenu::LevelMenu(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(logic){
     index = 0;
     l = 0;
     this->g = g;
-    this->logic = logic;
 }
 void LevelMenu::input(){
     if(IsKeyReleased(KEY_S)){

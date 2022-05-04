@@ -24,7 +24,6 @@ static void UpdateDrawFrame(void);  // Update and Draw (one frame)
 //------------------------------------------------------------------------------------
 
 Game* g;
-ClientLogic* h;
 int main(void)
 {
     // Initialization (Note windowTitle is unused on Android)
@@ -64,18 +63,13 @@ void InitGame(void)
 {
     framesCounter = 0;
     
-    h = new ClientLogic;
-    h->que();
-    
-    g = new Game(screenWidth,screenHeight,h);
+    g = new Game(screenWidth,screenHeight);
 }
 
 // Update game (one frame)
 void UpdateGame(void)
 {
     float deltatime = GetFrameTime();
-    h->update(deltatime);
-    
     g->update();
 }
 

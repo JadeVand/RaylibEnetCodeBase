@@ -1,9 +1,8 @@
 #include <levelhost.h>
-LevelHost::LevelHost(AbstractGame* g,GameLogic* logic){
+LevelHost::LevelHost(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(logic){
     l = 4;
     this->g = g;
     index = 0;
-    this->logic = logic;
 }
 void LevelHost::input(){
     if(IsKeyReleased(KEY_ENTER)){

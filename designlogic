@@ -29,3 +29,12 @@ Game takes a pointer to gamelogic and passes the pointer to level classes
 When the correct level is created (gamelevel) it will call startlogic on the gamelogic object
 
 Gamelogic will instantiate ENetInterface and handle packet I/O
+
+
+
+
+EDIT:
+Main will instantiate game
+Game will instantiate Gamelogic
+Gamelogic will have a separate method just for updating gamelogicn and nothing else
+This will allow Gamelogic to run its own updates separate from the levels draws / levels update

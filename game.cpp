@@ -1,9 +1,9 @@
 #include <game.h>
-Game::Game(int screenWidth,int screenHeight,GameLogic* logic){
+Game::Game(int screenWidth,int screenHeight){
     stage = std::make_shared<LevelMenu>(this,logic);
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
-    this->logic = logic;
+
 }
 Game::~Game(){
 
@@ -19,9 +19,12 @@ void Game::inputcallback(int action){
         case 0:{
             switch(stage->getlevel()){
                 case 0:
+                    logic = std::make_shared<HostLogic>();
+                    //call host here?
                     stage = std::make_shared<LevelHost>(this,logic);
                     break;
                 case 1:
+                    logic = std::make_shared<HostLogic>();
                     stage = std::make_shared<LevelJoin>(this,logic);
                     break;
                 case 2:

@@ -9,7 +9,7 @@ private:
     AbstractGame* g;
     GameLogic* logic;
 public:
-    LevelQue(AbstractGame* g,GameLogic* logic);
+    LevelQue(AbstractGame* g,std::weak_ptr<GameLogic> logic);
     void input();
     void update();
     void draw();

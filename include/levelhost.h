@@ -9,7 +9,7 @@ private:
     AbstractGame* g;
     GameLogic* logic;
 public:
-    LevelHost(AbstractGame* g,GameLogic* logic);
+    LevelHost(AbstractGame* g,std::weak_ptr<GameLogic> logic);
     void input();
     void update();
     void draw();
