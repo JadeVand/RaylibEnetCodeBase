@@ -79,9 +79,8 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
 
     int result = enet_host_service(client,&event,timeout);
     
-    callback(event.packet -> data,event.packet -> dataLength, result);
-    
     if(result>0&&ENET_EVENT_TYPE_RECEIVE){
+        callback(event.packet -> data,event.packet -> dataLength, result);
         enet_packet_destroy (event.packet);
     }
 }
