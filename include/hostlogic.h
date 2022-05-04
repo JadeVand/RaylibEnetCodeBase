@@ -4,8 +4,6 @@
 class HostLogic : public GameLogic{
 public:
     HostLogic();
-    void startlogic();
-    void stoplogic();
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
 };

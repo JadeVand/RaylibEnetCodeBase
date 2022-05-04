@@ -5,8 +5,6 @@
 class ClientLogic : public GameLogic{
 public:
     ClientLogic();
-    void startlogic();
-    void stoplogic();
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
 };
