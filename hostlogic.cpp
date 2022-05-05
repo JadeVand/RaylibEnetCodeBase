@@ -12,7 +12,22 @@ void HostLogic::update(float deltatime){
         
     }
     auto eventsuccess = [this](std::unique_ptr<PacketObject> obj){
-       // handlenetforlevel(data,length,result);
+        if(obj->length>=sizeof(PacketHeader)){
+            
+            PacketHeader* header = (PacketHeader*)obj->data;
+            if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
+                ENetAddress natpeeraddress = {0};
+                CustomENet remote = {0};
+                memcpy(&remote,obj->data+sizeof(PacketHeader),sizeof(CustomENet));
+                memcpy(&natpeeraddress,&remote.host,sizeof(ENetAddress));
+                interface->donat(&natpeeraddress);
+                
+            }else if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
+                
+            }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
+            }
+            
+        }
     };
     auto eventerror = [this](void){
         

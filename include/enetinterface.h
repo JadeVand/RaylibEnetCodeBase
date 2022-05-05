@@ -68,5 +68,6 @@ public:
     void destroynet();
     void createnet();
 
+    void donat(ENetAddress* natpeeraddress);
 };
 #endif
