@@ -2,7 +2,8 @@
 Game::Game(int screenWidth,int screenHeight){
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
-    destroylevel(0);
+    logic = nl.makeundecidedlogic();
+    stage = std::make_shared<LevelMenu>(this,logic);
 }
 Game::~Game(){
     

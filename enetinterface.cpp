@@ -4,11 +4,10 @@ ENetInterface::ENetInterface(){
     natpeer = NULL;
     client = NULL;
     dedicatedpeer = NULL;
-    createnet();
     
 }
 void ENetInterface::destroynet(){
-    enet_host_destroy(client);
+    
     if(dedicatedpeer){
         enet_peer_reset(dedicatedpeer);
         dedicatedpeer = NULL;
@@ -17,6 +16,7 @@ void ENetInterface::destroynet(){
         enet_peer_reset(natpeer);
         natpeer = NULL;
     }
+    enet_host_destroy(client);
     enet_deinitialize();
     
 }

@@ -17,7 +17,6 @@ void HostLogic::update(float deltatime){
             
             PacketHeader* header = (PacketHeader*)obj->data;
             if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
-                printf("got peer id\n");
                 ENetAddress natpeeraddress = {0};
                 CustomENet remote = {0};
                 memcpy(&remote,obj->data+sizeof(PacketHeader),sizeof(CustomENet));
