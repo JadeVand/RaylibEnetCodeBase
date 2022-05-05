@@ -10,7 +10,7 @@ Game::~Game(){
 
 }
 void Game::updategamelogic(float deltatime){
-    
+    nl.updatelogic(deltatime);
 }
 void Game::update(){
     stage->update();

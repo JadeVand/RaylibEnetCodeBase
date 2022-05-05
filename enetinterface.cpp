@@ -88,6 +88,7 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
             if(event.packet -> dataLength>=sizeof(struct PacketHeader)){
                 struct PacketHeader* header = (struct PacketHeader*)event.packet -> data;
                 if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
+                    printf("peer id was sent\n");
                     ENetAddress natpeeraddress = {0};
                     CustomENet remote = {0};
                     memcpy(&remote,event.packet -> data+sizeof(struct PacketHeader),sizeof(CustomENet));
@@ -132,7 +133,9 @@ void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length
                     }
                     
                 }else if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
-
+                    
+                }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
+                    printf("hostname was sent\n");
                 }
                 
             }

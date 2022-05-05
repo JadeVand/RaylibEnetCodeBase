@@ -27,5 +27,8 @@ public:
     std::weak_ptr<GameLogic> getcurrentlogic(){
         return logic;
     }
+    void updatelogic(float deltatime){
+        logic->update(deltatime);
+    }
 };
 #endif
