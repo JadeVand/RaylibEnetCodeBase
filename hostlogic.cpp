@@ -1,7 +1,7 @@
 #include <hostlogic.h>
 
-HostLogic::HostLogic(ENetInterface* interface){
-    this->interface = interface;
+HostLogic::HostLogic(ENetInterface* interface) : UndecidedLogic(interface){
+
 }
 
 void HostLogic::update(float deltatime){

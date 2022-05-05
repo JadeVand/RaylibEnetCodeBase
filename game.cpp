@@ -1,6 +1,7 @@
 #include <game.h>
 Game::Game(int screenWidth,int screenHeight){
-    //stage = std::make_shared<LevelMenu>(this,logic);
+    std::weak_ptr<UndecidedLogic> logic = nl.makeundecidedlogic();
+    stage = std::make_shared<LevelMenu>(this,logic);
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
 

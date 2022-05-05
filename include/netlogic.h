@@ -20,6 +20,10 @@ public:
         logic = std::make_shared<ClientLogic>(&interface);
         return std::dynamic_pointer_cast<ClientLogic>(logic);
     }
+    std::weak_ptr<UndecidedLogic> makeundecidedlogic(){
+        logic = std::make_shared<UndecidedLogic>(&interface);
+        return std::dynamic_pointer_cast<UndecidedLogic>(logic);
+    }
     std::weak_ptr<GameLogic> getcurrentlogic(){
         return logic;
     }

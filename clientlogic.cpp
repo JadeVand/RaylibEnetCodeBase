@@ -1,7 +1,7 @@
 #include <clientlogic.h>
 
-ClientLogic::ClientLogic(ENetInterface* interface){
-    this->interface = interface;
+ClientLogic::ClientLogic(ENetInterface* interface) : UndecidedLogic(interface){
+
 }
 void ClientLogic::update(float deltatime){
     GameLogic::update(deltatime);
