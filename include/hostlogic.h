@@ -1,7 +1,7 @@
 #ifndef _hostlogic_h
 #define _hostlogic_h
-#include <gamelogic.h>
-class HostLogic : public GameLogic{
+#include <undecidedlogic.h>
+class HostLogic : public UndecidedLogic{
 public:
     HostLogic(ENetInterface* interface);
     void update(float deltatime);

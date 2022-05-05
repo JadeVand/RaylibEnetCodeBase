@@ -27,10 +27,10 @@ public:
     virtual void que(){
         interface->dedicatedconnect(false);
     }
-    Entity* getself(){
+    virtual Entity* getself(){
         return me;
     }
-    Entity* getapponent(){
+    virtual Entity* getapponent(){
         return apponent;
     }
     virtual void send(uint8_t* packet,uint32_t size) = 0;//subject to change

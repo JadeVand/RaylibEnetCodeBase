@@ -1,8 +1,8 @@
 
 #ifndef _clientlogic_h
 #define _clientlogic_h
-#include <gamelogic.h>
-class ClientLogic : public GameLogic{
+#include <undecidedlogic.h>
+class ClientLogic : public UndecidedLogic{
 public:
     ClientLogic(ENetInterface* interface);
     void update(float deltatime);
