@@ -23,11 +23,9 @@ void LevelHost::draw(){
             text.r = 230;
             text.g = 41;
             text.b = 55;
-            
+            DrawText(buffers[i], g->getscreenwidth()/2 - 200 , g->getscreenheight()/2+(i*50) ,20, text);
         }
-       //DrawText(buffers[i], g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50) ,20, text);
-        Vector2 center = (Vector2){100,100};
-        DrawPolyLines(center, 6, 10, 0, text);
+       
     }
 }
 int LevelHost::getlevel(){
