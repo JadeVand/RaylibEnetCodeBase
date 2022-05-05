@@ -1,6 +1,6 @@
 #ifndef _abstractgame_h
 #define _abstractgame_h
-#include <netlogic.h>
+#include <entity.h>
 class AbstractGame{
 public:
     virtual void destroylevel(int input) = 0;

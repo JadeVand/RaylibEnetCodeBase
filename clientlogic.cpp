@@ -1,6 +1,6 @@
 #include <clientlogic.h>
 
-ClientLogic::ClientLogic(ENetInterface* interface) : UndecidedLogic(interface){
+ClientLogic::ClientLogic(ENetInterface* interface,AbstractGame* game) : UndecidedLogic(interface,game){
 
 }
 void ClientLogic::update(float deltatime){

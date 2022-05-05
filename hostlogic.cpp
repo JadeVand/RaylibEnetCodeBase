@@ -1,6 +1,6 @@
 #include <hostlogic.h>
 
-HostLogic::HostLogic(ENetInterface* interface) : UndecidedLogic(interface){
+HostLogic::HostLogic(ENetInterface* interface,AbstractGame* game) : UndecidedLogic(interface,game){
     hostname = 0;
     failedtoconnect = false;
 }

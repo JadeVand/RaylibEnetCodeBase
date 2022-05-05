@@ -6,7 +6,7 @@ protected:
     uint64_t hostname;
     bool failedtoconnect;
 public:
-    HostLogic(ENetInterface* interface);
+    HostLogic(ENetInterface* interface,AbstractGame* game);
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
     void send(uint8_t* packet,uint32_t size);

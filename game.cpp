@@ -1,5 +1,5 @@
 #include <game.h>
-Game::Game(int screenWidth,int screenHeight){
+Game::Game(int screenWidth,int screenHeight) : nl(this){
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
     logic = nl.makeundecidedlogic();

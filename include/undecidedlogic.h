@@ -5,8 +5,9 @@ class UndecidedLogic : public GameLogic{
 private:
     
 public:
-    UndecidedLogic(ENetInterface* interface){
+    UndecidedLogic(ENetInterface* interface,AbstractGame* game){
         this->interface = interface;
+        this->game = game;
     }
     virtual void update(float deltatime){
         if(updating){

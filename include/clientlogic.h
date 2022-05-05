@@ -4,7 +4,7 @@
 #include <undecidedlogic.h>
 class ClientLogic : public UndecidedLogic{
 public:
-    ClientLogic(ENetInterface* interface);
+    ClientLogic(ENetInterface* interface,AbstractGame* game);
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
     void send(uint8_t* packet,uint32_t size);

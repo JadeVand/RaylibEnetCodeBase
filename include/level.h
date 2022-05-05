@@ -1,6 +1,6 @@
 #ifndef _level_h
 #define _level_h
-#include <abstractgame.h>
+#include <netlogic.h>
 class Level{
 protected:
     std::weak_ptr<GameLogic> logic;

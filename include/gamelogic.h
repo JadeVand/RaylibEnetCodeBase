@@ -1,8 +1,7 @@
 
 #ifndef _gamelogic_h
 #define _gamelogic_h
-#include <entity.h>
-
+#include <abstractgame.h>
 class GameLogic{
 protected:
     ENetInterface* interface;
@@ -10,6 +9,7 @@ protected:
     Entity* me;
     Entity* apponent;
     std::shared_ptr<PacketObject> latestpacket;
+    AbstractGame* game;
 public:
     virtual void startlogic(){
         updating = true;
