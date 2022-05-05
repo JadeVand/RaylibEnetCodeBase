@@ -1,19 +1,25 @@
-Classes:
+Current include structure:
+Main
+	game
+		levelmenu
+		levelgame
+		levelhost
+		leveljoin
+		levelque
+				level
+					abstractgame
+							netlogic
+									hostlogic
+									clientlogic
+											undecidedlogic
+														gamelogic
+																entity
+																		enetinterface
 
-ENetInterface 
-    Interfaces with the ENet library for I/O and packets queing
 
-Entity
-    Holds player state information
-HostLogic
-    Runs server sided game logic (host only)
-ClientLogiic
-    Runs client sided game logic (client only)
 
-Game
-    Instantiates level pointers for which level is currently being draw
-Level 
-    The current level being rendered/drawn
+
+
 
 
 
@@ -44,3 +50,16 @@ EDIT:
 Issue with latter design ,since Gamelogic contains network , this means network will keep getting reset every time game spawns a new logic object
 We need a separate contains which will instantiate the network layer just once but is allowed to spawn new logic objects
 NetLogic class can solve this
+
+
+
+
+ISSUE:
+
+Undecided logic needs to be able to tell the game we're either host or client
+But it doesn't have a pointer to game... so how can we resolve this?
+
+
+			
+
+
