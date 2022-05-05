@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <functional>
 #include <string>
+#include <memory>
 
 enum Pid : uint16_t{
     kInvalidHost = 1,
