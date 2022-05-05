@@ -3,7 +3,11 @@
 
 #include <hostlogic.h>
 #include <clientlogic.h>
-
+class UnableToConnectException : public std::exception{
+    const char* what(){
+        return "Unable to connect to server";
+    }
+};
 class NetLogic{
 private:
     std::shared_ptr<GameLogic> logic;

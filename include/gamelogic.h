@@ -12,7 +12,7 @@ protected:
     AbstractGame* game;
 public:
     virtual void startlogic(){
-        updating = true;    
+        updating = true;
     }
     virtual void stoplogic(){
         updating = false;
@@ -27,14 +27,14 @@ public:
         
     }
     virtual void draw(int screenWidth,int screenHeight) = 0;
-    virtual void que(){
-        interface->dedicatedconnect(false);
+    virtual bool que(){
+        return interface->dedicatedconnect(false);
     }
-    virtual void host(){
-        interface->dedicatedconnect(true);
+    virtual bool host(){
+        return interface->dedicatedconnect(true);
     }
-    virtual void join(uint64_t hostname){
-        interface->dedicatedconnect(hostname);
+    virtual bool join(uint64_t hostname){
+        return interface->dedicatedconnect(true);
     }
     virtual Entity* getself(){
         return me;

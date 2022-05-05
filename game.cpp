@@ -38,10 +38,12 @@ void Game::inputcallback(int action){
             logic = nl.makehostlogic();
             std::shared_ptr<GameLogic> locked = logic.lock();
             if(locked){
-                locked->host();
+                if(locked->host()){
+                    stage = std::make_shared<LevelHost>(this,logic);
+                }
             }
             
-            stage = std::make_shared<LevelHost>(this,logic);
+            
         }
             
             break;
@@ -59,9 +61,11 @@ void Game::inputcallback(int action){
             logic = nl.makeundecidedlogic();
             std::shared_ptr<GameLogic> locked = logic.lock();
             if(locked){
-                locked->que();
+                if(locked->que()){
+                    stage = std::make_shared<LevelQue>(this,logic);
+                }
             }
-            stage = std::make_shared<LevelQue>(this,logic);
+            
         }
             
             break;
