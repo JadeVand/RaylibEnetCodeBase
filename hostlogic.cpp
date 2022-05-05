@@ -12,7 +12,7 @@ void HostLogic::update(float deltatime){
         
     }
     auto eventsuccess = [this](std::unique_ptr<PacketObject> obj){
-        /*
+        
         if(obj->length>=sizeof(PacketHeader)){
             
             PacketHeader* header = (PacketHeader*)obj->data;
@@ -27,11 +27,13 @@ void HostLogic::update(float deltatime){
             }else if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
                 
             }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
-                printf("got hostname \n");
+                HostPacket* hp = (HostPacket*)obj->data;
+                hostname = hp->hostname;
+                
             }
             
         }
-         */
+         
     };
     auto eventerror = [this](void){
         

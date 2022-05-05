@@ -129,7 +129,7 @@ void ENetInterface::quecompletion(std::function<void(std::unique_ptr<PacketObjec
         if(event.type == ENET_EVENT_TYPE_RECEIVE){
             
             std::unique_ptr<PacketObject> packet = std::make_unique<PacketObject>(event.packet -> data,event.packet -> dataLength);
-            //callback(std::move(packet));
+            callback(std::move(packet));
              
             enet_packet_destroy (event.packet);
         }else if(event.type == ENET_EVENT_TYPE_DISCONNECT){
