@@ -38,8 +38,7 @@ bool ENetInterface::dedicatedconnect(uint64_t hn){
     enet_address_set_host (& dedicatedaddress, "18.168.115.193");
     dedicatedaddress.port = 8011;
     dedicatedpeer = enet_host_connect (client, & dedicatedaddress, 2, 0);
-    
-    assert(dedicatedpeer);
+
     
     if (enet_host_service(client, &event, 1000) > 0 &&
         event.type == ENET_EVENT_TYPE_CONNECT) {
@@ -55,6 +54,7 @@ bool ENetInterface::dedicatedconnect(uint64_t hn){
         
     } else {
         enet_peer_reset(dedicatedpeer);
+        dedicatedpeer = NULL;
         return false;
     }
     
@@ -66,10 +66,7 @@ bool ENetInterface::dedicatedconnect(bool ishost){
     enet_address_set_host (& dedicatedaddress, "18.168.115.193");
     dedicatedaddress.port = 8011;
     dedicatedpeer = enet_host_connect (client, & dedicatedaddress, 2, 0);
-    
-    if(!dedicatedpeer){
-        return false;
-    }
+
     if (enet_host_service(client, &event, 1000) > 0 &&
         event.type == ENET_EVENT_TYPE_CONNECT) {
         uint8_t p = 0;
@@ -88,8 +85,6 @@ bool ENetInterface::dedicatedconnect(bool ishost){
         return true;
         
     } else {
-        printf("failed to connect\n");
-        
         enet_peer_reset(dedicatedpeer);
         dedicatedpeer = NULL;
         return false;
