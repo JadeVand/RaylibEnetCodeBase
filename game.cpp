@@ -1,6 +1,6 @@
 #include <game.h>
 Game::Game(int screenWidth,int screenHeight){
-    std::weak_ptr<UndecidedLogic> logic = nl.makeundecidedlogic();
+    logic = nl.makeundecidedlogic();
     stage = std::make_shared<LevelMenu>(this,logic);
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
@@ -23,7 +23,7 @@ void Game::inputcallback(int action){
         case 0:{
             switch(stage->getlevel()){
                 case 0:
-                    //logic = std::make_shared<HostLogic>();
+                    logic = nl.makehostlogic();
                     //call host here?
                     //stage = std::make_shared<LevelHost>(this,logic);
                     break;

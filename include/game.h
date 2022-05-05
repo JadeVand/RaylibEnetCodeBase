@@ -11,6 +11,7 @@ private:
     int screenWidth;
     int screenHeight;
     NetLogic nl;
+    std::weak_ptr<GameLogic> logic;
 public:
     Game(int screenWidth,int screenHeight);
     ~Game();
