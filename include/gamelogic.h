@@ -44,6 +44,8 @@ public:
     virtual void send(uint8_t* packet,uint32_t size) = 0;//subject to change
     
     virtual bool needstodraw() = 0;
+    
+    virtual void handlenetforlevel(uint8_t* data,size_t length,int result) = 0;
 };
 
 #endif

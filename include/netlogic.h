@@ -30,5 +30,11 @@ public:
     void updatelogic(float deltatime){
         logic->update(deltatime);
     }
+    void destroynet(){
+        interface.destroynet();
+    }
+    void createnet(){
+        interface.createnet();
+    }
 };
 #endif

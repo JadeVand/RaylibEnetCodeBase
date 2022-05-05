@@ -4,6 +4,24 @@ ENetInterface::ENetInterface(){
     natpeer = NULL;
     client = NULL;
     dedicatedpeer = NULL;
+    createnet();
+    
+}
+void ENetInterface::destroynet(){
+    enet_host_destroy(client);
+    if(dedicatedpeer){
+        enet_peer_reset(dedicatedpeer);
+        dedicatedpeer = NULL;
+    }
+    if(natpeer){
+        enet_peer_reset(natpeer);
+        natpeer = NULL;
+    }
+    enet_deinitialize();
+    
+}
+void ENetInterface::createnet(){
+    assert(enet_initialize ()==0);
     client = enet_host_create (NULL /* create a client host */,
                                5 /* only allow 1 outgoing connection */,
                                2 /* allow up 2 channels to be used, 0 and 1 */,
@@ -11,9 +29,7 @@ ENetInterface::ENetInterface(){
                                0 /* assume any amount of outgoing bandwidth */
                                );
     assert(client);
-    
 }
-
 bool ENetInterface::dedicatedconnect(uint64_t hn){
     
     uint64_t p = hn;

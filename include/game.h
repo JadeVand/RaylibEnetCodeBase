@@ -22,5 +22,6 @@ public:
     int getscreenwidth();
     int getscreenheight();
     void destroylevel(int action);
+    
 };
 #endif

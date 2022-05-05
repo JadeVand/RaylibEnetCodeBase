@@ -17,8 +17,10 @@ void Game::draw(){
     stage->draw();
 }
 void Game::destroylevel(int action){
+    nl.destroynet();
     logic = nl.makeundecidedlogic();
     stage = std::make_shared<LevelMenu>(this,logic);
+    nl.createnet();
 }
 void Game::inputcallback(int action){
     switch(action){

@@ -64,6 +64,8 @@ public:
     bool dedicatedconnect(uint64_t hostname);
     bool dedicatedconnect(bool ishost);
     void quecompletion(std::function<void(uint8_t* data,size_t length,int result)> callback,uint32_t timeout);
+    void destroynet();
+    void createnet();
 
 };
 #endif

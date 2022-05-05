@@ -12,17 +12,7 @@ void HostLogic::update(float deltatime){
         
     }
     auto lambda = [this](uint8_t* data,size_t length, int result){
-        if(length>=sizeof(PacketHeader)+sizeof(uint64_t)){
-            PacketHeader* ph = (PacketHeader*)data;
-            if(ph->packettype = kHostname&&ph->signature == NATSIGNATURE){
-                
-                HostPacket* hp = (HostPacket*)data;
-                hostname = hp->hostname;
-                //printf("%p\n",hostname);
-            }
-            
-        }
-        //printf("packet size%d\n",length);
+        handlenetforlevel(data,length,result);
     };
     interface->quecompletion(lambda,1);
 }
@@ -55,4 +45,7 @@ bool HostLogic::needstodraw(){
         return true;
     }
     return false;
+}
+void HostLogic::handlenetforlevel(uint8_t* data,size_t length,int result){
+    
 }
