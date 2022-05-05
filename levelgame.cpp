@@ -6,8 +6,11 @@ LevelGame::LevelGame(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(log
     index = 0;
 }
 void LevelGame::input(){
+    if(IsKeyReleased(KEY_ESCAPE)){
+        g->destroylevel(0);
+    }
     if(IsKeyReleased(KEY_ENTER)){
-        g->inputcallback(0);
+      //  g->inputcallback(0);
     }
 }
 void LevelGame::update(){

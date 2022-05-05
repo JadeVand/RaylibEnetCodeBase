@@ -2,6 +2,7 @@
 
 HostLogic::HostLogic(ENetInterface* interface) : UndecidedLogic(interface){
     hostname = 0;
+    failedtoconnect = false;
 }
 
 void HostLogic::update(float deltatime){
@@ -17,7 +18,7 @@ void HostLogic::update(float deltatime){
                 
                 HostPacket* hp = (HostPacket*)data;
                 hostname = hp->hostname;
-                printf("%p\n",hostname);
+                //printf("%p\n",hostname);
             }
             
         }
@@ -32,17 +33,25 @@ void HostLogic::draw(int screenWidth,int screenHeight){
         ClearBackground(RAYWHITE);
         std::string hostnamestring = std::to_string(hostname);
         DrawText(TextFormat("Hostname: %p",hostname),screenWidth/2-100,screenHeight/2,20,RED);
+    }else if(failedtoconnect){
+        ClearBackground(RAYWHITE);
+        std::string hostnamestring = std::to_string(hostname);
+        DrawText(TextFormat("Unable to connect",hostname),screenWidth/2-100,screenHeight/2,20,RED);
     }
     
 }
 void HostLogic::host(){
-    interface->dedicatedconnect(true);
+    if(!interface->dedicatedconnect(true)){
+        failedtoconnect = true;
+    }
 }
 void HostLogic::send(uint8_t* packet,uint32_t size){
     
 }
 bool HostLogic::needstodraw(){
     if(hostname){
+        return true;
+    }else if(failedtoconnect){
         return true;
     }
     return false;

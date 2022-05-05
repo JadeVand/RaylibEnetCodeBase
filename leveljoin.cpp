@@ -8,6 +8,9 @@ LevelJoin::LevelJoin(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(log
 }
 void LevelJoin::input(){
     std::string hostnamestring(hostnamebuffer);
+    if(IsKeyReleased(KEY_ESCAPE)){
+        g->destroylevel(0);
+    }
     if(IsKeyReleased(KEY_ENTER)){
         uint64_t uhostname = 0;
         try{

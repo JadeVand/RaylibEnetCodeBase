@@ -1,10 +1,8 @@
 #include <game.h>
 Game::Game(int screenWidth,int screenHeight){
-    logic = nl.makeundecidedlogic();
-    stage = std::make_shared<LevelMenu>(this,logic);
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
-    
+    destroylevel(0);
 }
 Game::~Game(){
     
@@ -17,6 +15,10 @@ void Game::update(){
 }
 void Game::draw(){
     stage->draw();
+}
+void Game::destroylevel(int action){
+    logic = nl.makeundecidedlogic();
+    stage = std::make_shared<LevelMenu>(this,logic);
 }
 void Game::inputcallback(int action){
     switch(action){

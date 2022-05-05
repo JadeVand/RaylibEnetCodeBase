@@ -5,8 +5,8 @@ LevelHost::LevelHost(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(log
     index = 0;
 }
 void LevelHost::input(){
-    if(IsKeyReleased(KEY_ENTER)){
-
+    if(IsKeyReleased(KEY_ESCAPE)){
+        g->destroylevel(0);
     }
 }
 void LevelHost::update(){

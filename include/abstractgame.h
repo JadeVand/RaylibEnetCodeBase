@@ -3,7 +3,8 @@
 #include <netlogic.h>
 class AbstractGame{
 public:
-    virtual void inputcallback(int input) = 0;
+    virtual void destroylevel(int input) = 0;
+    virtual void inputcallback(int action) = 0;
     virtual int getscreenwidth() = 0;
     virtual int getscreenheight() = 0;
 };

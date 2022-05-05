@@ -4,6 +4,7 @@
 class HostLogic : public UndecidedLogic{
 protected:
     uint64_t hostname;
+    bool failedtoconnect;
 public:
     HostLogic(ENetInterface* interface);
     void update(float deltatime);

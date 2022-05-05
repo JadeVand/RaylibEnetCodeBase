@@ -7,8 +7,8 @@ LevelQue::LevelQue(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(logic
     index = 0;
 }
 void LevelQue::input(){
-    if(IsKeyReleased(KEY_ENTER)){
-
+    if(IsKeyReleased(KEY_ESCAPE)){
+        g->destroylevel(0);
     }
 }
 void LevelQue::update(){
