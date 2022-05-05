@@ -23,7 +23,11 @@ public:
                 if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
                     
                 }else if(header->signature == NATSIGNATURE && header->packettype == kMatched){
+                    
                     MatchPacket* mp = (MatchPacket*)obj->data;
+                    ENetAddress remoteaddress = {0};
+                    memcpy(&remoteaddress,&mp->host,sizeof(ENetAddress));
+                    interface->donat(&mp->host);
                     if(mp->ishost){
                         game->createhostlevel();
                     }else{
