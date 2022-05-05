@@ -22,7 +22,6 @@ void LevelJoin::input(){
         if(uhostname!=0){
             std::shared_ptr<GameLogic> locked = logic.lock();
             if(locked){
-                printf("hmmmm\n");
                 locked->join(uhostname);
             }
             
