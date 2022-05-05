@@ -9,6 +9,7 @@ protected:
     bool updating;
     Entity* me;
     Entity* apponent;
+    std::shared_ptr<PacketObject> latestpacket;
 public:
     virtual void startlogic(){
         updating = true;
@@ -18,7 +19,7 @@ public:
     }
     virtual void update(float deltatime){
         auto lambda = [this](uint8_t* data,size_t length, int result){
-            
+            latestpacket = std::make_shared<PacketObject>(data,length);
         };
         interface->quecompletion(lambda,0);
         
@@ -32,6 +33,9 @@ public:
     }
     virtual Entity* getapponent(){
         return apponent;
+    }
+    virtual std::weak_ptr<PacketObject> getlatestpacket(){
+        return latestpacket;
     }
     virtual void send(uint8_t* packet,uint32_t size) = 0;//subject to change
 };
