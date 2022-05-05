@@ -35,9 +35,6 @@ public:
     virtual bool needstodraw(){
         return false;
     }
-    virtual void handlenetforlevel(uint8_t* data,size_t length,int result){
-        
-    }
 };
 
 #endif

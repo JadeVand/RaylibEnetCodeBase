@@ -11,13 +11,13 @@ void HostLogic::update(float deltatime){
     if(updating){
         
     }
-    auto lambda = [this](uint8_t* data,size_t length, int result){
-        handlenetforlevel(data,length,result);
+    auto eventsuccess = [this](std::unique_ptr<PacketObject> obj){
+       // handlenetforlevel(data,length,result);
     };
-    auto lambdaerror = [this](void){
+    auto eventerror = [this](void){
         
     };
-    interface->quecompletion(lambda,lambdaerror,1);
+    interface->quecompletion(eventsuccess,eventerror,1);
 }
 void HostLogic::draw(int screenWidth,int screenHeight){
     
@@ -48,7 +48,4 @@ bool HostLogic::needstodraw(){
         return true;
     }
     return false;
-}
-void HostLogic::handlenetforlevel(uint8_t* data,size_t length,int result){
-    
 }

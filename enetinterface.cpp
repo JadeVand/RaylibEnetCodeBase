@@ -94,7 +94,7 @@ bool ENetInterface::dedicatedconnect(bool ishost){
     return false;
 }
 
-void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length,int result)> callback,
+void ENetInterface::quecompletion(std::function<void(std::unique_ptr<PacketObject>)> callback,
                                   std::function<void(void)> errorcallback,uint32_t timeout){
     
     int result = enet_host_service(client,&event,timeout);
