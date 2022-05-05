@@ -55,7 +55,7 @@ void LevelJoin::update(){
     
 }
 void LevelJoin::draw(){
-    char* buffers[] = {"Enter hostname to join"};
+    std::vector<std::string> buffers = {"Enter hostname to join"};
 
     for(int i = 0; i < sizeof(buffers)/sizeof(void*);++i){
         Color text = { 130, 130, 130, 255 };
@@ -63,7 +63,7 @@ void LevelJoin::draw(){
             text.r = 230;
             text.g = 41;
             text.b = 55;
-            DrawText(buffers[i], g->getscreenwidth()/2-100 , g->getscreenheight()/2+(i*50) ,20, text);
+            DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2-100 , g->getscreenheight()/2+(i*50) ,20, text);
         }
     }
     DrawText((char*)hostnamebuffer, g->getscreenwidth()/2+(-1*offset*5) , g->getscreenheight()/2+50 ,20, BLACK);

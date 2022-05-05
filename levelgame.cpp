@@ -19,7 +19,7 @@ void LevelGame::update(){
     
 }
 void LevelGame::draw(){
-    char* buffers[] = {"Back"};
+    std::vector<std::string>buffers = {"Back"};
 
     for(int i = 0; i < sizeof(buffers)/sizeof(void*);++i){
         Color text = { 130, 130, 130, 255 };
@@ -27,11 +27,8 @@ void LevelGame::draw(){
             text.r = 230;
             text.g = 41;
             text.b = 55;
-            
+            DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50) ,20, text);
         }
-       //DrawText(buffers[i], g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50) ,20, text);
-        Vector2 center = (Vector2){100,100};
-        DrawPolyLines(center, 6, 10, 0, text);
     }
 }
 int LevelGame::getlevel(){

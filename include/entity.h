@@ -5,6 +5,7 @@
 #include <raymath.h>
 #include <enetinterface.h>
 #include <memory>
+#include <vector>
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
 #endif

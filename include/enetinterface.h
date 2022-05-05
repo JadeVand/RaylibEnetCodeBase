@@ -5,10 +5,7 @@
 #include <assert.h>
 #include <functional>
 #include <string>
-struct PacketHeader{
-    uint16_t signature;
-    uint16_t packettype;
-};
+
 enum Pid : uint16_t{
     kInvalidHost = 1,
     kHostname = 2,
@@ -19,21 +16,25 @@ enum GamePid : uint16_t{
     
   kNatReserved = 5,
 };
-struct CustomENet{
+typedef struct SPacketHeader{
+    uint16_t signature;
+    uint16_t packettype;
+}PacketHeader;
+typedef struct SCustomENet{
     ENetAddress host;
-};
-struct MatchPacket{
-    struct PacketHeader ph;//4
+}CustomENet;
+typedef struct SMatchPacket{
+    PacketHeader ph;//4
     ENetAddress host;//6
     uint16_t ishost;//2
     uint32_t extra;
     
-};
-struct HostPacket{
+}MatchPacket;
+typedef struct SHostPacket{
     PacketHeader ph;
     uint64_t hostname;
     uint32_t extra;
-};
+}HostPacket;
 class PacketObject{
 public:
     uint8_t* data;

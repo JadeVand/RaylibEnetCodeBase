@@ -23,7 +23,7 @@ void LevelQue::draw(){
         if(locked->needstodraw()){
             locked->draw(g->getscreenwidth(),g->getscreenheight());
         }else{
-            char* buffers[] = {"In Que"};
+            std::vector<std::string> buffers = {"In Queue"};
 
             for(int i = 0; i < sizeof(buffers)/sizeof(void*);++i){
                 Color text = { 130, 130, 130, 255 };
@@ -31,7 +31,7 @@ void LevelQue::draw(){
                     text.r = 230;
                     text.g = 41;
                     text.b = 55;
-                    DrawText(buffers[i], g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50) ,20, text);
+                    DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50) ,20, text);
                 }
                
             }

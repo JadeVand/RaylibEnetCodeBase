@@ -20,8 +20,8 @@ void LevelMenu::update(){
 }
 void LevelMenu::draw(){
     
-    char* buffers[] = {"Host","Join","Queue"};
-
+    //char* buffers[] = {"Host","Join","Queue"};
+    std::vector<std::string> buffers = {"Host","Join","Queue"};
     for(int i = 0; i < sizeof(buffers)/sizeof(void*);++i){
         Color text = { 130, 130, 130, 255 };
         if(index == i){
@@ -30,7 +30,7 @@ void LevelMenu::draw(){
             text.b = 55;
             
         }
-        DrawText(buffers[i], g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50)-25 ,20, text);
+        DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50)-25 ,20, text);
     }
     
     //DrawText("NOP", screenWidth/2 , screenHeight/2+50 , 20, text);
