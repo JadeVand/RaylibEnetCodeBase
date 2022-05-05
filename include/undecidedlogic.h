@@ -2,6 +2,8 @@
 #define _undecidedlogic_h
 #include <gamelogic.h>
 class UndecidedLogic : public GameLogic{
+private:
+   
 public:
     UndecidedLogic(ENetInterface* interface){
         this->interface = interface;

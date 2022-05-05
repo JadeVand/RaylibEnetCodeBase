@@ -7,20 +7,38 @@ LevelJoin::LevelJoin(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(log
     charindex = 0;
 }
 void LevelJoin::input(){
+    std::string hostnamestring(hostnamebuffer);
     if(IsKeyReleased(KEY_ENTER)){
+        uint64_t uhostname = 0;
+        try{
+            uhostname = std::stoull(hostnamebuffer,nullptr,16);
+        }
+        catch(std::invalid_argument& e){
+            
+        }
+        if(uhostname!=0){
+            printf("%p\n",uhostname);
+        }
     }
     else if(IsKeyReleased(KEY_BACKSPACE)){
+        
         hostnamebuffer[charindex-1] = 0;
         --charindex;
         if(charindex<0){
             charindex = 0;
         }
+        --offset;
+        if(offset<0){
+            offset = 0;
+        }
+        
     }
     int n = GetCharPressed();
     if(n){
         if(charindex<32){
             hostnamebuffer[charindex++] = (char)n;
         }
+        ++offset;
         
     }
 }
@@ -41,7 +59,7 @@ void LevelJoin::draw(){
             DrawText(buffers[i], g->getscreenwidth()/2-100 , g->getscreenheight()/2+(i*50) ,20, text);
         }
     }
-    DrawText((char*)hostnamebuffer, g->getscreenwidth()/2-100 , g->getscreenheight()/2+50 ,20, BLACK);
+    DrawText((char*)hostnamebuffer, g->getscreenwidth()/2+(-1*offset*5) , g->getscreenheight()/2+50 ,20, BLACK);
 }
 int LevelJoin::getlevel(){
     return l;

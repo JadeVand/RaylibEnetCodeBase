@@ -9,6 +9,7 @@ private:
     AbstractGame* g;
     char hostnamebuffer[32];
     int charindex;
+    int offset;
 public:
     LevelJoin(AbstractGame* g,std::weak_ptr<GameLogic> logic);
     void input();
