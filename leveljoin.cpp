@@ -11,7 +11,7 @@ void LevelJoin::input(){
     if(IsKeyReleased(KEY_ESCAPE)){
         g->destroylevel(0);
     }
-    if(IsKeyReleased(KEY_ENTER)){
+    if(IsKeyPressed(KEY_ENTER)){
         uint64_t uhostname = 0;
         try{
             uhostname = std::stoull(hostnamebuffer,nullptr,16);
@@ -20,7 +20,12 @@ void LevelJoin::input(){
             
         }
         if(uhostname!=0){
-            printf("%p\n",uhostname);
+            std::shared_ptr<GameLogic> locked = logic.lock();
+            if(locked){
+                printf("hmmmm\n");
+                locked->join(uhostname);
+            }
+            
         }
     }
     else if(IsKeyReleased(KEY_BACKSPACE)){

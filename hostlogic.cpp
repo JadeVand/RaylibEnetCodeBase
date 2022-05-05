@@ -6,8 +6,7 @@ HostLogic::HostLogic(ENetInterface* interface) : UndecidedLogic(interface){
 }
 
 void HostLogic::update(float deltatime){
-    GameLogic::update(deltatime);
-    
+
     if(updating){
         
     }
@@ -16,15 +15,16 @@ void HostLogic::update(float deltatime){
         if(obj->length>=sizeof(PacketHeader)){
             
             PacketHeader* header = (PacketHeader*)obj->data;
-            if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
+            if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
+                
+            }
+            else if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
                 ENetAddress natpeeraddress = {0};
                 CustomENet remote = {0};
                 memcpy(&remote,obj->data+sizeof(PacketHeader),sizeof(CustomENet));
                 memcpy(&natpeeraddress,&remote.host,sizeof(ENetAddress));
                 interface->donat(&natpeeraddress);
                 //printf("nat completed\n");
-            }else if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
-                
             }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
                 HostPacket* hp = (HostPacket*)obj->data;
                 hostname = hp->hostname;
@@ -52,11 +52,6 @@ void HostLogic::draw(int screenWidth,int screenHeight){
         DrawText(TextFormat("Unable to connect",hostname),screenWidth/2-100,screenHeight/2,20,RED);
     }
     
-}
-void HostLogic::host(){
-    if(!interface->dedicatedconnect(true)){
-        failedtoconnect = true;
-    }
 }
 void HostLogic::send(uint8_t* packet,uint32_t size){
     

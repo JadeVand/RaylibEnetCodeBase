@@ -3,6 +3,7 @@ Game::Game(int screenWidth,int screenHeight){
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
     logic = nl.makeundecidedlogic();
+    nl.createnet();
     stage = std::make_shared<LevelMenu>(this,logic);
 }
 Game::~Game(){
@@ -23,30 +24,42 @@ void Game::destroylevel(int action){
     stage = std::make_shared<LevelMenu>(this,logic);
     nl.createnet();
 }
+void Game::createhostlevel(){
+    logic = nl.makehostlogic();
+    stage = std::make_shared<LevelGame>(this,logic);
+}
+void Game::createclientlevel(){
+    logic = nl.makeclientlogic();
+    stage = std::make_shared<LevelGame>(this,logic);
+}
 void Game::inputcallback(int action){
     switch(action){
         case 0:{
             logic = nl.makehostlogic();
             std::shared_ptr<GameLogic> locked = logic.lock();
             if(locked){
-                std::shared_ptr<HostLogic> hostlock = std::dynamic_pointer_cast<HostLogic>(locked);
-                if(hostlock){
-                    hostlock->host();
-                }
+                locked->host();
             }
             
             stage = std::make_shared<LevelHost>(this,logic);
         }
             
             break;
-        case 1:
+        case 1:{
             logic = nl.makeclientlogic();
-            
+            std::shared_ptr<GameLogic> locked = logic.lock();
+            if(locked){
+                //locked->join(false);
+            }
             stage = std::make_shared<LevelJoin>(this,logic);
+        }
+            
             break;
-        case 2:
+        case 2:{
             logic = nl.makeundecidedlogic();
             stage = std::make_shared<LevelQue>(this,logic);
+        }
+            
             break;
         default:
             break;

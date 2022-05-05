@@ -30,6 +30,12 @@ public:
     virtual void que(){
         interface->dedicatedconnect(false);
     }
+    virtual void host(){
+        interface->dedicatedconnect(true);
+    }
+    virtual void join(uint64_t hostname){
+        interface->dedicatedconnect(hostname);
+    }
     virtual Entity* getself(){
         return me;
     }
