@@ -24,5 +24,6 @@ public:
     void destroylevel(int action);
     void createhostlevel();
     void createclientlevel();
+    
 };
 #endif

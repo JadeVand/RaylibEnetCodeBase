@@ -25,7 +25,9 @@ public:
                 }else if(header->signature == NATSIGNATURE && header->packettype == kMatched){
                     MatchPacket* mp = (MatchPacket*)obj->data;
                     if(mp->ishost){
+                        game->createhostlevel();
                     }else{
+                        game->createclientlevel();
                     }
                 }
             }

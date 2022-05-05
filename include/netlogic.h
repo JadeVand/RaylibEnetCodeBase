@@ -12,6 +12,7 @@ private:
 public:
     NetLogic(AbstractGame* game){
         logic = nullptr;
+        this->game = game;
     }
     std::weak_ptr<HostLogic> makehostlogic(){
         logic = std::make_shared<HostLogic>(&interface,game);

@@ -17,3 +17,5 @@ target_include_directories(enet PUBLIC enet/include)
 target_link_libraries(streetninja enet)
 
 target_compile_features(streetninja PRIVATE cxx_std_17)
+
+set(CMAKE_BUILD_TYPE RelWithDebInfo)
