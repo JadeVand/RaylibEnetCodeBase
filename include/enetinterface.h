@@ -40,7 +40,7 @@ public:
     size_t length;
 
     PacketObject(uint8_t* data, size_t length){
-        data = new uint8_t[length];
+        this->data = new uint8_t[length];
         memcpy(this->data,data,length);
     }
     ~PacketObject(){
