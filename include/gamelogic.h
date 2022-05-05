@@ -12,7 +12,7 @@ protected:
     AbstractGame* game;
 public:
     virtual void startlogic(){
-        updating = true;
+        updating = true;    
     }
     virtual void stoplogic(){
         updating = false;

@@ -45,7 +45,8 @@ void HostLogic::draw(int screenWidth,int screenHeight){
     if(hostname){
         ClearBackground(RAYWHITE);
         std::string hostnamestring = std::to_string(hostname);
-        DrawText(TextFormat("Hostname: %p",hostname),screenWidth/2-100,screenHeight/2,20,RED);
+        DrawText(TextFormat("Hostname: %p",hostname),screenWidth/2-150,screenHeight/2,20,RED);
+        DrawText(TextFormat("Give this to your apponent",hostname),screenWidth/2-150,screenHeight/2+30,20,RED);
     }else if(failedtoconnect){
         ClearBackground(RAYWHITE);
         std::string hostnamestring = std::to_string(hostname);
