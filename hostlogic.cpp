@@ -14,7 +14,10 @@ void HostLogic::update(float deltatime){
     auto lambda = [this](uint8_t* data,size_t length, int result){
         handlenetforlevel(data,length,result);
     };
-    interface->quecompletion(lambda,1);
+    auto lambdaerror = [this](void){
+        
+    };
+    interface->quecompletion(lambda,lambdaerror,1);
 }
 void HostLogic::draw(int screenWidth,int screenHeight){
     

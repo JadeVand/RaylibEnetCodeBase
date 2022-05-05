@@ -94,69 +94,71 @@ bool ENetInterface::dedicatedconnect(bool ishost){
     return false;
 }
 
-void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length,int result)> callback,uint32_t timeout){
+void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t length,int result)> callback,
+                                  std::function<void(void)> errorcallback,uint32_t timeout){
     
     int result = enet_host_service(client,&event,timeout);
     if(result > 0){
         if(event.type == ENET_EVENT_TYPE_RECEIVE){
-            callback(event.packet -> data,event.packet -> dataLength, result);
+           // callback(event.packet -> data,event.packet -> dataLength, result);
             
-            if(event.packet -> dataLength>=sizeof(struct PacketHeader)){
-                struct PacketHeader* header = (struct PacketHeader*)event.packet -> data;
-                if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
-                    printf("peer id was sent\n");
-                    ENetAddress natpeeraddress = {0};
-                    CustomENet remote = {0};
-                    memcpy(&remote,event.packet -> data+sizeof(struct PacketHeader),sizeof(CustomENet));
-                    memcpy(&natpeeraddress,&remote.host,sizeof(ENetAddress));
-                    uint32_t remotehost = 0;
-                    remotehost = natpeeraddress.host;
-                    remotehost = ENET_NET_TO_HOST_32(remotehost);
-                    natpeer = natpeer  = enet_host_connect (client, &natpeeraddress, 2, 0);
-                    assert(natpeer);
-                    int count = 20;
-                    while(count >= 0){
-                        --count ;
-                        struct PacketHeader s = {0};
-                        s.signature = GAMESIGNATURE;
-                        s.packettype = kNatReserved;
-                            /* Create a reliable packet of size 7 containing "packet\0" */
-                            ENetPacket * packet = enet_packet_create (&s,
-                                                                      sizeof(s),
-                                                                      ENET_PACKET_FLAG_RELIABLE);
-                            enet_peer_send (natpeer, 0, packet);
-                       // enet_host_flush (client);//host)
-                        ENetEvent ev ;
-                        /*
-                         With a 1000 delay and 10 packets being asent
-                         assume after 10 packets the nat has been punched
-                         since right now we have no real way of verifying..
-                         
-                         */
-                        int r = enet_host_service (client, & ev, 1000);
-                        if(r>0){
-                            if (ev.type == ENET_EVENT_TYPE_RECEIVE){
-                                printf("received packet\n");
-                                struct PacketHeader* header = (struct PacketHeader*)event.packet -> data;
-                                if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
-
-                                }
-                                //printf("nat punched\n");
-                                enet_packet_destroy (ev.packet);
-                              //  break;
-                            }
-                        }
-                    }
-                    
-                }else if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
-                    
-                }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
-                    printf("hostname was sent\n");
-                }
-                
-            }
+            
             enet_packet_destroy (event.packet);
         }
+    }else if(result < 0){
+        errorcallback();
     }
 
 }
+/*
+ 
+ if(event.packet -> dataLength>=sizeof(PacketHeader)){
+      PacketHeader* header = (PacketHeader*)event.packet -> data;
+     if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
+         printf("peer id was sent\n");
+         ENetAddress natpeeraddress = {0};
+         CustomENet remote = {0};
+         memcpy(&remote,event.packet -> data+sizeof(PacketHeader),sizeof(CustomENet));
+         memcpy(&natpeeraddress,&remote.host,sizeof(ENetAddress));
+         uint32_t remotehost = 0;
+         remotehost = natpeeraddress.host;
+         remotehost = ENET_NET_TO_HOST_32(remotehost);
+         natpeer = natpeer  = enet_host_connect (client, &natpeeraddress, 2, 0);
+         assert(natpeer);
+         int count = 20;
+         while(count >= 0){
+             --count ;
+             PacketHeader s = {0};
+             s.signature = GAMESIGNATURE;
+             s.packettype = kNatReserved;
+
+                 ENetPacket * packet = enet_packet_create (&s,
+                                                           sizeof(s),
+                                                           ENET_PACKET_FLAG_RELIABLE);
+                 enet_peer_send (natpeer, 0, packet);
+            // enet_host_flush (client);//host)
+             ENetEvent ev ;
+
+             int r = enet_host_service (client, & ev, 1000);
+             if(r>0){
+                 if (ev.type == ENET_EVENT_TYPE_RECEIVE){
+                     printf("received packet\n");
+                     PacketHeader* header = (PacketHeader*)event.packet -> data;
+                     if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
+
+                     }
+                     //printf("nat punched\n");
+                     enet_packet_destroy (ev.packet);
+                   //  break;
+                 }
+             }
+         }
+         
+     }else if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
+         
+     }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
+         printf("hostname was sent\n");
+     }
+     
+ }
+ */
