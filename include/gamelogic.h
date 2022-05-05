@@ -18,10 +18,12 @@ public:
         updating = false;
     }
     virtual void update(float deltatime){
+        /*
         auto lambda = [this](uint8_t* data,size_t length, int result){
-            latestpacket = std::make_shared<PacketObject>(data,length);
+            this->latestpacket = std::make_shared<PacketObject>(data,length);
         };
-        interface->quecompletion(lambda,0);
+        interface->quecompletion(lambda,1);
+         */
         
     }
     virtual void draw(int screenWidth,int screenHeight) = 0;
@@ -34,9 +36,11 @@ public:
     virtual Entity* getapponent(){
         return apponent;
     }
+    /*
     virtual std::weak_ptr<PacketObject> getlatestpacket(){
         return latestpacket;
     }
+     */
     virtual void send(uint8_t* packet,uint32_t size) = 0;//subject to change
 };
 

@@ -15,7 +15,7 @@ void LevelHost::update(){
     
 }
 void LevelHost::draw(){
-    char* buffers[] = {"Connected to matchmaking server"};
+    char* buffers[] = {"Connecting to matchmaking server"};
 
     for(int i = 0; i < sizeof(buffers)/sizeof(void*);++i){
         Color text = { 130, 130, 130, 255 };
@@ -27,6 +27,7 @@ void LevelHost::draw(){
         }
        
     }
+    logic.lock();
 }
 int LevelHost::getlevel(){
     return l;

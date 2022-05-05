@@ -4,7 +4,7 @@
 #include <enet/enet.h>
 #include <assert.h>
 #include <functional>
-
+#include <string>
 struct PacketHeader{
     uint16_t signature;
     uint16_t packettype;
@@ -21,6 +21,7 @@ enum GamePid : uint16_t{
 struct CustomENet{
     ENetAddress host;
 };
+
 class PacketObject{
 public:
     uint8_t* data;

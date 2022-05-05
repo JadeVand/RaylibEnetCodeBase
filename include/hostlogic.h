@@ -2,6 +2,8 @@
 #define _hostlogic_h
 #include <undecidedlogic.h>
 class HostLogic : public UndecidedLogic{
+protected:
+    uint64_t hostname;
 public:
     HostLogic(ENetInterface* interface);
     void update(float deltatime);

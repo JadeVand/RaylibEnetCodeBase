@@ -22,14 +22,23 @@ void Game::inputcallback(int action){
     switch(action){
         case 0:{
             switch(stage->getlevel()){
-                case 0:
+                case 0:{
                     logic = nl.makehostlogic();
-                    //call host here?
+                    std::shared_ptr<GameLogic> locked = logic.lock();
+                    if(locked){
+                        std::shared_ptr<HostLogic> hostlock = std::dynamic_pointer_cast<HostLogic>(locked);
+                        if(hostlock){
+                            hostlock->host();
+                        }
+                    }
+
                     stage = std::make_shared<LevelHost>(this,logic);
+                }
+                    
                     break;
                 case 1:
                     logic = nl.makeclientlogic();
-                    //logic = std::make_shared<HostLogic>();
+
                     stage = std::make_shared<LevelJoin>(this,logic);
                     break;
                 case 2:
