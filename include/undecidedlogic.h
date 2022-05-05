@@ -22,12 +22,9 @@ public:
                 if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
                     
                 }else if(header->signature == NATSIGNATURE && header->packettype == kMatched){
-                    printf("We matched\t");
                     MatchPacket* mp = (MatchPacket*)obj->data;
                     if(mp->ishost){
-                        printf("we are host\n");
                     }else{
-                        printf("we are not host\n");
                     }
                 }
             }

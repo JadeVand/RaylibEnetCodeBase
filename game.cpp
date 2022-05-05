@@ -57,6 +57,10 @@ void Game::inputcallback(int action){
             break;
         case 2:{
             logic = nl.makeundecidedlogic();
+            std::shared_ptr<GameLogic> locked = logic.lock();
+            if(locked){
+                locked->que();
+            }
             stage = std::make_shared<LevelQue>(this,logic);
         }
             
