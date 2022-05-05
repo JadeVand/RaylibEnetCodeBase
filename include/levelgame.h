@@ -6,7 +6,6 @@ private:
     int l;
     int index;
     AbstractGame* g;
-    GameLogic* logic;
 public:
     LevelGame(AbstractGame* g,std::weak_ptr<GameLogic> logic);
     void input();

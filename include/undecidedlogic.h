@@ -30,6 +30,9 @@ public:
     virtual void send(uint8_t* packet, uint32_t size){
         
     }
+    virtual bool needstodraw(){
+        return false;
+    }
 };
 
 #endif

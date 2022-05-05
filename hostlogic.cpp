@@ -57,3 +57,9 @@ void HostLogic::host(){
 void HostLogic::send(uint8_t* packet,uint32_t size){
     
 }
+bool HostLogic::needstodraw(){
+    if(hostname){
+        return true;
+    }
+    return false;
+}

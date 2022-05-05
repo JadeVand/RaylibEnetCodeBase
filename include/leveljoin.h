@@ -7,7 +7,6 @@ private:
     int l;
     int index;
     AbstractGame* g;
-    GameLogic* logic;
 public:
     LevelJoin(AbstractGame* g,std::weak_ptr<GameLogic> logic);
     void input();

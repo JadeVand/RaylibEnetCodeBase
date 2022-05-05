@@ -20,3 +20,6 @@ void ClientLogic::join(uint64_t hostname){
 void ClientLogic::send(uint8_t* packet,uint32_t size){
     
 }
+bool ClientLogic::needstodraw(){
+    return false;
+}

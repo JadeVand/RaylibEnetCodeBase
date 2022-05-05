@@ -9,5 +9,6 @@ public:
     void draw(int screenWidth,int screenHeight);
     void join(uint64_t hostname);
     void send(uint8_t* packet,uint32_t size);
+    bool needstodraw();
 };
 #endif

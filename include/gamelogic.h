@@ -42,6 +42,8 @@ public:
     }
      */
     virtual void send(uint8_t* packet,uint32_t size) = 0;//subject to change
+    
+    virtual bool needstodraw() = 0;
 };
 
 #endif

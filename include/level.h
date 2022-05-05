@@ -2,6 +2,7 @@
 #define _level_h
 #include <abstractgame.h>
 class Level{
+protected:
     std::weak_ptr<GameLogic> logic;
 public:
     Level(std::weak_ptr<GameLogic> logic){
