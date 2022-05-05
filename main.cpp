@@ -71,6 +71,7 @@ void UpdateGame(void)
 {
     float deltatime = GetFrameTime();
     g->update();
+    g->updategamelogic(deltatime);
 }
 
 // Draw game (one frame)
