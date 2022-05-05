@@ -14,11 +14,7 @@ void HostLogic::update(float deltatime){
         if(length>=sizeof(PacketHeader)+sizeof(uint64_t)){
             PacketHeader* ph = (PacketHeader*)data;
             if(ph->packettype = kHostname&&ph->signature == NATSIGNATURE){
-                struct HostPacket{
-                    PacketHeader ph;
-                    uint64_t hostname;
-                    uint32_t extra;
-                };
+                
                 HostPacket* hp = (HostPacket*)data;
                 hostname = hp->hostname;
                 printf("%p\n",hostname);
@@ -31,22 +27,7 @@ void HostLogic::update(float deltatime){
 }
 void HostLogic::draw(int screenWidth,int screenHeight){
     
-    /*
-    if(latestpacket){
-        PacketHeader* ph = (PacketHeader*)latestpacket.get();
-        if(ph->packettype == kHostname&&ph->signature == NATSIGNATURE){
-            struct HostPacket{
-                struct PacketHeader* ph;
-                uint64_t hostname;
-            };
-            HostPacket* hp = (HostPacket*)latestpacket.get();
-            
-            ClearBackground(RAYWHITE);
-            std::string hostname = std::to_string(hp->hostname);
-            DrawText(hostname.c_str(),screenWidth/2,screenHeight/2,10,GRAY);
-        }
-    }
-     */
+
     if(hostname){
         ClearBackground(RAYWHITE);
         std::string hostnamestring = std::to_string(hostname);

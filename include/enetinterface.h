@@ -13,6 +13,7 @@ enum Pid : uint16_t{
     kInvalidHost = 1,
     kHostname = 2,
     kPeerId = 3,
+    kMatched = 4,
 };
 enum GamePid : uint16_t{
     
@@ -21,7 +22,18 @@ enum GamePid : uint16_t{
 struct CustomENet{
     ENetAddress host;
 };
-
+struct MatchPacket{
+    struct PacketHeader ph;//4
+    ENetAddress host;//6
+    uint16_t ishost;//2
+    uint32_t extra;
+    
+};
+struct HostPacket{
+    PacketHeader ph;
+    uint64_t hostname;
+    uint32_t extra;
+};
 class PacketObject{
 public:
     uint8_t* data;
