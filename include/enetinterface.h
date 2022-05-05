@@ -21,6 +21,20 @@ enum GamePid : uint16_t{
 struct CustomENet{
     ENetAddress host;
 };
+class PacketObject{
+public:
+    uint8_t* data;
+    size_t length;
+
+    PacketObject(uint8_t* data, size_t length){
+        data = new uint8_t[length];
+        memcpy(this->data,data,length);
+    }
+    ~PacketObject(){
+        delete[] data;
+        length = 0;
+    }
+};
 #define GAMESIGNATURE 0x4843
 #define NATSIGNATURE 0x4E53
 class ENetInterface{

@@ -10,6 +10,8 @@ void HostLogic::update(float deltatime){
     if(updating){
         
     }
+
+    
 }
 void HostLogic::draw(int screenWidth,int screenHeight){
     
