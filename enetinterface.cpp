@@ -114,9 +114,9 @@ void ENetInterface::donat(ENetAddress* natpeeraddress){
             if (ev.type == ENET_EVENT_TYPE_RECEIVE){
                 PacketHeader* header = (PacketHeader*)event.packet -> data;
                 if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
-
+                    
                 }
-
+                enet_packet_destroy(ev.packet);
             }
         }
     }
