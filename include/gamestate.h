@@ -24,6 +24,7 @@ private:
     Entity* me;
     Entity* apponent;
     XoGrid map[9];
+    Entity* turn;
 public:
     GameState();
     /*
@@ -39,5 +40,6 @@ public:
     bool checkwinner(uint32_t xoid);
     Entity* getself();
     Entity* getapponent();
+    void setturn(Entity* t);
 };
 #endif

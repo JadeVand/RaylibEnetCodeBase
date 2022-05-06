@@ -4,9 +4,9 @@ GameState::GameState(){
     memset(map,0,sizeof(map));
 }
 bool GameState::processmove(const XoMovePacket& mp,Entity* e){
-    /*
-     First check if its our move
-     */
+    if(turn != e){
+        return false;
+    }
     uint32_t y = mp.y;
     uint32_t x = mp.x;
     XoGrid* block = NULL;
@@ -23,6 +23,14 @@ bool GameState::processmove(const XoMovePacket& mp,Entity* e){
         return false;
     }
     
+    
+    
+    
+    if(turn == me){
+        turn = apponent;
+    }else{
+        turn = me;
+    }
 }
 bool GameState::checkwinner(uint32_t xoid){
     return false;
@@ -32,4 +40,7 @@ Entity* GameState::getself(){
 }
 Entity* GameState::getapponent(){
     return apponent;
+}
+void GameState::setturn(Entity* t){
+    turn = t;
 }
