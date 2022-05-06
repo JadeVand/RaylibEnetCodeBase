@@ -9,8 +9,11 @@
 #endif
 class Entity{
 private:
+    uint32_t xoid;
 public:
     
     Entity();
+    
+    void setxoid(uint32_t xoid);
 };
 #endif

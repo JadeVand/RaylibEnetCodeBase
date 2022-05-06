@@ -21,12 +21,12 @@ typedef struct SXoGrid{
 }XoGrid;
 class GameState{
 private:
-    Entity* me;
-    Entity* apponent;
+    Entity me;
+    Entity apponent;
     XoGrid map[9];
     Entity* turn;
 public:
-    GameState();
+    GameState(uint32_t myxoid, uint32_t apponentxoid);
     /*
      Processmove gets called from either network during update
      Or from level update

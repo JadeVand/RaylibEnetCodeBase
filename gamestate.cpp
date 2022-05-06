@@ -1,7 +1,8 @@
 #include <gamestate.h>
 
-GameState::GameState(){
+GameState::GameState(uint32_t myxoid, uint32_t apponentxoid){
     memset(map,0,sizeof(map));
+    
 }
 bool GameState::processmove(const XoMovePacket& mp,Entity* e){
     if(turn != e){
@@ -26,20 +27,20 @@ bool GameState::processmove(const XoMovePacket& mp,Entity* e){
     
     
     
-    if(turn == me){
-        turn = apponent;
+    if(turn == &me){
+        turn = &apponent;
     }else{
-        turn = me;
+        turn = &me;
     }
 }
 bool GameState::checkwinner(uint32_t xoid){
     return false;
 }
 Entity* GameState::getself(){
-    return me;
+    return &me;
 }
 Entity* GameState::getapponent(){
-    return apponent;
+    return &apponent;
 }
 void GameState::setturn(Entity* t){
     turn = t;

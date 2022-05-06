@@ -57,5 +57,5 @@ std::shared_ptr<GameState> ClientLogic::getgamestate(){
     return gamestate;
 }
 void ClientLogic::creategamestate(){
-    gamestate = std::make_shared<GameState>();
+    gamestate = std::make_shared<GameState>(2,1);
 }
