@@ -29,6 +29,10 @@ void ENetInterface::destroynet(){
 }
 void ENetInterface::createnet(){
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    WSADATA data = {0};
+    WSAStartup(MAKEWORD(2,2),&data);
+#endif
     assert(enet_initialize ()==0);
     c->client = enet_host_create (NULL /* create a client host */,
                                5 /* only allow 1 outgoing connection */,
