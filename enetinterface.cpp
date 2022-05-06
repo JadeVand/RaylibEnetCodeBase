@@ -107,13 +107,13 @@ void ENetInterface::donat(CustomENet* natpeeraddr){
     ENetAddress* natpeeraddress = (ENetAddress*)natpeeraddr;
     c->natpeer = enet_host_connect (c->client, natpeeraddress, 2, 0);
     assert(c->natpeer);
-    int count = 20;
-    while(count >= 0){
-        --count ;
-        PacketHeader s = {0};
-        s.signature = GAMESIGNATURE;
-        s.packettype = kNatReserved;
-
+    bool punched = false;
+    uint64_t p = 0;
+    while(!punched){
+        NATPacket s = {0};
+        s.ph.signature = GAMESIGNATURE;
+        s.ph.packettype = kNatReserved;
+        s.handshake = p;
             ENetPacket * packet = enet_packet_create (&s,
                                                       sizeof(s),
                                                       ENET_PACKET_FLAG_RELIABLE);
@@ -121,13 +121,26 @@ void ENetInterface::donat(CustomENet* natpeeraddr){
        // enet_host_flush (client);//host)
         ENetEvent ev ;
 
-        int r = enet_host_service (c->client, & ev, 1000);
+        int r = enet_host_service (c->client, & ev, 1);
         if(r>0){
             if (ev.type == ENET_EVENT_TYPE_RECEIVE){
-                PacketHeader* header = (PacketHeader*)ev.packet -> data;
-                if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
-                    
+                if(ev.packet -> dataLength>=sizeof(PacketHeader)){
+                    PacketHeader* header = (PacketHeader*)ev.packet -> data;
+                    if(header->signature == GAMESIGNATURE && header->packettype == kNatReserved){
+                        NATPacket* natp = (NATPacket*)ev.packet -> data;
+                        p = 0xAD;
+                        printf("handshake 1\n");
+                        if(natp->handshake == 0xAD){
+                            printf("handshake 2\n");
+                            p = 0xBC;
+                        }else if(natp->handshake == 0xBC){
+                            printf("handshake 3\n");
+                            punched = true;
+                            printf("We punched them!\n");
+                        }
+                    }
                 }
+                
                 enet_packet_destroy(ev.packet);
             }
         }

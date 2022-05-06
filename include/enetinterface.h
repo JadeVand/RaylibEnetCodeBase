@@ -21,6 +21,10 @@ typedef struct SPacketHeader{
     uint16_t signature;
     uint16_t packettype;
 }PacketHeader;
+typedef struct SNATPacket{
+    PacketHeader ph;
+    uint64_t handshake;
+}NATPacket;
 typedef struct SCustomENet{
     uint32_t host;
     uint16_t port;
