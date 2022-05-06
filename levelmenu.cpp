@@ -20,7 +20,6 @@ void LevelMenu::update(){
 }
 void LevelMenu::draw(){
     
-    //char* buffers[] = {"Host","Join","Queue"};
     std::vector<std::string> buffers = {"Host","Join","Queue", "LAN"};
     for(int i = 0; i < buffers.size();++i){
         Color text = { 130, 130, 130, 255 };
@@ -32,10 +31,6 @@ void LevelMenu::draw(){
         }
         DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50)-50 ,20, text);
     }
-    
-    //DrawText("NOP", screenWidth/2 , screenHeight/2+50 , 20, text);
-    
-   // DrawRectangleLines(screenWidth/2-15,screenHeight/2+(50*index),75,20,text);
 }
 int LevelMenu::getlevel(){
     return l;

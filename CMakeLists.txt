@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 
 project(streetninja)
 
-add_executable(streetninja main.cpp levelmenu.cpp levelgame.cpp game.cpp enetinterface.cpp levelque.cpp leveljoin.cpp levelhost.cpp hostlogic.cpp clientlogic.cpp)
+add_executable(streetninja main.cpp levelmenu.cpp levelgame.cpp game.cpp enetinterface.cpp levelque.cpp leveljoin.cpp levelhost.cpp hostlogic.cpp clientlogic.cpp gamestate.cpp)
 
 target_include_directories(streetninja PUBLIC "include")
 

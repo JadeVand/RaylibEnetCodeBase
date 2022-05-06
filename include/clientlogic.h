@@ -3,6 +3,8 @@
 #define _clientlogic_h
 #include <undecidedlogic.h>
 class ClientLogic : public UndecidedLogic{
+private:
+    std::shared_ptr<GameState> gamestate;
 public:
     ClientLogic(ENetInterface* interface,AbstractGame* game);
     void update(float deltatime);
@@ -10,5 +12,7 @@ public:
     void send(uint8_t* packet,uint32_t size);
     bool needstodraw();
     void handlenetforlevel(uint8_t* data,size_t length,int result);
+    std::shared_ptr<GameState> getgamestate();
+    void creategamestate();
 };
 #endif

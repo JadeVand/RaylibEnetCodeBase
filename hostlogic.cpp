@@ -69,3 +69,10 @@ bool HostLogic::needstodraw(){
     }
     return false;
 }
+
+std::shared_ptr<GameState> HostLogic::getgamestate(){
+    return gamestate;
+}
+void HostLogic::creategamestate(){
+    gamestate = std::make_shared<GameState>();
+}

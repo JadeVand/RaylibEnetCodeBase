@@ -1,7 +1,7 @@
 
 #ifndef _gamelogic_h
 #define _gamelogic_h
-#include <abstractlevel.h>
+#include <gamestate.h>
 class GameLogic{
 protected:
     ENetInterface* interface;
@@ -50,6 +50,7 @@ public:
     virtual void send(uint8_t* packet,uint32_t size) = 0;//subject to change
     
     virtual bool needstodraw() = 0;
+    
 
 };
 

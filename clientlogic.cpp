@@ -53,3 +53,9 @@ bool ClientLogic::needstodraw(){
 void ClientLogic::handlenetforlevel(uint8_t* data,size_t length,int result){
     
 }
+std::shared_ptr<GameState> ClientLogic::getgamestate(){
+    return gamestate;
+}
+void ClientLogic::creategamestate(){
+    gamestate = std::make_shared<GameState>();
+}

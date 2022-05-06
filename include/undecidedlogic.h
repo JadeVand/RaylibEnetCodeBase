@@ -2,8 +2,8 @@
 #define _undecidedlogic_h
 #include <gamelogic.h>
 class UndecidedLogic : public GameLogic{
-private:
-    
+protected:
+
 public:
     UndecidedLogic(ENetInterface* interface,AbstractGame* game){
         this->interface = interface;
@@ -52,6 +52,7 @@ public:
     virtual bool needstodraw(){
         return false;
     }
+
 };
 
 #endif

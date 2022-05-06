@@ -14,22 +14,28 @@ void LevelGame::input(){
     }
 }
 void LevelGame::update(){
+    mouseposition = GetMousePosition();
     input();
-    
-    
+ 
 }
-void LevelGame::draw(){
-    std::vector<std::string>buffers = {"Back"};
 
-    for(int i = 0; i < buffers.size();++i){
-        Color text = { 130, 130, 130, 255 };
-        if(index == i){
-            text.r = 230;
-            text.g = 41;
-            text.b = 55;
-            DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50) ,20, text);
+void LevelGame::draw(){
+#define SQUARE_SIZE 50
+    int offsetx = g->getscreenwidth()/2;
+    int offsety = g->getscreenheight()/2;
+    for(int i = 0; i < 3; ++i){
+        for(int k = 0; k < 3; ++k){
+            Color c = LIGHTGRAY;
+            if(mouseposition.x>k*SQUARE_SIZE+offsetx-100 && mouseposition.x<k*SQUARE_SIZE+offsetx-100+SQUARE_SIZE){
+                if(mouseposition.y>i*SQUARE_SIZE+offsety-100 && mouseposition.y< i*SQUARE_SIZE+offsety-100 +SQUARE_SIZE){
+                    c = DARKGRAY;
+                }
+            }
+            DrawRectangleLines(k*SQUARE_SIZE+offsetx-100, i*SQUARE_SIZE+offsety-100, SQUARE_SIZE, SQUARE_SIZE, c);
         }
+        
     }
+
 }
 int LevelGame::getlevel(){
     return l;
