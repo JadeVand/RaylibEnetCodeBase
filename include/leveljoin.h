@@ -2,6 +2,8 @@
 #define _leveljoin_h
 
 #include <level.h>
+#include <raylib.h>
+#include <raymath.h>
 class LevelJoin : public Level{
 private:
     int l;
@@ -16,6 +18,6 @@ public:
     void update();
     void draw();
     int getlevel();
-
+    void drawtextforlogic(std::vector<std::string> buffers);
 };
 #endif

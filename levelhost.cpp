@@ -42,3 +42,6 @@ void LevelHost::draw(){
 int LevelHost::getlevel(){
     return l;
 }
+void LevelHost::drawtextforlogic(std::vector<std::string> buffers){
+    
+}

@@ -1,8 +1,6 @@
 
 #ifndef _entity_h
 #define _entity_h
-#include <raylib.h>
-#include <raymath.h>
 #include <enetinterface.h>
 #include <memory>
 #include <vector>

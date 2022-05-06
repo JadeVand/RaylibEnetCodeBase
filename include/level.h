@@ -1,7 +1,7 @@
 #ifndef _level_h
 #define _level_h
 #include <netlogic.h>
-class Level{
+class Level : public AbstractLevel{
 protected:
     std::weak_ptr<GameLogic> logic;
 public:
@@ -12,5 +12,6 @@ public:
     virtual void update() = 0;
     virtual void draw() = 0;
     virtual int getlevel() = 0;
+    virtual void drawtextforlogic(std::vector<std::string> buffers) = 0;
 };
 #endif

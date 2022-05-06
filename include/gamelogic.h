@@ -1,7 +1,7 @@
 
 #ifndef _gamelogic_h
 #define _gamelogic_h
-#include <abstractgame.h>
+#include <abstractlevel.h>
 class GameLogic{
 protected:
     ENetInterface* interface;

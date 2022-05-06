@@ -40,3 +40,6 @@ void LevelMenu::draw(){
 int LevelMenu::getlevel(){
     return l;
 }
+void LevelMenu::drawtextforlogic(std::vector<std::string> buffers){
+    
+}

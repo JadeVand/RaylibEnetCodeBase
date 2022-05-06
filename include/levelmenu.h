@@ -2,6 +2,8 @@
 #define _levelmenu_h
 
 #include <level.h>
+#include <raylib.h>
+#include <raymath.h>
 class LevelMenu : public Level{
 private:
     int index;
@@ -13,6 +15,6 @@ public:
     void update();
     void draw();
     int getlevel();
-
+    void drawtextforlogic(std::vector<std::string> buffers);
 };
 #endif

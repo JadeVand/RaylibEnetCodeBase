@@ -42,3 +42,7 @@ void LevelQue::draw(){
 int LevelQue::getlevel(){
     return l;
 }
+void LevelQue::drawtextforlogic(std::vector<std::string> buffers){
+    
+}
+

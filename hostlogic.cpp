@@ -41,7 +41,7 @@ void HostLogic::update(float deltatime){
 }
 void HostLogic::draw(int screenWidth,int screenHeight){
     
-
+/*
     if(hostname){
         ClearBackground(RAYWHITE);
         std::string hostnamestring = std::to_string(hostname);
@@ -52,7 +52,7 @@ void HostLogic::draw(int screenWidth,int screenHeight){
         std::string hostnamestring = std::to_string(hostname);
         DrawText(TextFormat("Unable to connect",hostname),screenWidth/2-100,screenHeight/2,20,RED);
     }
-    
+    */
 }
 void HostLogic::send(uint8_t* packet,uint32_t size){
     

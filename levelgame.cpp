@@ -34,3 +34,7 @@ void LevelGame::draw(){
 int LevelGame::getlevel(){
     return l;
 }
+
+void LevelGame::drawtextforlogic(std::vector<std::string> buffers){
+    
+}
