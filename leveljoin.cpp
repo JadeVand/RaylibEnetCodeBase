@@ -1,4 +1,5 @@
 #include <leveljoin.h>
+#include <stdexcept>
 LevelJoin::LevelJoin(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(logic){
     l = 3;
     this->g = g;
