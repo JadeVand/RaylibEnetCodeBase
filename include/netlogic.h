@@ -1,5 +1,10 @@
 #ifndef _netlogic_h
 #define _netlogic_h
+//I forgot why I even made this class LOL
+//could I have not just an interface pointer in Game
+//instead of using NetLogic* ?
+//Like this class doesn't even really do anything I really don't get it
+//but I have it and it works so it's saying
 
 #include <hostlogic.h>
 #include <clientlogic.h>

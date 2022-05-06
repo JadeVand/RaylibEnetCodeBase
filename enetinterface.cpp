@@ -33,6 +33,11 @@ void ENetInterface::createnet(){
     WSADATA data = {0};
     WSAStartup(MAKEWORD(2,2),&data);
 #endif
+    ENetAddress lanaddr = {0};
+    /*
+    lanaddr.host = ENET_HOST_ANY;
+    lanaddr.port = 0;
+     */
     assert(enet_initialize ()==0);
     c->client = enet_host_create (NULL /* create a client host */,
                                5 /* only allow 1 outgoing connection */,
