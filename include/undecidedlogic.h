@@ -29,9 +29,9 @@ public:
                     memcpy(&remoteaddress,&mp->host,sizeof(CustomENet));
                     interface->donat(&mp->host);
                     if(mp->ishost){
-                        game->createhostlevel();
+                        game->creategamelevelashostlogic();
                     }else{
-                        game->createclientlevel();
+                        game->creategamelevelasclientlogic();
                     }
                 }
             }

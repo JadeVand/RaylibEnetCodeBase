@@ -16,7 +16,8 @@ void HostLogic::update(float deltatime){
             
             PacketHeader* header = (PacketHeader*)obj->data;
             if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
-                
+                //We ignore this packet since it could be
+                //left over holepunch packets in the stream
             }
             else if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
                 
@@ -24,7 +25,10 @@ void HostLogic::update(float deltatime){
                 CustomENet remote = {0};
                 memcpy(&natpeeraddress,obj->data+sizeof(PacketHeader),sizeof(CustomENet));
                 interface->donat(&natpeeraddress);
-                //printf("nat completed\n");
+                //NAT COMPLETED
+                
+                //BEGIN GGAMEPLAY
+                game->creategamelevelascurrentlogic();
             }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
                 HostPacket* hp = (HostPacket*)obj->data;
                 hostname = hp->hostname;

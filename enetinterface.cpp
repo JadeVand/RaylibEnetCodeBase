@@ -127,14 +127,10 @@ void ENetInterface::donat(CustomENet* natpeeraddr){
                     if(header->signature == GAMESIGNATURE && header->packettype == kNatReserved){
                         NATPacket* natp = (NATPacket*)ev.packet -> data;
                         p = 0xAD;
-                        printf("handshake 1\n");
                         if(natp->handshake == 0xAD){
-                            printf("handshake 2\n");
                             p = 0xBC;
                         }else if(natp->handshake == 0xBC){
-                            printf("handshake 3\n");
                             punched = true;
-                            printf("We punched them!\n");
                         }
                     }
                 }

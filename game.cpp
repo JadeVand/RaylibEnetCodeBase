@@ -24,12 +24,17 @@ void Game::destroylevel(int action){
     stage = std::make_shared<LevelMenu>(this,logic);
     nl.createnet();
 }
-void Game::createhostlevel(){
+void Game::creategamelevelashostlogic(){
     logic = nl.makehostlogic();
     stage = std::make_shared<LevelGame>(this,logic);
 }
-void Game::createclientlevel(){
+void Game::creategamelevelasclientlogic(){
     logic = nl.makeclientlogic();
+    stage = std::make_shared<LevelGame>(this,logic);
+}
+void Game::creategamelevelascurrentlogic(){
+    //we already have a logic in place
+    //make a new stage
     stage = std::make_shared<LevelGame>(this,logic);
 }
 void Game::inputcallback(int action){

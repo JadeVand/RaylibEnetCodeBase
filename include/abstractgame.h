@@ -7,7 +7,8 @@ public:
     virtual void inputcallback(int action) = 0;
     virtual int getscreenwidth() = 0;
     virtual int getscreenheight() = 0;
-    virtual void createhostlevel() = 0;
-    virtual void createclientlevel() = 0;
+    virtual void creategamelevelashostlogic() = 0;
+    virtual void creategamelevelasclientlogic() = 0;
+    virtual void creategamelevelascurrentlogic() = 0;
 };
 #endif
