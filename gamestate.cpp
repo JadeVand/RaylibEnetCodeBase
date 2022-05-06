@@ -3,9 +3,33 @@
 GameState::GameState(){
     memset(map,0,sizeof(map));
 }
-bool GameState::processmove(const XoMovePacket& mp){
+bool GameState::processmove(const XoMovePacket& mp,Entity* e){
+    /*
+     First check if its our move
+     */
+    uint32_t y = mp.y;
+    uint32_t x = mp.x;
+    XoGrid* block = NULL;
+    for(int n = 0; n < 9; ++n){
+        if(map[n].x==x && map[n].y==y){
+            block = &map[n];
+            break;
+        }
+    }
+    if(!block){
+        return false;
+    }
+    if(block->occupied){
+        return false;
+    }
     
 }
 bool GameState::checkwinner(uint32_t xoid){
     return false;
+}
+Entity* GameState::getself(){
+    return me;
+}
+Entity* GameState::getapponent(){
+    return apponent;
 }

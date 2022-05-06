@@ -20,11 +20,24 @@ typedef struct SXoGrid{
     uint32_t xoid;
 }XoGrid;
 class GameState{
-protected:
+private:
+    Entity* me;
+    Entity* apponent;
     XoGrid map[9];
 public:
     GameState();
-    bool processmove(const XoMovePacket& mp);
+    /*
+     Processmove gets called from either network during update
+     Or from level update
+     We have to be able to differentiate who sent the packet
+     Since it's only two players we can simplify this process
+     Pretty easily
+     If level update calls it, then it passes selfentityh
+     if network update calls it then it passes apponententity
+     */
+    bool processmove(const XoMovePacket& mp,Entity* e);
     bool checkwinner(uint32_t xoid);
+    Entity* getself();
+    Entity* getapponent();
 };
 #endif

@@ -12,6 +12,9 @@ void LevelGame::input(){
     if(IsKeyReleased(KEY_ENTER)){
       //  g->inputcallback(0);
     }
+    if(IsMouseButtonPressed(0)){//left mouse click
+
+    }
 }
 void LevelGame::update(){
     mouseposition = GetMousePosition();
@@ -28,6 +31,8 @@ void LevelGame::draw(){
             Color c = LIGHTGRAY;
             if(mouseposition.x>k*SQUARE_SIZE+offsetx-100 && mouseposition.x<k*SQUARE_SIZE+offsetx-100+SQUARE_SIZE){
                 if(mouseposition.y>i*SQUARE_SIZE+offsety-100 && mouseposition.y< i*SQUARE_SIZE+offsety-100 +SQUARE_SIZE){
+                    highlightedy = i;
+                    highlightedx = k;
                     c = DARKGRAY;
                 }
             }

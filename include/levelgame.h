@@ -9,6 +9,8 @@ private:
     int index;
     AbstractGame* g;
     Vector2 mouseposition;
+    int32_t highlightedx;
+    int32_t highlightedy;
 public:
     LevelGame(AbstractGame* g,std::weak_ptr<GameLogic> logic);
     void input();

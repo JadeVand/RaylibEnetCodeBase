@@ -6,8 +6,7 @@ class GameLogic{
 protected:
     ENetInterface* interface;
     bool updating;
-    Entity* me;
-    Entity* apponent;
+
     std::shared_ptr<PacketObject> latestpacket;
     AbstractGame* game;
 public:
@@ -35,12 +34,6 @@ public:
     }
     virtual bool join(uint64_t hostname){
         return interface->dedicatedconnect(hostname);
-    }
-    virtual Entity* getself(){
-        return me;
-    }
-    virtual Entity* getapponent(){
-        return apponent;
     }
     /*
     virtual std::weak_ptr<PacketObject> getlatestpacket(){

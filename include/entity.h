@@ -10,6 +10,7 @@
 class Entity{
 private:
 public:
+    
     Entity();
 };
 #endif
