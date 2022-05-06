@@ -34,7 +34,7 @@ public:
         return interface->dedicatedconnect(true);
     }
     virtual bool join(uint64_t hostname){
-        return interface->dedicatedconnect(true);
+        return interface->dedicatedconnect(hostname);
     }
     virtual Entity* getself(){
         return me;

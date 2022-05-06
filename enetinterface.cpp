@@ -47,8 +47,6 @@ bool ENetInterface::dedicatedconnect(uint64_t hn){
     enet_address_set_host (& dedicatedaddress, "18.168.115.193");
     dedicatedaddress.port = 8011;
     c->dedicatedpeer = enet_host_connect (c->client, & dedicatedaddress, 2, 0);
-
-    
     if (enet_host_service(c->client, &c->event, 1000) > 0 &&
         c->event.type == ENET_EVENT_TYPE_CONNECT) {
         
