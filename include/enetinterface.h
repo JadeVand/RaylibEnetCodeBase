@@ -1,7 +1,7 @@
 
 #ifndef _netinterface_h
 #define _netinterface_h
-#include <enet/enet.h>
+
 #include <assert.h>
 #include <functional>
 #include <string>
@@ -22,11 +22,12 @@ typedef struct SPacketHeader{
     uint16_t packettype;
 }PacketHeader;
 typedef struct SCustomENet{
-    ENetAddress host;
+    uint32_t host;
+    uint16_t port;
 }CustomENet;
 typedef struct SMatchPacket{
     PacketHeader ph;//4
-    ENetAddress host;//6
+    CustomENet host;//6
     uint16_t ishost;//2
     uint32_t extra;
     
@@ -52,14 +53,13 @@ public:
 };
 #define GAMESIGNATURE 0x4843
 #define NATSIGNATURE 0x4E53
+typedef struct SENetInterfaceContainer{
+    bool natpunched;
+}ENetInterfaceContainer;
 class ENetInterface{
 private:
-    
-    ENetHost* client;
-    ENetPeer* dedicatedpeer;
-    ENetPeer* natpeer;
-    ENetEvent event;
-    bool natpunched ;
+
+    ENetInterfaceContainer* a;
 public:
     ENetInterface();
     void quecompletion();
@@ -70,6 +70,7 @@ public:
     void destroynet();
     void createnet();
 
-    void donat(ENetAddress* natpeeraddress);
+    void donat(CustomENet* natpeeraddress);
+    ~ENetInterface();
 };
 #endif

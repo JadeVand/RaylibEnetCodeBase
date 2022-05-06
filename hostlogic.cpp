@@ -19,10 +19,10 @@ void HostLogic::update(float deltatime){
                 
             }
             else if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
-                ENetAddress natpeeraddress = {0};
+                
+                CustomENet natpeeraddress = {0};
                 CustomENet remote = {0};
-                memcpy(&remote,obj->data+sizeof(PacketHeader),sizeof(CustomENet));
-                memcpy(&natpeeraddress,&remote.host,sizeof(ENetAddress));
+                memcpy(&natpeeraddress,obj->data+sizeof(PacketHeader),sizeof(CustomENet));
                 interface->donat(&natpeeraddress);
                 //printf("nat completed\n");
             }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){

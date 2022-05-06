@@ -25,8 +25,8 @@ public:
                 }else if(header->signature == NATSIGNATURE && header->packettype == kMatched){
                     
                     MatchPacket* mp = (MatchPacket*)obj->data;
-                    ENetAddress remoteaddress = {0};
-                    memcpy(&remoteaddress,&mp->host,sizeof(ENetAddress));
+                    CustomENet remoteaddress = {0};
+                    memcpy(&remoteaddress,&mp->host,sizeof(CustomENet));
                     interface->donat(&mp->host);
                     if(mp->ishost){
                         game->createhostlevel();
