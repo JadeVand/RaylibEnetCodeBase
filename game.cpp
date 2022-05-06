@@ -74,6 +74,11 @@ void Game::inputcallback(int action){
         }
             
             break;
+        case 3:{//lan player
+            logic = nl.makeundecidedlogic();
+            stage = std::make_shared<LevelQue>(this,logic);
+        }
+            break;
         default:
             break;
     }

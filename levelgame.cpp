@@ -21,7 +21,7 @@ void LevelGame::update(){
 void LevelGame::draw(){
     std::vector<std::string>buffers = {"Back"};
 
-    for(int i = 0; i < sizeof(buffers)/sizeof(void*);++i){
+    for(int i = 0; i < buffers.size();++i){
         Color text = { 130, 130, 130, 255 };
         if(index == i){
             text.r = 230;

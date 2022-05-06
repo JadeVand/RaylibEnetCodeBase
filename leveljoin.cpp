@@ -59,7 +59,7 @@ void LevelJoin::update(){
 void LevelJoin::draw(){
     std::vector<std::string> buffers = {"Enter hostname to join"};
 
-    for(int i = 0; i < sizeof(buffers)/sizeof(void*);++i){
+    for(int i = 0; i < buffers.size();++i){
         Color text = { 130, 130, 130, 255 };
         if(index == i){
             text.r = 230;
