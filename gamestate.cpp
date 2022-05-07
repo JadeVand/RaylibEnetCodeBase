@@ -5,9 +5,12 @@ GameState::GameState(uint32_t myxoid, uint32_t apponentxoid){
     
 }
 bool GameState::processmove(const XoMovePacket& mp,Entity* e){
-    if(turn != e){
-        return false;
+    if(logic->ishost()){
+        if(turn != e){
+            return false;
+        }
     }
+    
     uint32_t y = mp.y;
     uint32_t x = mp.x;
     XoGrid* block = NULL;
@@ -17,20 +20,21 @@ bool GameState::processmove(const XoMovePacket& mp,Entity* e){
             break;
         }
     }
-    if(!block){
-        return false;
+    if(logic->ishost()){
+        if(!block){
+            return false;
+        }
+        if(block->occupied){
+            return false;
+        }
     }
-    if(block->occupied){
-        return false;
-    }
-    
-    
-    
-    
-    if(turn == &me){
-        turn = &apponent;
-    }else{
-        turn = &me;
+
+    if(logic->ishost()){
+        if(turn == &me){
+            turn = &apponent;
+        }else{
+            turn = &me;
+        }
     }
     
     return true;
