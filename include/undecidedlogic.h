@@ -56,6 +56,9 @@ public:
     virtual bool ishost(){
         return host;
     }
+    virtual void movebroadcast(uint32_t x, uint32_t y){
+        
+    }
 };
 
 #endif

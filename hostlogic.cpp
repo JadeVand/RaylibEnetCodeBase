@@ -41,7 +41,7 @@ void HostLogic::update(float deltatime){
                     XoMovePacket mp = {0};
                     memcpy(&mp,obj->data,sizeof(XoMovePacket));
                     printf("move-%d:%d\n",mp.x,mp.y);
-                    if(!trymove(mp,gamestate->getapponent())){
+                    if(!trymoveremote(mp,gamestate->getapponent())){
                         //move rejected let them know
                     }else{
                         //move accepted
@@ -94,8 +94,20 @@ void HostLogic::creategamestate(){
     gamestate = std::make_shared<GameState>(1,2);
 }
 //this can probably just be uint32_t x, uint32_t y
-bool HostLogic::trymove(const XoMovePacket& mp,Entity* e){
+//this is called from the network callback
+bool HostLogic::trymoveremote(const XoMovePacket& mp,Entity* e){
     return gamestate->processmove(mp,e);
+}
+//this is called from the level
+void HostLogic::movebroadcast(uint32_t x, uint32_t y){
+    XoMovePacket mp = {0};
+    mp.ph.signature = GAMESIGNATURE;
+    mp.ph.packettype = kMove;
+    mp.x = x;
+    mp.y = y;
+    if(trymoveremote(mp,gamestate->getself())){
+        interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
+    }
 }
 bool HostLogic::ishost(){
     return host;

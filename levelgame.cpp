@@ -13,10 +13,10 @@ void LevelGame::input(){
       //  g->inputcallback(0);
     }
     if(IsMouseButtonPressed(0)){//left mouse click
-        XoMovePacket xo = {0};
-        xo.x = highlightedx;
-        xo.y = highlightedy;
-        
+        std::shared_ptr<GameLogic> locked = logic.lock();
+        if(locked){
+            locked->movebroadcast(highlightedx,highlightedy);
+        }
     }
 }
 void LevelGame::update(){ 

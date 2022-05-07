@@ -40,11 +40,12 @@ public:
         return latestpacket;
     }
      */
-    virtual void send(uint8_t* packet,uint32_t size) = 0;//subject to change
     
     virtual bool needstodraw() = 0;
     
     virtual bool ishost() = 0;
+    
+    virtual void movebroadcast(uint32_t x, uint32_t y) = 0;
 };
 
 #endif

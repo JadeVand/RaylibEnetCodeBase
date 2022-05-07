@@ -14,7 +14,8 @@ public:
     void handlenetforlevel(uint8_t* data,size_t length,int result);
     std::shared_ptr<GameState> getgamestate();
     void creategamestate();
-    bool trymove(const XoMovePacket& mp,Entity* e);
+    bool trymoveremote(const XoMovePacket& mp,Entity* e);
+    void movebroadcast(uint32_t x, uint32_t y);
     bool ishost();
 };
 #endif
