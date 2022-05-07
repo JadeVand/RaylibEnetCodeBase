@@ -4,7 +4,7 @@ Game::Game(int screenWidth,int screenHeight) : nl(this){
     this->screenHeight = screenHeight;
     logic = nl.makeundecidedlogic();
     nl.createnet();
-    stage = std::make_shared<LevelGame>(this,logic);
+    stage = std::make_shared<LevelMenu>(this,logic);
 }
 Game::~Game(){
     

@@ -80,6 +80,7 @@ std::shared_ptr<GameState> ClientLogic::getgamestate(){
 void ClientLogic::creategamestate(){
     gamestate = std::make_shared<GameState>(2,1);
 }
+//this can probably just be uint32_t x, uint32_t y
 bool ClientLogic::trymove(const XoMovePacket& mp,Entity* e){
     return gamestate->processmove(mp,e);
 }

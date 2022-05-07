@@ -13,7 +13,10 @@ void LevelGame::input(){
       //  g->inputcallback(0);
     }
     if(IsMouseButtonPressed(0)){//left mouse click
-
+        XoMovePacket xo = {0};
+        xo.x = highlightedx;
+        xo.y = highlightedy;
+        
     }
 }
 void LevelGame::update(){ 

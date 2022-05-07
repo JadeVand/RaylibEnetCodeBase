@@ -15,5 +15,6 @@ public:
     Entity();
     
     void setxoid(uint32_t xoid);
+    uint32_t getxoid();
 };
 #endif

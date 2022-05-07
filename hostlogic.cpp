@@ -93,6 +93,7 @@ std::shared_ptr<GameState> HostLogic::getgamestate(){
 void HostLogic::creategamestate(){
     gamestate = std::make_shared<GameState>(1,2);
 }
+//this can probably just be uint32_t x, uint32_t y
 bool HostLogic::trymove(const XoMovePacket& mp,Entity* e){
     return gamestate->processmove(mp,e);
 }

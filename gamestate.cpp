@@ -28,7 +28,10 @@ bool GameState::processmove(const XoMovePacket& mp,Entity* e){
             return false;
         }
     }
-
+    
+    block->occupied = true;
+    block->xoid = e->getxoid();
+    
     if(logic->ishost()){
         if(turn == &me){
             turn = &apponent;
