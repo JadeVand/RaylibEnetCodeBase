@@ -16,7 +16,7 @@ void LevelGame::input(){
 
     }
 }
-void LevelGame::update(){
+void LevelGame::update(){ 
     mouseposition = GetMousePosition();
     input();
  

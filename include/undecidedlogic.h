@@ -1,13 +1,14 @@
 #ifndef _undecidedlogic_h
 #define _undecidedlogic_h
-#include <gamelogic.h>
+#include <gamestate.h>
 class UndecidedLogic : public GameLogic{
 protected:
-
+    bool host;
 public:
-    UndecidedLogic(ENetInterface* interface,AbstractGame* game){
+    UndecidedLogic(ENetInterface* interface,AbstractGame* game,bool host){
         this->interface = interface;
         this->game = game;
+        this->host = host;
     }
     virtual void update(float deltatime){
         if(updating){
@@ -52,7 +53,9 @@ public:
     virtual bool needstodraw(){
         return false;
     }
-
+    virtual bool ishost(){
+        return host;
+    }
 };
 
 #endif

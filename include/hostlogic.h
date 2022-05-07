@@ -7,7 +7,7 @@ private:
     bool failedtoconnect;
     std::shared_ptr<GameState> gamestate;
 public:
-    HostLogic(ENetInterface* interface,AbstractGame* game);
+    HostLogic(ENetInterface* interface,AbstractGame* game,bool host);
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
     void send(uint8_t* packet,uint32_t size);
@@ -16,6 +16,7 @@ public:
     std::shared_ptr<GameState> getgamestate();
     void creategamestate();
     bool trymove(const XoMovePacket& mp,Entity* e);
+    bool ishost();
     
 };
 #endif

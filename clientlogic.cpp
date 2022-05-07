@@ -1,6 +1,6 @@
 #include <clientlogic.h>
 
-ClientLogic::ClientLogic(ENetInterface* interface,AbstractGame* game) : UndecidedLogic(interface,game){
+ClientLogic::ClientLogic(ENetInterface* interface,AbstractGame* game,bool host) : UndecidedLogic(interface,game,host){
 
 }
 void ClientLogic::update(float deltatime){
@@ -58,4 +58,10 @@ std::shared_ptr<GameState> ClientLogic::getgamestate(){
 }
 void ClientLogic::creategamestate(){
     gamestate = std::make_shared<GameState>(2,1);
+}
+void ClientLogic::trymove(const XoMovePacket& mp){
+    
+}
+bool ClientLogic::ishost(){
+    return host;
 }

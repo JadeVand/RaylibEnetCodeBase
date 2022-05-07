@@ -6,7 +6,7 @@ class ClientLogic : public UndecidedLogic{
 private:
     std::shared_ptr<GameState> gamestate;
 public:
-    ClientLogic(ENetInterface* interface,AbstractGame* game);
+    ClientLogic(ENetInterface* interface,AbstractGame* game,bool host);
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
     void send(uint8_t* packet,uint32_t size);
@@ -14,5 +14,7 @@ public:
     void handlenetforlevel(uint8_t* data,size_t length,int result);
     std::shared_ptr<GameState> getgamestate();
     void creategamestate();
+    void trymove(const XoMovePacket& mp);
+    bool ishost();
 };
 #endif

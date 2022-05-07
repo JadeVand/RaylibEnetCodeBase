@@ -1,12 +1,15 @@
 #ifndef _gamestate_h
 #define _gamestate_h
-#include <abstractlevel.h>
+
+#include <gamelogic.h>
 enum XoPacketId{
-  kReserved = 5,
+  
     kWin = 1,
     kLose = 2,
     kPause = 3,
     kResume = 4,
+    kReserved = 5,
+    kMove = 6,
 };
 typedef struct SXoMovePacket{
     PacketHeader ph;
@@ -25,6 +28,7 @@ private:
     Entity apponent;
     XoGrid map[9];
     Entity* turn;
+    GameLogic* logic;
 public:
     GameState(uint32_t myxoid, uint32_t apponentxoid);
     /*

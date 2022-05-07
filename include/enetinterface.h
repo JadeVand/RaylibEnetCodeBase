@@ -77,5 +77,7 @@ public:
     void donat(CustomENet* natpeeraddress);
     ~ENetInterface();
     uint16_t assignedport();
+    
+    void sendpacketnetwork(uint8_t* p,size_t length);
 };
 #endif

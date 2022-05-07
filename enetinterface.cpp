@@ -35,16 +35,16 @@ void ENetInterface::createnet(){
 #endif
     ENetAddress lanaddr = {0};
     /*
-    lanaddr.host = ENET_HOST_ANY;
-    lanaddr.port = 0;
+     lanaddr.host = ENET_HOST_ANY;
+     lanaddr.port = 0;
      */
     assert(enet_initialize ()==0);
     c->client = enet_host_create (NULL /* create a client host */,
-                               5 /* only allow 1 outgoing connection */,
-                               2 /* allow up 2 channels to be used, 0 and 1 */,
-                               0 /* assume any amount of incoming bandwidth */,
-                               0 /* assume any amount of outgoing bandwidth */
-                               );
+                                  5 /* only allow 1 outgoing connection */,
+                                  2 /* allow up 2 channels to be used, 0 and 1 */,
+                                  0 /* assume any amount of incoming bandwidth */,
+                                  0 /* assume any amount of outgoing bandwidth */
+                                  );
     assert(c->client);
 }
 bool ENetInterface::dedicatedconnect(uint64_t hn){
@@ -83,7 +83,7 @@ bool ENetInterface::dedicatedconnect(bool ishost){
     enet_address_set_host (& dedicatedaddress, "18.168.115.193");
     dedicatedaddress.port = 8011;
     c->dedicatedpeer = enet_host_connect (c->client, & dedicatedaddress, 2, 0);
-
+    
     if (enet_host_service(c->client, &c->event, 1000) > 0 &&
         c->event.type == ENET_EVENT_TYPE_CONNECT) {
         uint8_t p = 0;
@@ -121,13 +121,13 @@ void ENetInterface::donat(CustomENet* natpeeraddr){
         s.ph.signature = GAMESIGNATURE;
         s.ph.packettype = kNatReserved;
         s.handshake = p;
-            ENetPacket * packet = enet_packet_create (&s,
-                                                      sizeof(s),
-                                                      ENET_PACKET_FLAG_RELIABLE);
-            enet_peer_send (c->natpeer, 0, packet);
-       // enet_host_flush (client);//host)
+        ENetPacket * packet = enet_packet_create (&s,
+                                                  sizeof(s),
+                                                  ENET_PACKET_FLAG_RELIABLE);
+        enet_peer_send (c->natpeer, 0, packet);
+        // enet_host_flush (client);//host)
         ENetEvent ev ;
-
+        
         int r = enet_host_service (c->client, & ev, 1);
         if(r>0){
             if (ev.type == ENET_EVENT_TYPE_RECEIVE){
@@ -158,7 +158,7 @@ void ENetInterface::quecompletion(std::function<void(std::unique_ptr<PacketObjec
             
             std::unique_ptr<PacketObject> packet = std::make_unique<PacketObject>(c->event.packet -> data,c->event.packet -> dataLength);
             callback(std::move(packet));
-             
+            
             enet_packet_destroy (c->event.packet);
         }else if(c->event.type == ENET_EVENT_TYPE_DISCONNECT){
             //Ive been disconnected
@@ -171,9 +171,13 @@ void ENetInterface::quecompletion(std::function<void(std::unique_ptr<PacketObjec
     }else{
         //do nothing
     }
-
+    
 }
-/*
- 
+void ENetInterface::sendpacketnetwork(uint8_t* p,size_t length){
+    ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
+    ENetPacket * packet = enet_packet_create (p,
+                                              length,
+                                              ENET_PACKET_FLAG_RELIABLE);
+    enet_peer_send (c->natpeer, 0, packet);
+}
 
- */

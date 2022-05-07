@@ -1,7 +1,7 @@
 
 #ifndef _gamelogic_h
 #define _gamelogic_h
-#include <gamestate.h>
+#include <abstractlevel.h>
 class GameLogic{
 protected:
     ENetInterface* interface;
@@ -44,7 +44,7 @@ public:
     
     virtual bool needstodraw() = 0;
     
-
+    virtual bool ishost() = 0;
 };
 
 #endif

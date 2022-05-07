@@ -32,6 +32,8 @@ bool GameState::processmove(const XoMovePacket& mp,Entity* e){
     }else{
         turn = &me;
     }
+    
+    return true;
 }
 bool GameState::checkwinner(uint32_t xoid){
     return false;
