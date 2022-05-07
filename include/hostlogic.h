@@ -5,7 +5,7 @@ class HostLogic : public UndecidedLogic{
 private:
     uint64_t hostname;
     bool failedtoconnect;
-    std::shared_ptr<GameState> gamestate;
+    
 public:
     HostLogic(ENetInterface* interface,AbstractGame* game,bool host);
     void update(float deltatime);

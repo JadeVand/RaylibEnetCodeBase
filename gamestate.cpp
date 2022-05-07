@@ -54,3 +54,6 @@ Entity* GameState::getapponent(){
 void GameState::setturn(Entity* t){
     turn = t;
 }
+XoGrid* GameState::getmap(){
+    return map;
+}

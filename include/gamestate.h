@@ -45,5 +45,6 @@ public:
     Entity* getself();
     Entity* getapponent();
     void setturn(Entity* t);
+    XoGrid* getmap();
 };
 #endif

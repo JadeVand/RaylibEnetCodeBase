@@ -4,6 +4,7 @@
 class UndecidedLogic : public GameLogic{
 protected:
     bool host;
+    std::shared_ptr<GameState> gamestate;
 public:
     UndecidedLogic(ENetInterface* interface,AbstractGame* game,bool host){
         this->interface = interface;
@@ -58,6 +59,9 @@ public:
     }
     virtual void movebroadcast(uint32_t x, uint32_t y){
         
+    }
+    virtual std::shared_ptr<GameState> getgamestate() {
+        return gamestate;
     }
 };
 

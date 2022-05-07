@@ -4,7 +4,7 @@
 #include <undecidedlogic.h>
 class ClientLogic : public UndecidedLogic{
 private:
-    std::shared_ptr<GameState> gamestate;
+    
 public:
     ClientLogic(ENetInterface* interface,AbstractGame* game,bool host);
     void update(float deltatime);
