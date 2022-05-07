@@ -39,10 +39,14 @@ void ClientLogic::update(float deltatime){
                     memcpy(&mp,obj->data,sizeof(XoMovePacket));
                     printf("move-%d:%d\n",mp.x,mp.y);
                     if(!trymove(mp,gamestate->getapponent())){
-                        //move rejected let them know
+                        /*
+                         if we were host
+                         here we would call
+                         if(ishost()){
+                         broadcast or reply
+                         }
+                         */
                     }else{
-                        //move accepted
-                        //broadcast if needed
                     }
                 }else{
                     //did someone manipulate the packet? BAD

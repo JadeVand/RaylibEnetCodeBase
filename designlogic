@@ -1,38 +1,12 @@
 
-Main instantiates two classes game and gamelogic
 
-The reason these two need to be created separately is because gamelogic needs to be able to run its updates faster than game
-
-Game takes a pointer to gamelogic and passes the pointer to level classes
-
-When the correct level is created (gamelevel) it will call startlogic on the gamelogic object
-
-Gamelogic will instantiate ENetInterface and handle packet I/O
+HostLogic ClientLogic thoughts:
 
 
+I don't think we need to separate client logic and hostlogic
 
+Rather we can use one separate class called ingamelogic
 
-EDIT:
-Main will instantiate game
-Game will instantiate Gamelogic
-Gamelogic will have a separate method just for updating gamelogicn and nothing else
-This will allow Gamelogic to run its own updates separate from the levels draws / levels update
+Then when we want to decide if and when to broadcast we can use ishost() which gets instantiated by NetLogic and will always choose correctly
 
-
-EDIT: 
-Issue with latter design ,since Gamelogic contains network , this means network will keep getting reset every time game spawns a new logic object
-We need a separate contains which will instantiate the network layer just once but is allowed to spawn new logic objects
-NetLogic class can solve this
-
-
-
-
-ISSUE:
-
-Undecided logic needs to be able to tell the game we're either host or client
-But it doesn't have a pointer to game... so how can we resolve this?
-
-
-			
-
-
+Because right now hostlogic and clientlogic are pretty much doing the exact same thing which is unnecessary to have two classes and just copy and pasting data
