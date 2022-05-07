@@ -78,7 +78,7 @@ std::shared_ptr<GameState> ClientLogic::getgamestate(){
     return gamestate;
 }
 void ClientLogic::creategamestate(){
-    gamestate = std::make_shared<GameState>(2,1);
+    gamestate = std::make_shared<GameState>(this,2,1);
 }
 //this can probably just be uint32_t x, uint32_t y
 //this is called from the network callback

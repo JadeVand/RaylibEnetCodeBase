@@ -30,7 +30,7 @@ private:
     Entity* turn;
     GameLogic* logic;
 public:
-    GameState(uint32_t myxoid, uint32_t apponentxoid);
+    GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid);
     /*
      Processmove gets called from either network during update
      Or from level update

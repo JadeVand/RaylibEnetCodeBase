@@ -1,6 +1,7 @@
 #include <gamestate.h>
 
-GameState::GameState(uint32_t myxoid, uint32_t apponentxoid){
+GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid){
+    this->logic = logic;
     memset(map,0,sizeof(map));
     
 }
