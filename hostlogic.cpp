@@ -3,6 +3,7 @@
 HostLogic::HostLogic(ENetInterface* interface,AbstractGame* game,bool host) : UndecidedLogic(interface,game,host){
     hostname = 0;
     failedtoconnect = false;
+    gamestate = std::make_shared<GameState>(this,1,2);
 }
 
 void HostLogic::update(float deltatime){
@@ -91,7 +92,7 @@ std::shared_ptr<GameState> HostLogic::getgamestate(){
     return gamestate;
 }
 void HostLogic::creategamestate(){
-    gamestate = std::make_shared<GameState>(this,1,2);
+    //gamestate = std::make_shared<GameState>(this,1,2);
 }
 //this can probably just be uint32_t x, uint32_t y
 //this is called from the network callback

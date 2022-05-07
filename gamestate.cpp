@@ -21,10 +21,10 @@ bool GameState::processmove(const XoMovePacket& mp,Entity* e){
             break;
         }
     }
+    if(!block){
+        return false;
+    }
     if(logic->ishost()){
-        if(!block){
-            return false;
-        }
         if(block->occupied){
             return false;
         }

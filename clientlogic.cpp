@@ -1,7 +1,7 @@
 #include <clientlogic.h>
 
 ClientLogic::ClientLogic(ENetInterface* interface,AbstractGame* game,bool host) : UndecidedLogic(interface,game,host){
-
+    gamestate = std::make_shared<GameState>(this,2,1);
 }
 void ClientLogic::update(float deltatime){
 
@@ -78,7 +78,7 @@ std::shared_ptr<GameState> ClientLogic::getgamestate(){
     return gamestate;
 }
 void ClientLogic::creategamestate(){
-    gamestate = std::make_shared<GameState>(this,2,1);
+    
 }
 //this can probably just be uint32_t x, uint32_t y
 //this is called from the network callback
