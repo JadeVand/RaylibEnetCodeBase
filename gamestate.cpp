@@ -1,16 +1,13 @@
 #include <gamestate.h>
 
-GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid){
+GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid) {
     this->logic = logic;
     memset(map,0,sizeof(map));
-    
+    me.setxoid(myxoid);
+    apponent.setxoid(apponentxoid);
 }
 bool GameState::processmove(const XoMovePacket& mp,Entity* e){
-    if(logic->ishost()){
-        if(turn != e){
-            return false;
-        }
-    }
+
     
     uint32_t y = mp.y;
     uint32_t x = mp.x;
@@ -24,23 +21,14 @@ bool GameState::processmove(const XoMovePacket& mp,Entity* e){
     if(!block){
         return false;
     }
-    if(logic->ishost()){
-        if(block->occupied){
-            return false;
-        }
+    if(block->occupied){
+        return false;
     }
     
     block->occupied = true;
     block->xoid = e->getxoid();
     
-    if(logic->ishost()){
-        if(turn == &me){
-            turn = &apponent;
-        }else{
-            turn = &me;
-        }
-    }
-    
+
     return true;
 }
 bool GameState::checkwinner(uint32_t xoid){

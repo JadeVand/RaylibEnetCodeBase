@@ -53,12 +53,12 @@ void LevelGame::draw(){
                 XoGrid* map = state->getmap();
                 for(int n = 0; n < 9 ; ++n){
                     if(map[n].occupied){
-                        int xpos = map[n].x*SQUARE_SIZE+offsetx-100;
-                        int ypos = map[n].y*SQUARE_SIZE+offsety-100;
+                        int xpos = map[n].x*SQUARE_SIZE+offsetx-100+25;
+                        int ypos = map[n].y*SQUARE_SIZE+offsety-100+25;
                         if(map[n].xoid==1){
-                            DrawText("X",xpos,ypos,10,RED);
+                            DrawText("X",xpos,ypos,20,RED);
                         }else{
-                            DrawText("Y",xpos,ypos,10,RED);
+                            DrawText("O",xpos,ypos,20,RED);
                         }
                     }
                 }
