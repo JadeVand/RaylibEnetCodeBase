@@ -30,6 +30,23 @@ void ClientLogic::update(float deltatime){
             }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
                 //We ignore this packet since we're not hosting
                 
+            }else if(header->signature == GAMESIGNATURE &&
+                     header->packettype == kMove){
+                //player client sent move packet
+                
+                if(obj->length>=sizeof(XoMovePacket)){
+                    XoMovePacket mp = {0};
+                    memcpy(&mp,obj->data,sizeof(XoMovePacket));
+                    printf("move-%d:%d\n",mp.x,mp.y);
+                    if(!trymove(mp,gamestate->getapponent())){
+                        //move rejected let them know
+                    }else{
+                        //move accepted
+                        //broadcast if needed
+                    }
+                }else{
+                    //did someone manipulate the packet? BAD
+                }
             }
             
         }
@@ -59,8 +76,8 @@ std::shared_ptr<GameState> ClientLogic::getgamestate(){
 void ClientLogic::creategamestate(){
     gamestate = std::make_shared<GameState>(2,1);
 }
-void ClientLogic::trymove(const XoMovePacket& mp){
-    
+bool ClientLogic::trymove(const XoMovePacket& mp,Entity* e){
+    return gamestate->processmove(mp,e);
 }
 bool ClientLogic::ishost(){
     return host;
