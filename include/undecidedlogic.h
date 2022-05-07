@@ -58,7 +58,7 @@ public:
         return host;
     }
     virtual void movebroadcast(uint32_t x, uint32_t y){
-        
+        printf("move broadcast called:ishost?%d\n",ishost());
     }
     virtual std::shared_ptr<GameState> getgamestate() {
         return gamestate;

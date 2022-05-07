@@ -5,9 +5,18 @@ GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid) {
     memset(map,0,sizeof(map));
     me.setxoid(myxoid);
     apponent.setxoid(apponentxoid);
+    for (int x = 0; x < 3; ++x)
+    {
+        for (int y = 0; y < 3; ++y)
+        {
+            map[3*x + y].x = x;
+            map[3*x + y].y = y;
+        }
+    }
 }
 bool GameState::processmove(const XoMovePacket& mp,Entity* e){
 
+    printf("process move called\n");
     
     uint32_t y = mp.y;
     uint32_t x = mp.x;
@@ -21,6 +30,7 @@ bool GameState::processmove(const XoMovePacket& mp,Entity* e){
     if(!block){
         return false;
     }
+    printf("we got a block\n");
     if(block->occupied){
         return false;
     }

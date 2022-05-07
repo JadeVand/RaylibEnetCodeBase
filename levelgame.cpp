@@ -13,8 +13,10 @@ void LevelGame::input(){
       //  g->inputcallback(0);
     }
     if(IsMouseButtonPressed(0)){//left mouse click
+        printf("xposition:%d\typosition:%d\n",highlightedx,highlightedy);
         std::shared_ptr<GameLogic> locked = logic.lock();
         if(locked){
+            printf("got shared ptr\n");
             locked->movebroadcast(highlightedx,highlightedy);
         }
     }
@@ -39,6 +41,7 @@ void LevelGame::draw(){
                     c = DARKGRAY;
                 }
             }
+            
             DrawRectangleLines(k*SQUARE_SIZE+offsetx-100, i*SQUARE_SIZE+offsety-100, SQUARE_SIZE, SQUARE_SIZE, c);
         }
         

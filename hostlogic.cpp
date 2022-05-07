@@ -101,12 +101,14 @@ bool HostLogic::trymoveremote(const XoMovePacket& mp,Entity* e){
 }
 //this is called from the level
 void HostLogic::movebroadcast(uint32_t x, uint32_t y){
+    UndecidedLogic::movebroadcast(x,y);
     XoMovePacket mp = {0};
     mp.ph.signature = GAMESIGNATURE;
     mp.ph.packettype = kMove;
     mp.x = x;
     mp.y = y;
     if(trymoveremote(mp,gamestate->getself())){
+        printf("called trymovebroadcast\n");
         interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
     }
 }

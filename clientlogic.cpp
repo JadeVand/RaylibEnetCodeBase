@@ -83,16 +83,19 @@ void ClientLogic::creategamestate(){
 //this can probably just be uint32_t x, uint32_t y
 //this is called from the network callback
 bool ClientLogic::trymoveremote(const XoMovePacket& mp,Entity* e){
+    printf("trymoveremote called\n");
     return gamestate->processmove(mp,e);
 }
 //this is called from the level
 void ClientLogic::movebroadcast(uint32_t x, uint32_t y){
+    UndecidedLogic::movebroadcast(x,y);
     XoMovePacket mp = {0};
     mp.ph.signature = GAMESIGNATURE;
     mp.ph.packettype = kMove;
     mp.x = x;
     mp.y = y;
     if(trymoveremote(mp,gamestate->getself())){
+        printf("called trymovebroadcast\n");
         interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
     }
 }
