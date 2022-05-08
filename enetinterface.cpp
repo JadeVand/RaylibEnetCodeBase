@@ -23,6 +23,7 @@ void ENetInterface::destroynet(){
         c->natpeer = NULL;
     }
     enet_host_destroy(c->client);
+    c->client = NULL;
     enet_deinitialize();
     
 }
@@ -104,6 +105,7 @@ bool ENetInterface::dedicatedconnect(bool ishost){
                 p = 1;//premade host
             }else{
                 p = 2;//joining queue
+
             }
             ENetPacket * packet = enet_packet_create (&p,
                                                       sizeof(p),
