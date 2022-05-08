@@ -3,3 +3,10 @@ Maybe create a gamestate interface which has to implement update
 
 CRITICAL:
 Issue with crashing when queue is called repeatedly , hard to debug..
+
+Solved:
+The issue was when I would que up, the matchmaking server would push me into a que ,
+When I would leave, it takes about 10 seconds for the server to remove me from the list
+When I would reque the matchmaking server would match me up with my self because I was already
+In the list, and so I would be stuck hole punching myself
+maybe I should put a cool down to prevetn queing very fast?
