@@ -54,5 +54,6 @@ public:
     void setturn(Entity* t);
     XoGrid* getmap();
     bool isxyvalid(uint32_t x, uint32_t y);
+    void rejectmove(uint32_t x, uint32_t y, uint32_t xoid);
 };
 #endif

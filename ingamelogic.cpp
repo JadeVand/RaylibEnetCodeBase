@@ -56,6 +56,11 @@ void InGameLogic::update(float deltatime){
                 }else{
                     //did someone manipulate the packet? BAD
                 }
+            }else if(header->signature==GAMESIGNATURE&&header->packettype==kRejection){
+                if(dataLength>=sizeof(RejectionMovePacket)){
+                    RejectionMovePacket* rmp = (RejectionMovePacket*)data;
+                    
+                }
             }
             
         }

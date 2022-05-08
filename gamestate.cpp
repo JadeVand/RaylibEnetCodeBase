@@ -45,6 +45,16 @@ bool GameState::processmove(uint32_t x, uint32_t y,Entity* e){
 
     return true;
 }
+void GameState::rejectmove(uint32_t x, uint32_t y, uint32_t xoid){
+    if(!isxyvalid(x,y)){
+        return;
+    }
+    XoGrid* block = NULL;
+    typedef XoGrid map2d[3][3];
+    map2d* dmap = (map2d*)map;
+    block = dmap[x][y];
+    block->xoid = xoid;
+}
 bool GameState::checkwinner(uint32_t xoid){
     return false;
 }
