@@ -164,17 +164,16 @@ void ENetInterface::donat(CustomENet* natpeeraddr){
         }
     }
 }
-void ENetInterface::quecompletion(std::function<void(std::unique_ptr<PacketObject>)> callback,
-                                  std::function<void(void)> errorcallback,uint32_t timeout){
+void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t size)> callback,
+                                                     std::function<void(void)> errorcallback,uint32_t timeout){
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
     ENetEvent event;
     int result = enet_host_service(c->client,&event,timeout);
     
     if(result > 0){
         if(event.type == ENET_EVENT_TYPE_RECEIVE){
-            
-            std::unique_ptr<PacketObject> packet = std::make_unique<PacketObject>(event.packet -> data,event.packet -> dataLength);
-            callback(std::move(packet));
+
+            callback(event.packet -> data, event.packet -> dataLength);
             
             enet_packet_destroy (event.packet);
         }else if(event.type == ENET_EVENT_TYPE_DISCONNECT){

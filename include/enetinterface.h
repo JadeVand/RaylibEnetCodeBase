@@ -70,7 +70,7 @@ public:
     void quecompletion();
     bool dedicatedconnect(uint64_t hostname);
     bool dedicatedconnect(bool ishost);
-    void quecompletion(std::function<void(std::unique_ptr<PacketObject>)> callback,
+    void quecompletion(std::function<void(uint8_t* data,size_t size)> callback,
                        std::function<void(void)> errorcallback,uint32_t timeout);
     void destroynet();
     void createnet();

@@ -8,26 +8,26 @@ InGameLogic::InGameLogic(ENetInterface* interface,AbstractGame* game,bool host) 
 
 void InGameLogic::update(float deltatime){
 
-    auto eventsuccess = [this](std::unique_ptr<PacketObject> obj){
+    auto eventsuccess = [this](uint8_t* data, size_t dataLength){
         
-        if(obj->length>=sizeof(PacketHeader)){
+        if(dataLength>=sizeof(PacketHeader)){
             
-            PacketHeader* header = (PacketHeader*)obj->data;
+            PacketHeader* header = (PacketHeader*)data;
             if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
                 //We ignore this packet since it could be
                 //left over holepunch packets in the stream
             }
             else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
-                HostPacket* hp = (HostPacket*)obj->data;
+                HostPacket* hp = (HostPacket*)data;
                 hostname = hp->hostname;
                 
             }else if(header->signature == GAMESIGNATURE &&
                      header->packettype == kMove){
                 //player client sent move packet
                 
-                if(obj->length>=sizeof(XoMovePacket)){
+                if(dataLength>=sizeof(XoMovePacket)){
                     XoMovePacket mp = {0};
-                    memcpy(&mp,obj->data,sizeof(XoMovePacket));
+                    memcpy(&mp,data,sizeof(XoMovePacket));
                     printf("move-%d:%d\n",mp.x,mp.y);
                     if(!trymoveremote(mp,gamestate->getapponent())){
                         //move rejected let them know

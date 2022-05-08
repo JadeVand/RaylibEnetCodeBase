@@ -6,18 +6,18 @@ OutOfGameLogic::OutOfGameLogic(ENetInterface* interface, AbstractGame* game, boo
     this->host = host;
 }
 void OutOfGameLogic::update(float deltatime){
-    auto eventsuccess = [this](std::unique_ptr<PacketObject> obj){
+    auto eventsuccess = [this](uint8_t* data, size_t dataLength){
         
-        if(obj->length>=sizeof(PacketHeader)){
+        if(dataLength>=sizeof(PacketHeader)){
             
-            PacketHeader* header = (PacketHeader*)obj->data;
+            PacketHeader* header = (PacketHeader*)data;
             if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
                 
             }else if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
                 
                 CustomENet natpeeraddress = {0};
                 CustomENet remote = {0};
-                memcpy(&natpeeraddress,obj->data+sizeof(PacketHeader),sizeof(CustomENet));
+                memcpy(&natpeeraddress,data+sizeof(PacketHeader),sizeof(CustomENet));
                 interface->donat(&natpeeraddress);
                 //NAT COMPLETED
                 
@@ -25,7 +25,7 @@ void OutOfGameLogic::update(float deltatime){
                 game->creategamelevelasunknownlogic();
             }else if(header->signature == NATSIGNATURE && header->packettype == kMatched){
                 
-                MatchPacket* mp = (MatchPacket*)obj->data;
+                MatchPacket* mp = (MatchPacket*)data;
                 CustomENet remoteaddress = {0};
                 memcpy(&remoteaddress,&mp->host,sizeof(CustomENet));
                 interface->donat(&mp->host);
