@@ -21,7 +21,7 @@ void LevelMenu::update(){
 void LevelMenu::draw(){
     
     std::vector<std::string> buffers = {"Host","Join","Queue", "LAN"};
-    for(int i = 0; i < buffers.size();++i){
+    for(size_t i = 0; i < buffers.size();++i){
         Color text = { 130, 130, 130, 255 };
         if(index == i){
             text.r = 230;

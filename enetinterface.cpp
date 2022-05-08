@@ -48,38 +48,48 @@ void ENetInterface::createnet(){
     assert(c->client);
 }
 /*this function can get called repeatidly in case they type the wrong id
-*So we need to make sure whenever it gets called
-*in case a previous state is active we destroy it
-*then generate a new state to connect with
+ *So we need to make sure whenever it gets called
+ *in case a previous state is active we destroy it
+ *then generate a new state to connect with
  */
 bool ENetInterface::dedicatedconnect(uint64_t hn){
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
     
     uint64_t p = hn;
-    printf("dedicatedconnect called\n");
-    ENetAddress dedicatedaddress;
-    enet_address_set_host (& dedicatedaddress, "18.168.115.193");
-    dedicatedaddress.port = 8011;
-    c->dedicatedpeer = enet_host_connect (c->client, & dedicatedaddress, 2, 0);
-    if (enet_host_service(c->client, &c->event, 1000) > 0 &&
-        c->event.type == ENET_EVENT_TYPE_CONNECT) {
-        
+    if(c->dedicatedpeer){
         ENetPacket * packet = enet_packet_create (&p,
                                                   sizeof(p),
                                                   ENET_PACKET_FLAG_RELIABLE);
         
-        enet_peer_send (c->dedicatedpeer, 0, packet);
-        enet_host_flush (c->client);
-        
+        int res = enet_peer_send (c->dedicatedpeer, 0, packet);
+        if(res<0){
+            return false;
+        }
         return true;
-        
-    } else {
-        enet_peer_reset(c->dedicatedpeer);
-        c->dedicatedpeer = NULL;
-        return false;
+    }else{
+        ENetAddress dedicatedaddress;
+        enet_address_set_host (& dedicatedaddress, "18.168.115.193");
+        dedicatedaddress.port = 8011;
+        c->dedicatedpeer = enet_host_connect (c->client, & dedicatedaddress, 2, 0);
+        if (enet_host_service(c->client, &c->event, 1000) > 0 &&
+            c->event.type == ENET_EVENT_TYPE_CONNECT) {
+            ENetPacket * packet = enet_packet_create (&p,
+                                                      sizeof(p),
+                                                      ENET_PACKET_FLAG_RELIABLE);
+            
+            int res = enet_peer_send (c->dedicatedpeer, 0, packet);
+            if(res<0){
+                return false;
+            }
+            return true;
+            
+        } else {
+            enet_peer_reset(c->dedicatedpeer);
+            c->dedicatedpeer = NULL;
+            return false;
+        }
     }
     
-    return false;
 }
 
 bool ENetInterface::dedicatedconnect(bool ishost){

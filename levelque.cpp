@@ -25,7 +25,7 @@ void LevelQue::draw(){
         }else{
             std::vector<std::string> buffers = {"In Queue"};
 
-            for(int i = 0; i < buffers.size();++i){
+            for(size_t i = 0; i < buffers.size();++i){
                 Color text = { 130, 130, 130, 255 };
                 if(index == i){
                     text.r = 230;
