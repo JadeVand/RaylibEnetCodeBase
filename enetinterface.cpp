@@ -4,7 +4,6 @@ typedef struct SENetInterfaceContainerExtended : ENetInterfaceContainer{
     ENetHost* client;
     ENetPeer* dedicatedpeer;
     ENetPeer* natpeer;
-    ENetEvent event;
 }ENetInterfaceContainerExtended;
 ENetInterface::ENetInterface(){
     a = new ENetInterfaceContainerExtended;
@@ -67,12 +66,13 @@ bool ENetInterface::dedicatedconnect(uint64_t hn){
         }
         return true;
     }else{
+        ENetEvent event;
         ENetAddress dedicatedaddress;
         enet_address_set_host (& dedicatedaddress, "18.168.115.193");
         dedicatedaddress.port = 8011;
         c->dedicatedpeer = enet_host_connect (c->client, & dedicatedaddress, 2, 0);
-        if (enet_host_service(c->client, &c->event, 1000) > 0 &&
-            c->event.type == ENET_EVENT_TYPE_CONNECT) {
+        if (enet_host_service(c->client, &event, 1000) > 0 &&
+            event.type == ENET_EVENT_TYPE_CONNECT) {
             ENetPacket * packet = enet_packet_create (&p,
                                                       sizeof(p),
                                                       ENET_PACKET_FLAG_RELIABLE);
@@ -98,9 +98,9 @@ bool ENetInterface::dedicatedconnect(bool ishost){
     enet_address_set_host (& dedicatedaddress, "18.168.115.193");
     dedicatedaddress.port = 8011;
     c->dedicatedpeer = enet_host_connect (c->client, & dedicatedaddress, 2, 0);
-    
-    if (enet_host_service(c->client, &c->event, 1000) > 0 &&
-        c->event.type == ENET_EVENT_TYPE_CONNECT) {
+    ENetEvent event;
+    if (enet_host_service(c->client, &event, 1000) > 0 &&
+        event.type == ENET_EVENT_TYPE_CONNECT) {
         uint8_t p = 0;
         if(ishost){
             p = 1;//premade host
@@ -112,7 +112,6 @@ bool ENetInterface::dedicatedconnect(bool ishost){
                                                   ENET_PACKET_FLAG_RELIABLE);
         
         enet_peer_send (c->dedicatedpeer, 0, packet);
-        enet_host_flush (c->client);
         
         return true;
         
@@ -140,7 +139,6 @@ void ENetInterface::donat(CustomENet* natpeeraddr){
                                                   sizeof(s),
                                                   ENET_PACKET_FLAG_RELIABLE);
         enet_peer_send (c->natpeer, 0, packet);
-        // enet_host_flush (client);//host)
         ENetEvent ev ;
         
         int r = enet_host_service (c->client, & ev, 1);
@@ -167,18 +165,20 @@ void ENetInterface::donat(CustomENet* natpeeraddr){
 void ENetInterface::quecompletion(std::function<void(std::unique_ptr<PacketObject>)> callback,
                                   std::function<void(void)> errorcallback,uint32_t timeout){
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
-    int result = enet_host_service(c->client,&c->event,timeout);
+    ENetEvent event;
+    int result = enet_host_service(c->client,&event,timeout);
+    
     if(result > 0){
-        if(c->event.type == ENET_EVENT_TYPE_RECEIVE){
+        if(event.type == ENET_EVENT_TYPE_RECEIVE){
             
-            std::unique_ptr<PacketObject> packet = std::make_unique<PacketObject>(c->event.packet -> data,c->event.packet -> dataLength);
+            std::unique_ptr<PacketObject> packet = std::make_unique<PacketObject>(event.packet -> data,event.packet -> dataLength);
             callback(std::move(packet));
             
-            enet_packet_destroy (c->event.packet);
-        }else if(c->event.type == ENET_EVENT_TYPE_DISCONNECT){
+            enet_packet_destroy (event.packet);
+        }else if(event.type == ENET_EVENT_TYPE_DISCONNECT){
             //Ive been disconnected
             //Maybe have gamelogic handle this too
-        }else if(c->event.type == ENET_EVENT_TYPE_NONE){
+        }else if(event.type == ENET_EVENT_TYPE_NONE){
             //nothing
         }
     }else if(result < 0){
