@@ -28,7 +28,7 @@ int main(void)
 {
     // Initialization (Note windowTitle is unused on Android)
     //---------------------------------------------------------
-    InitWindow(screenWidth, screenHeight, "Street Ninja");
+    InitWindow(screenWidth, screenHeight, "XO");
 
     InitGame();
     
@@ -72,7 +72,18 @@ void InitGame(void)
 void UpdateGame(void)
 {
     float deltatime = GetFrameTime();
+    /*
+     We can update game input from gamelogic input/update
+     */
+    
+    /*
+     g->update calls the levels' (stage) update which can render and take input
+     */
     g->update();
+    
+    /*
+     g->updategalogic can run separately where this strictly updates the state and checks for input if needed
+     */
     g->updategamelogic(deltatime);
 }
 
@@ -97,7 +108,6 @@ void UnloadGame(void)
 // Update and Draw (one frame)
 void UpdateDrawFrame(void)
 {
-
     UpdateGame();
     DrawGame();
 }
