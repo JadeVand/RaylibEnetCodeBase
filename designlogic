@@ -1,2 +1,5 @@
 
 Maybe create a gamestate interface which has to implement update
+
+CRITICAL:
+Issue with crashing when queue is called repeatedly , hard to debug..
