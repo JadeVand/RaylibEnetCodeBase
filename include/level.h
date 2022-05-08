@@ -1,7 +1,8 @@
 #ifndef _level_h
 #define _level_h
 #include <netlogic.h>
-#include <cstring>
+#include <raylib.h>
+#include <raymath.h>
 class Level : public AbstractLevel{
 protected:
     std::weak_ptr<GameLogic> logic;

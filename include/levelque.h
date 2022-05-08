@@ -2,8 +2,6 @@
 #define _levelque_h
 
 #include <level.h>
-#include <raylib.h>
-#include <raymath.h>
 class LevelQue : public Level{
 private:
     int l;

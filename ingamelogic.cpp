@@ -1,13 +1,13 @@
-#include <clientlogic.h>
+#include <ingamelogic.h>
 
-ClientLogic::ClientLogic(ENetInterface* interface,AbstractGame* game,bool host) : UndecidedLogic(interface,game,host){
-    gamestate = std::make_shared<GameState>(this,2,1);
+InGameLogic::InGameLogic(ENetInterface* interface,AbstractGame* game,bool host) : OutOfGameLogic(interface,game,host){
+    hostname = 0;
+    failedtoconnect = false;
+    gamestate = std::make_shared<GameState>(this,1,2);
 }
-void ClientLogic::update(float deltatime){
 
-    if(updating){
-        
-    }
+void InGameLogic::update(float deltatime){
+
     auto eventsuccess = [this](std::unique_ptr<PacketObject> obj){
         
         if(obj->length>=sizeof(PacketHeader)){
@@ -17,18 +17,9 @@ void ClientLogic::update(float deltatime){
                 //We ignore this packet since it could be
                 //left over holepunch packets in the stream
             }
-            else if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
-                
-                CustomENet natpeeraddress = {0};
-                CustomENet remote = {0};
-                memcpy(&natpeeraddress,obj->data+sizeof(PacketHeader),sizeof(CustomENet));
-                interface->donat(&natpeeraddress);
-                //NAT COMPLETED
-                
-                //BEGIN GAMEPLAY
-                game->creategamelevelascurrentlogic();
-            }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
-                //We ignore this packet since we're not hosting
+            else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
+                HostPacket* hp = (HostPacket*)obj->data;
+                hostname = hp->hostname;
                 
             }else if(header->signature == GAMESIGNATURE &&
                      header->packettype == kMove){
@@ -39,14 +30,10 @@ void ClientLogic::update(float deltatime){
                     memcpy(&mp,obj->data,sizeof(XoMovePacket));
                     printf("move-%d:%d\n",mp.x,mp.y);
                     if(!trymoveremote(mp,gamestate->getapponent())){
-                        /*
-                         if we were host
-                         here we would call
-                         if(ishost()){
-                         broadcast or reply
-                         }
-                         */
+                        //move rejected let them know
                     }else{
+                        //move accepted
+                        //broadcast if needed
                     }
                 }else{
                     //did someone manipulate the packet? BAD
@@ -61,34 +48,43 @@ void ClientLogic::update(float deltatime){
     };
     interface->quecompletion(eventsuccess,eventerror,1);
 }
-
-void ClientLogic::draw(int screenWidth,int screenHeight){
+void InGameLogic::draw(int screenWidth,int screenHeight){
     
+/*
+    if(hostname){
+        ClearBackground(RAYWHITE);
+        std::string hostnamestring = std::to_string(hostname);
+        DrawText(TextFormat("Hostname: %p",hostname),screenWidth/2-150,screenHeight/2,20,RED);
+        DrawText(TextFormat("Give this to your apponent",hostname),screenWidth/2-150,screenHeight/2+30,20,RED);
+    }else if(failedtoconnect){
+        ClearBackground(RAYWHITE);
+        std::string hostnamestring = std::to_string(hostname);
+        DrawText(TextFormat("Unable to connect",hostname),screenWidth/2-100,screenHeight/2,20,RED);
+    }
+    */
 }
-void ClientLogic::send(uint8_t* packet,uint32_t size){
-    
-}
-bool ClientLogic::needstodraw(){
+bool InGameLogic::needstodraw(){
+    if(hostname){
+        return true;
+    }else if(failedtoconnect){
+        return true;
+    }
     return false;
 }
-void ClientLogic::handlenetforlevel(uint8_t* data,size_t length,int result){
-    
-}
-std::shared_ptr<GameState> ClientLogic::getgamestate(){
+
+std::shared_ptr<GameState> InGameLogic::getgamestate(){
     return gamestate;
 }
-void ClientLogic::creategamestate(){
-    
+void InGameLogic::creategamestate(){
+    //gamestate = std::make_shared<GameState>(this,1,2);
 }
 //this can probably just be uint32_t x, uint32_t y
 //this is called from the network callback
-bool ClientLogic::trymoveremote(const XoMovePacket& mp,Entity* e){
-    printf("trymoveremote called\n");
+bool InGameLogic::trymoveremote(const XoMovePacket& mp,Entity* e){
     return gamestate->processmove(mp,e);
 }
 //this is called from the level
-void ClientLogic::movebroadcast(uint32_t x, uint32_t y){
-    UndecidedLogic::movebroadcast(x,y);
+void InGameLogic::movebroadcast(uint32_t x, uint32_t y){
     XoMovePacket mp = {0};
     mp.ph.signature = GAMESIGNATURE;
     mp.ph.packettype = kMove;
@@ -99,6 +95,6 @@ void ClientLogic::movebroadcast(uint32_t x, uint32_t y){
         interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
     }
 }
-bool ClientLogic::ishost(){
+bool InGameLogic::ishost(){
     return host;
 }

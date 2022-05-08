@@ -10,3 +10,9 @@ Rather we can use one separate class called ingamelogic
 Then when we want to decide if and when to broadcast we can use ishost() which gets instantiated by NetLogic and will always choose correctly
 
 Because right now hostlogic and clientlogic are pretty much doing the exact same thing which is unnecessary to have two classes and just copy and pasting data
+
+
+Make two logics OutOfGameLogic InGameLogic
+Both inherit from GameLogic but InGameLogic has GameState and calls update on the gamestate
+
+Maybe create a gamestate interface which has to implement update

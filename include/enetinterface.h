@@ -6,7 +6,8 @@
 #include <functional>
 #include <string>
 #include <memory>
-
+#include <vector>
+#include <cstring>
 enum Pid : uint16_t{
     kInvalidHost = 1,
     kHostname = 2,

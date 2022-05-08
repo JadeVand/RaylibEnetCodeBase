@@ -2,8 +2,8 @@
 Game::Game(int screenWidth,int screenHeight) : nl(this){
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
-    logic = nl.makeundecidedlogic();
     nl.createnet();
+    std::weak_ptr<OutOfGameLogic> logic = nl.makeoutofgamelogicaseither();
     stage = std::make_shared<LevelMenu>(this,logic);
 }
 Game::~Game(){
@@ -20,63 +20,58 @@ void Game::draw(){
 }
 void Game::destroylevel(int action){
     nl.destroynet();
-    logic = nl.makeundecidedlogic();
+    std::weak_ptr<OutOfGameLogic> logic = nl.makeoutofgamelogicaseither();
     stage = std::make_shared<LevelMenu>(this,logic);
     nl.createnet();
 }
 void Game::creategamelevelashostlogic(){
-    logic = nl.makehostlogic();
+    std::weak_ptr<InGameLogic> logic = nl.makeingamelogicashost();
     stage = std::make_shared<LevelGame>(this,logic);
 }
 void Game::creategamelevelasclientlogic(){
-    logic = nl.makeclientlogic();
+    std::weak_ptr<InGameLogic> logic = nl.makeingamelogicasclient();
     stage = std::make_shared<LevelGame>(this,logic);
 }
-void Game::creategamelevelascurrentlogic(){
-    //we already have a logic in place
-    //make a new stage
+void Game::creategamelevelasunknownlogic(){
+    std::weak_ptr<InGameLogic> logic = nl.makeingamelogicaseither();
     stage = std::make_shared<LevelGame>(this,logic);
 }
 void Game::inputcallback(int action){
     switch(action){
         case 0:{
-            logic = nl.makehostlogic();
-            std::shared_ptr<GameLogic> locked = logic.lock();
+            std::weak_ptr<OutOfGameLogic> logic = nl.makeoutofgamelogicashost();
+            std::shared_ptr<OutOfGameLogic> locked = logic.lock();
             if(locked){
-                if(locked->host()){
+                if(locked->hostgame()){
                     stage = std::make_shared<LevelHost>(this,logic);
                 }
             }
-            
             
         }
             
             break;
         case 1:{
-            logic = nl.makeclientlogic();
-            std::shared_ptr<GameLogic> locked = logic.lock();
-            if(locked){
-                //locked->join(false);
-            }
+            std::weak_ptr<OutOfGameLogic> logic = nl.makeoutofgamelogicasclient();
             stage = std::make_shared<LevelJoin>(this,logic);
         }
             
             break;
         case 2:{
-            logic = nl.makeundecidedlogic();
-            std::shared_ptr<GameLogic> locked = logic.lock();
+            std::weak_ptr<OutOfGameLogic> logic = nl.makeoutofgamelogicaseither();
+            std::shared_ptr<OutOfGameLogic> locked = logic.lock();
             if(locked){
                 if(locked->que()){
                     stage = std::make_shared<LevelQue>(this,logic);
                 }
             }
-            
         }
             
             break;
         case 3:{//lan player
+            /*
             logic = nl.makeundecidedlogic();
             stage = std::make_shared<LevelQue>(this,logic);
+             */
         }
             break;
         default:

@@ -24,9 +24,11 @@ void LevelJoin::input(){
         if(uhostname!=0){
             std::shared_ptr<GameLogic> locked = logic.lock();
             if(locked){
-                locked->join(uhostname);
+                std::shared_ptr<InGameLogic> igl = std::dynamic_pointer_cast<InGameLogic>(igl);
+                if(igl){
+                    igl->join(uhostname);
+                }
             }
-            
         }
     }
     else if(IsKeyReleased(KEY_BACKSPACE)){

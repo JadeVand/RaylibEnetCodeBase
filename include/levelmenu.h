@@ -2,8 +2,6 @@
 #define _levelmenu_h
 
 #include <level.h>
-#include <raylib.h>
-#include <raymath.h>
 class LevelMenu : public Level{
 private:
     int index;

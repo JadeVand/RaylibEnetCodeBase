@@ -2,8 +2,7 @@
 #define _levelhost_h
 
 #include <level.h>
-#include <raylib.h>
-#include <raymath.h>
+
 class LevelHost : public Level{
 private:
     int l;
