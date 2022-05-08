@@ -15,6 +15,7 @@ public:
     std::shared_ptr<GameState> getgamestate();
     void creategamestate();
     bool trymoveremote(uint32_t x, uint32_t y,Entity* e);
+    bool trymovelocal(uint32_t x, uint32_t y,Entity* e);
     void movebroadcast(uint32_t x, uint32_t y);
     bool ishost();
     

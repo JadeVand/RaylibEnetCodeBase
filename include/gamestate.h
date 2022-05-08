@@ -10,6 +10,7 @@ enum XoPacketId{
     kResume = 4,
     kReserved = 5,
     kMove = 6,
+    kRejection = 7,
 };
 typedef struct SXoMovePacket{
     PacketHeader ph;
@@ -22,6 +23,12 @@ typedef struct SXoGrid{
     bool occupied;
     uint32_t xoid;
 }XoGrid;
+typedef struct SRejectMovePacket{
+    PacketHeader ph;
+    uint32_t x;
+    uint32_t y;
+    uint64_t xoid;
+}RejectionMovePacket;
 class GameState{
 private:
     Entity me;
@@ -46,5 +53,6 @@ public:
     Entity* getapponent();
     void setturn(Entity* t);
     XoGrid* getmap();
+    bool isxyvalid(uint32_t x, uint32_t y);
 };
 #endif

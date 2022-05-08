@@ -10,3 +10,26 @@ When I would leave, it takes about 10 seconds for the server to remove me from t
 When I would reque the matchmaking server would match me up with my self because I was already
 In the list, and so I would be stuck hole punching myself
 maybe I should put a cool down to prevetn queing very fast?
+
+
+
+
+Rollback logic
+our simulation
+frames:
+27:[peer input: null][my input: x]
+28:[peer input: null][my input: y]
+29:[peer input: null][my input: z]
+
+frame arrives
+27:[peer input: x]
+
+correction:
+rollback to frame 27:
+27:[peer input: x][my input: x]
+prediction they'll still keep pressing x
+28:[peer x: null][my input: y]
+29:[peer x: null][my input: z]
+
+draw is called:
+draw(frame==29)

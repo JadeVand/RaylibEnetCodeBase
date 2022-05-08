@@ -31,10 +31,22 @@ void InGameLogic::update(float deltatime){
                 //player client sent move packet
                 
                 if(dataLength>=sizeof(XoMovePacket)){
-                    XoMovePacket mp = {0};
-                    printf("move-%d:%d\n",mp.x,mp.y);
-                    if(!trymoveremote(mp.x,mp.y,gamestate->getapponent())){
+                    XoMovePacket* mp = (XoMovePacket*)data;
+                    if(!trymoveremote(mp->x,mp->y,gamestate->getapponent())){
                         //move rejected let them know
+                        RejectionMovePacket rmp = {0};
+                        
+                        if(gamestate->isxyvalid(mp->x,mp->y)){
+                            rmp.ph.signature = GAMESIGNATURE;
+                            rmp.ph.packettype = kRejection;
+                            rmp.x = mp->x;
+                            rmp.y = mp->y;
+                            typedef XoGrid map2d[3][3];
+                            
+                            XoGrid* map = gamestate->getmap();
+                            map2d* dmap = (map2d*)map;
+                            rmp.xoid =  dmap[mp->x][mp->y]->xoid;
+                        }
                     }else{
                         //move accepted
                         //broadcast if needed
@@ -85,6 +97,15 @@ void InGameLogic::creategamestate(){
 //this can probably just be uint32_t x, uint32_t y
 //this is called from the network callback
 bool InGameLogic::trymoveremote(uint32_t x, uint32_t y,Entity* e){
+    
+    if(!gamestate->processmove(x,y,e)){
+        //send a rejection
+        return false;
+    }
+    return true;
+}
+
+bool InGameLogic::trymovelocal(uint32_t x, uint32_t y,Entity* e){
     return gamestate->processmove(x,y,e);
 }
 //this is called from the level
@@ -96,7 +117,7 @@ void InGameLogic::movebroadcast(uint32_t x, uint32_t y){
     mp.x = x;
     mp.y = y;
      
-    if(trymoveremote(x,y,gamestate->getself())){
+    if(trymovelocal(x,y,gamestate->getself())){
         printf("called trymovebroadcast\n");
         interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
     }

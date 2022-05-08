@@ -5,6 +5,7 @@ GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid) {
     memset(map,0,sizeof(map));
     me.setxoid(myxoid);
     apponent.setxoid(apponentxoid);
+
     for (int x = 0; x < 3; ++x)
     {
         for (int y = 0; y < 3; ++y)
@@ -14,21 +15,26 @@ GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid) {
         }
     }
 }
+bool GameState::isxyvalid(uint32_t x, uint32_t y){
+    if(x>2||y>2){//this check might result in a crash at some point bceause maybe x and y can be less than 0? idk
+        return false;
+    }
+    return true;
+}
 bool GameState::processmove(uint32_t x, uint32_t y,Entity* e){
 
-    printf("process move called\n");
+    
 
     XoGrid* block = NULL;
-    for(int n = 0; n < 9; ++n){
-        if(map[n].x==x && map[n].y==y){
-            block = &map[n];
-            break;
-        }
+    if(!isxyvalid(x,y)){
+        return false;
     }
+    typedef XoGrid map2d[3][3];
+    map2d* dmap = (map2d*)map;
+    block = dmap[x][y];
     if(!block){
         return false;
     }
-    printf("we got a block\n");
     if(block->occupied){
         return false;
     }
