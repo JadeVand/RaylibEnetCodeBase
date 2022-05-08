@@ -13,7 +13,7 @@ std::weak_ptr<InGameLogic> NetLogic::makeingamelogicasclient(){
 }
 std::weak_ptr<InGameLogic> NetLogic::makeingamelogicaseither(){
     /*this check should always pass so maybe do assert here?
-    /*because this function can not get called unless a previous logic was established
+    *because this function can not get called unless a previous logic was established
      */
     if(logic){
         if(logic->ishost()){
