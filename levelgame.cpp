@@ -13,12 +13,9 @@ void LevelGame::input(){
       //  g->inputcallback(0);
     }
     if(IsMouseButtonPressed(0)){//left mouse click
-        printf("xposition:%d\typosition:%d\n",highlightedx,highlightedy);
         std::shared_ptr<GameLogic> locked = logic.lock();
         if(locked){
-            printf("%p\n",locked.get());
             std::shared_ptr<InGameLogic> igl = std::dynamic_pointer_cast<InGameLogic>(locked);
-            printf("%p\n",igl.get());
             igl->movebroadcast(highlightedx,highlightedy);
         }
     }

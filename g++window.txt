@@ -1,0 +1,1 @@
+g++ *.cpp -O3 -Wall -o main -Iinclude -Iexternal/raylib/gcc -Lexternal/raylib/gcc/lib -Iexternal/enet/include -Lexternal/enet/lib -lraylib -lgdi32 -lenet64 -lWS2_32 -lWinmm

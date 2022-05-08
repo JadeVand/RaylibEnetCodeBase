@@ -150,7 +150,10 @@ void ENetInterface::donat(CustomENet* natpeeraddr){
                     PacketHeader* header = (PacketHeader*)ev.packet -> data;
                     if(header->signature == GAMESIGNATURE && header->packettype == kNatReserved){
                         NATPacket* natp = (NATPacket*)ev.packet -> data;
-                        p = 0xAD;
+                        if(p==0){
+                            p = 0xAD;
+                        }
+                        
                         if(natp->handshake == 0xAD){
                             p = 0xBC;
                         }else if(natp->handshake == 0xBC){

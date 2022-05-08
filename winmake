@@ -1,1 +1,0 @@
-g++ main.cpp levelque.cpp levelmenu.cpp leveljoin.cpp levelhost.cpp levelgame.cpp hostlogic.cpp game.cpp entity.cpp enetinterface.cpp clientlogic.cpp -I../raylib/raylib -I../enet -L../raylib/lib -L../enet/lib -lraylib -lenet64 -Iinclude
