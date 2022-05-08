@@ -40,7 +40,7 @@ public:
      If level update calls it, then it passes selfentityh
      if network update calls it then it passes apponententity
      */
-    bool processmove(const XoMovePacket& mp,Entity* e);
+    bool processmove(uint32_t x, uint32_t y,Entity* e);
     bool checkwinner(uint32_t xoid);
     Entity* getself();
     Entity* getapponent();

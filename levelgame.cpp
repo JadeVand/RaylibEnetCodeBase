@@ -16,9 +16,9 @@ void LevelGame::input(){
         printf("xposition:%d\typosition:%d\n",highlightedx,highlightedy);
         std::shared_ptr<GameLogic> locked = logic.lock();
         if(locked){
-            
-            std::shared_ptr<InGameLogic> igl = std::dynamic_pointer_cast<InGameLogic>(igl);
-            printf("got shared ptr\n");
+            printf("%p\n",locked.get());
+            std::shared_ptr<InGameLogic> igl = std::dynamic_pointer_cast<InGameLogic>(locked);
+            printf("%p\n",igl.get());
             igl->movebroadcast(highlightedx,highlightedy);
         }
     }

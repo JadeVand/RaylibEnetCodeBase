@@ -3,7 +3,12 @@
 InGameLogic::InGameLogic(ENetInterface* interface,AbstractGame* game,bool host) : OutOfGameLogic(interface,game,host){
     hostname = 0;
     failedtoconnect = false;
-    gamestate = std::make_shared<GameState>(this,1,2);
+    if(host){
+        gamestate = std::make_shared<GameState>(this,1,2);
+    }else{
+        gamestate = std::make_shared<GameState>(this,2,1);
+    }
+    
 }
 
 void InGameLogic::update(float deltatime){
@@ -27,9 +32,8 @@ void InGameLogic::update(float deltatime){
                 
                 if(dataLength>=sizeof(XoMovePacket)){
                     XoMovePacket mp = {0};
-                    memcpy(&mp,data,sizeof(XoMovePacket));
                     printf("move-%d:%d\n",mp.x,mp.y);
-                    if(!trymoveremote(mp,gamestate->getapponent())){
+                    if(!trymoveremote(mp.x,mp.y,gamestate->getapponent())){
                         //move rejected let them know
                     }else{
                         //move accepted
@@ -80,17 +84,19 @@ void InGameLogic::creategamestate(){
 }
 //this can probably just be uint32_t x, uint32_t y
 //this is called from the network callback
-bool InGameLogic::trymoveremote(const XoMovePacket& mp,Entity* e){
-    return gamestate->processmove(mp,e);
+bool InGameLogic::trymoveremote(uint32_t x, uint32_t y,Entity* e){
+    return gamestate->processmove(x,y,e);
 }
 //this is called from the level
 void InGameLogic::movebroadcast(uint32_t x, uint32_t y){
+    
     XoMovePacket mp = {0};
     mp.ph.signature = GAMESIGNATURE;
     mp.ph.packettype = kMove;
     mp.x = x;
     mp.y = y;
-    if(trymoveremote(mp,gamestate->getself())){
+     
+    if(trymoveremote(x,y,gamestate->getself())){
         printf("called trymovebroadcast\n");
         interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
     }

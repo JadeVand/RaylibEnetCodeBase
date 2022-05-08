@@ -14,12 +14,10 @@ GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid) {
         }
     }
 }
-bool GameState::processmove(const XoMovePacket& mp,Entity* e){
+bool GameState::processmove(uint32_t x, uint32_t y,Entity* e){
 
     printf("process move called\n");
-    
-    uint32_t y = mp.y;
-    uint32_t x = mp.x;
+
     XoGrid* block = NULL;
     for(int n = 0; n < 9; ++n){
         if(map[n].x==x && map[n].y==y){
