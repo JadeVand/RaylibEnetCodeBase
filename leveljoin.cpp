@@ -13,20 +13,19 @@ void LevelJoin::input(){
     if(IsKeyReleased(KEY_ESCAPE)){
         g->destroylevel(0);
     }
-    if(IsKeyPressed(KEY_ENTER)){
+    if(IsKeyReleased(KEY_ENTER)){
         uint64_t uhostname = 0;
         try{
             uhostname = std::stoull(hostnamebuffer,nullptr,16);
         }
         catch(std::invalid_argument& e){
-            
         }
         if(uhostname!=0){
             std::shared_ptr<GameLogic> locked = logic.lock();
             if(locked){
-                std::shared_ptr<InGameLogic> igl = std::dynamic_pointer_cast<InGameLogic>(igl);
-                if(igl){
-                    igl->join(uhostname);
+                std::shared_ptr<OutOfGameLogic> ogl = std::dynamic_pointer_cast<OutOfGameLogic>(locked);
+                if(ogl){
+                    ogl->join(uhostname);
                 }
             }
         }

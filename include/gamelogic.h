@@ -26,6 +26,7 @@ public:
     
     virtual bool ishost() = 0;
 
+    
 };
 
 #endif

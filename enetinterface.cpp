@@ -56,7 +56,7 @@ bool ENetInterface::dedicatedconnect(uint64_t hn){
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
     
     uint64_t p = hn;
-    
+    printf("dedicatedconnect called\n");
     ENetAddress dedicatedaddress;
     enet_address_set_host (& dedicatedaddress, "18.168.115.193");
     dedicatedaddress.port = 8011;
