@@ -46,6 +46,8 @@ void InGameLogic::update(float deltatime){
                             XoGrid* map = gamestate->getmap();
                             map2d* dmap = (map2d*)map;
                             rmp.xoid =  dmap[mp->x][mp->y]->xoid;
+                            
+                            interface->sendpacketnetwork((uint8_t*)&rmp,sizeof(RejectionMovePacket));
                         }
                     }else{
                         //move accepted
