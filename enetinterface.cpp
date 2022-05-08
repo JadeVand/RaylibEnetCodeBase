@@ -47,6 +47,11 @@ void ENetInterface::createnet(){
                                   );
     assert(c->client);
 }
+/*this function can get called repeatidly in case they type the wrong id
+*So we need to make sure whenever it gets called
+*in case a previous state is active we destroy it
+*then generate a new state to connect with
+ */
 bool ENetInterface::dedicatedconnect(uint64_t hn){
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
     
