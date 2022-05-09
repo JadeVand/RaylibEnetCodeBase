@@ -77,8 +77,17 @@ std::shared_ptr<GameState> InGameLogic::getgamestate(){
 void InGameLogic::creategamestate(){
     //gamestate = std::make_shared<GameState>(this,1,2);
 }
+bool InGameLogic::processwinner(){
+    return false;
+}
 bool InGameLogic::processmove(uint32_t x, uint32_t y,Entity* e){
-    return gamestate->processmove(x,y,e);
+    if(gamestate->processmove(x,y,e)){
+        ////
+        ///Check win logic here
+        gamestate->swapturn();
+        return true;
+    }
+    return false;
 }
 bool InGameLogic::processmovelocal(uint32_t x, uint32_t y){
     XoMovePacket mp = {0};

@@ -59,5 +59,6 @@ public:
     void rejectmove(uint32_t x, uint32_t y, uint32_t xoid);
     uint32_t getidforxy(uint32_t x,uint32_t y);
     bool isoccupied(uint32_t x, uint32_t y);
+    void swapturn();
 };
 #endif

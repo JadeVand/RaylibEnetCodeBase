@@ -17,7 +17,7 @@ public:
     bool processmove(uint32_t x, uint32_t y,Entity* e);
     bool processmovelocal(uint32_t x, uint32_t y);
     bool ishost();
-    
+    bool processwinner();
     
 };
 #endif

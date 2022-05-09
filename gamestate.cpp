@@ -23,6 +23,9 @@ bool GameState::isxyvalid(uint32_t x, uint32_t y){
 bool GameState::processmove(uint32_t x, uint32_t y,Entity* e){
 
 
+    if(turn!=e){
+        return false;
+    }
     XoGrid* block = NULL;
     if(!isxyvalid(x,y)){
         return false;
@@ -40,6 +43,13 @@ bool GameState::processmove(uint32_t x, uint32_t y,Entity* e){
     
 
     return true;
+}
+void GameState::swapturn(){
+    if(turn==&me){
+        turn = &apponent;
+    }else{
+        turn = &me;
+    }
 }
 void GameState::rejectmove(uint32_t x, uint32_t y, uint32_t xoid){
     if(!isxyvalid(x,y)){
