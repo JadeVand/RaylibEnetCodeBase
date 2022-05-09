@@ -47,41 +47,48 @@ void ENetInterface::createnet(){
                                   );
     assert(c->client);
 }
-/*this function can get called repeatidly in case they type the wrong id
- *So we need to make sure whenever it gets called
- *in case a previous state is active we destroy it
- *then generate a new state to connect with
- */
+
 bool ENetInterface::dedicatedconnect(uint64_t hn){
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
-    ENetAddress dedicatedaddress;
-    enet_address_set_host (& dedicatedaddress, "18.168.115.193");
-    dedicatedaddress.port = 8011;
-    c->dedicatedpeer = enet_host_connect (c->client, & dedicatedaddress, 2, 0);
-    if(!c->dedicatedpeer){
-        
-        return false;
-    }
-    ENetEvent event;
+    uint64_t p = hn;
     bool ret = true;
-    int result = enet_host_service(c->client, &event, 1000) ;
-    if(result > 0){
-        if(event.type == ENET_EVENT_TYPE_CONNECT){
-            uint64_t p = hn;
-            ENetPacket * packet = enet_packet_create (&p,
-                                                      sizeof(p),
-                                                      ENET_PACKET_FLAG_RELIABLE);
-            
-            int sr = enet_peer_send (c->dedicatedpeer, 0, packet);
-            if(sr != 0){
-                ret = false;
-            }
+    if(c->dedicatedpeer){
+        
+        ENetPacket * packet = enet_packet_create (&p,
+                                                  sizeof(p),
+                                                  ENET_PACKET_FLAG_RELIABLE);
+        
+        int res = enet_peer_send (c->dedicatedpeer, 0, packet);
+        if(res<0){
+            ret = false;
         }
     }else{
-        enet_peer_reset(c->dedicatedpeer);
-        c->dedicatedpeer = NULL;
-        ret = false;
+        
+        ENetAddress dedicatedaddress;
+        enet_address_set_host (& dedicatedaddress, "18.168.115.193");
+        dedicatedaddress.port = 8011;
+        c->dedicatedpeer = enet_host_connect (c->client, & dedicatedaddress, 2, 0);
+        ENetEvent event;
+        int result = enet_host_service(c->client, &event, 1000) ;
+        if(result > 0){
+            if(event.type == ENET_EVENT_TYPE_CONNECT){
+                
+                ENetPacket * packet = enet_packet_create (&p,
+                                                          sizeof(p),
+                                                          ENET_PACKET_FLAG_RELIABLE);
+                
+                int sr = enet_peer_send (c->dedicatedpeer, 0, packet);
+                if(sr != 0){
+                    ret = false;
+                }
+            }
+        }else{
+            enet_peer_reset(c->dedicatedpeer);
+            c->dedicatedpeer = NULL;
+            ret = false;
+        }
     }
+    
     return ret;
 }
 
@@ -105,7 +112,7 @@ bool ENetInterface::dedicatedconnect(bool ishost){
                 p = 1;//premade host
             }else{
                 p = 2;//joining queue
-
+                
             }
             ENetPacket * packet = enet_packet_create (&p,
                                                       sizeof(p),
@@ -166,14 +173,14 @@ void ENetInterface::donat(CustomENet* natpeeraddr){
     }
 }
 void ENetInterface::quecompletion(std::function<void(uint8_t* data,size_t size)> callback,
-                                                     std::function<void(void)> errorcallback,uint32_t timeout){
+                                  std::function<void(void)> errorcallback,uint32_t timeout){
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
     ENetEvent event;
     int result = enet_host_service(c->client,&event,timeout);
     
     if(result > 0){
         if(event.type == ENET_EVENT_TYPE_RECEIVE){
-
+            
             callback(event.packet -> data, event.packet -> dataLength);
             
             enet_packet_destroy (event.packet);

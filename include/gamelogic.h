@@ -27,7 +27,7 @@ public:
     
     virtual uint16_t getstatusforgameplay() = 0;
 
-    
+    virtual uint64_t gethostname() = 0;
 };
 
 #endif

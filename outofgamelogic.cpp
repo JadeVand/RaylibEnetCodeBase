@@ -5,6 +5,7 @@ OutOfGameLogic::OutOfGameLogic(ENetInterface* interface, AbstractGame* game, boo
     this->game = game;
     this->host = host;
     mms = kMatchMakingStatusNone;
+    hostname = 0;
 }
 void OutOfGameLogic::update(float deltatime){
     auto eventsuccess = [this](uint8_t* data, size_t dataLength){
@@ -40,14 +41,20 @@ void OutOfGameLogic::update(float deltatime){
                 }
             }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
                 HostPacket* hp = (HostPacket*)data;
+                if(dataLength>=sizeof(HostPacket)){
+                    hostname = hp->hostname;
+                    mms = kMatchMakingStatusHostName;
+                }
                 
-                
+            }else if(header->signature == NATSIGNATURE && header->packettype == kBadHostName){
+                mms = kMatchMakingStatusBadHostName;
+                printf("bad hostname\n");
             }
         }
         
     };
     auto eventerror = [this](void){
-        printf("error\n");
+
     };
     interface->quecompletion(eventsuccess,eventerror,1);
      
@@ -71,3 +78,6 @@ uint16_t OutOfGameLogic::getstatusforgameplay(){
     return mms;
 }
 
+uint64_t OutOfGameLogic::gethostname(){
+    return hostname;
+}

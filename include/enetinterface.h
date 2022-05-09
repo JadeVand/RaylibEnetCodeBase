@@ -15,6 +15,7 @@ enum Pid : uint16_t{
     kHostname = 2,
     kPeerId = 3,
     kMatched = 4,
+    kBadHostName = 5,
 };
 enum GamePid : uint16_t{
     
