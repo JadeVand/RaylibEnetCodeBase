@@ -59,6 +59,7 @@ bool ENetInterface::dedicatedconnect(uint64_t hn){
     dedicatedaddress.port = 8011;
     c->dedicatedpeer = enet_host_connect (c->client, & dedicatedaddress, 2, 0);
     if(!c->dedicatedpeer){
+        
         return false;
     }
     ENetEvent event;
@@ -76,8 +77,6 @@ bool ENetInterface::dedicatedconnect(uint64_t hn){
                 ret = false;
             }
         }
-    }else if(result == 0){
-        
     }else{
         enet_peer_reset(c->dedicatedpeer);
         c->dedicatedpeer = NULL;
@@ -87,6 +86,7 @@ bool ENetInterface::dedicatedconnect(uint64_t hn){
 }
 
 bool ENetInterface::dedicatedconnect(bool ishost){
+    
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
     ENetAddress dedicatedaddress;
     enet_address_set_host (& dedicatedaddress, "18.168.115.193");
@@ -116,8 +116,6 @@ bool ENetInterface::dedicatedconnect(bool ishost){
                 ret = false;
             }
         }
-    }else if(result == 0){
-        
     }else{
         enet_peer_reset(c->dedicatedpeer);
         c->dedicatedpeer = NULL;

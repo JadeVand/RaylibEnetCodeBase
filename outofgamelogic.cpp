@@ -42,7 +42,7 @@ void OutOfGameLogic::update(float deltatime){
         
     };
     auto eventerror = [this](void){
-        
+        printf("error\n");
     };
     interface->quecompletion(eventsuccess,eventerror,1);
      
