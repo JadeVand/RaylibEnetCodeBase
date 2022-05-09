@@ -7,6 +7,7 @@ LevelJoin::LevelJoin(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(log
     index = 0;
     memset(hostnamebuffer,0,sizeof(hostnamebuffer));
     charindex = 0;
+    displaytick = 0;
 }
 void LevelJoin::input(){
     std::string hostnamestring(hostnamebuffer);
@@ -25,7 +26,9 @@ void LevelJoin::input(){
             if(locked){
                 std::shared_ptr<OutOfGameLogic> ogl = std::dynamic_pointer_cast<OutOfGameLogic>(locked);
                 if(ogl){
-                    ogl->join(uhostname);
+                    if(!ogl->join(uhostname)){
+                        displaytick = getmstimeu64();
+                    }
                 }
             }
         }
@@ -71,6 +74,11 @@ void LevelJoin::draw(){
         }
     }
     DrawText((char*)hostnamebuffer, g->getscreenwidth()/2+(-1*offset*5) , g->getscreenheight()/2+50 ,20, BLACK);
+    uint64_t now = getmstimeu64();
+    if(now-displaytick<5000){
+        int offset = g->getscreenwidth()/2-150;
+        DrawText("Failed to connect try again in a bit",offset,200,20,DARKGRAY);
+    }
 }
 int LevelJoin::getlevel(){
     return l;

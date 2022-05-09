@@ -8,6 +8,8 @@
 #include <memory>
 #include <vector>
 #include <cstring>
+#include <chrono>
+uint64_t getmstimeu64();
 enum Pid : uint16_t{
     kInvalidHost = 1,
     kHostname = 2,

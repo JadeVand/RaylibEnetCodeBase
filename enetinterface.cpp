@@ -198,3 +198,12 @@ void ENetInterface::sendpacketnetwork(uint8_t* p,size_t length){
     enet_peer_send (c->natpeer, 0, packet);
 }
 
+uint64_t getmstimeu64(){
+    auto now = std::chrono::system_clock::now();
+    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+    auto epoch = now_ms.time_since_epoch();
+    auto value = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
+    uint64_t duration = value.count();
+    
+    return duration;
+}

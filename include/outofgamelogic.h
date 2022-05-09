@@ -13,6 +13,7 @@ protected:
     AbstractGame* game;
     bool host;
     MatchmakingStatus mms;
+    
 public:
     OutOfGameLogic(ENetInterface* interface,AbstractGame* game,bool host);
     virtual void update(float deltatime);

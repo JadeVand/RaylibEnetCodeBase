@@ -5,6 +5,7 @@ Game::Game(int screenWidth,int screenHeight) : nl(this){
     nl.createnet();
     std::weak_ptr<OutOfGameLogic> logic = nl.makeoutofgamelogicaseither();
     stage = std::make_shared<LevelMenu>(this,logic);
+    displaytick = 0;
 }
 Game::~Game(){
     
@@ -14,9 +15,18 @@ void Game::updategamelogic(float deltatime){
 }
 void Game::update(){
     stage->update();
+    
 }
 void Game::draw(){
+    
     stage->draw();
+    
+    uint64_t now = getmstimeu64();
+    if(now-displaytick<5000){
+        int offset = screenWidth/2-150;
+        DrawText("Failed to connect try again in a bit",offset,200,20,DARKGRAY);
+    }
+
 }
 void Game::destroylevel(int action){
     nl.destroynet();
@@ -46,7 +56,11 @@ void Game::inputcallback(int action){
             std::shared_ptr<OutOfGameLogic> locked = logic.lock();
             if(locked){
                 if(locked->hostgame()){
+                    displaytick = 0;
                     stage = std::make_shared<LevelHost>(this,logic);
+                }else{
+                    
+                    displaytick = getmstimeu64();
                 }
             }
             
@@ -55,7 +69,9 @@ void Game::inputcallback(int action){
             break;
         case 1:{
             std::weak_ptr<OutOfGameLogic> logic = nl.makeoutofgamelogicasclient();
+            displaytick = 0;
             stage = std::make_shared<LevelJoin>(this,logic);
+            
         }
             
             break;
@@ -64,7 +80,10 @@ void Game::inputcallback(int action){
             std::shared_ptr<OutOfGameLogic> locked = logic.lock();
             if(locked){
                 if(locked->que()){
+                    displaytick = 0;
                     stage = std::make_shared<LevelQue>(this,logic);
+                }else{
+                    displaytick = getmstimeu64();
                 }
             }
         }
@@ -87,4 +106,5 @@ int Game::getscreenwidth(){
 int Game::getscreenheight(){
     return screenHeight;
 }
+
 

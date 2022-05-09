@@ -5,12 +5,17 @@
 #include <leveljoin.h>
 #include <levelhost.h>
 #include <levelque.h>
+#include <chrono>
+#include <ctime>
+
+#define MAX_FAILURE_DISPLAY_TIME 1000
 class Game : public AbstractGame{
 private:
     std::shared_ptr<Level> stage;
     int screenWidth;
     int screenHeight;
     NetLogic nl;
+    uint64_t displaytick;
 public:
     Game(int screenWidth,int screenHeight);
     ~Game();
