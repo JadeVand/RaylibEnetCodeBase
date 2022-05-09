@@ -112,6 +112,7 @@ bool InGameLogic::ishost(){
 bool InGameLogic::isprocessing(){
     return processing;
 }
-StopProcessingState InGameLogic::getprocestate(){
+
+uint16_t InGameLogic::getstatusforgameplay(){
     return procstate;
 }

@@ -24,6 +24,8 @@ public:
 
     
     virtual bool ishost() = 0;
+    
+    virtual uint16_t getstatusforgameplay() = 0;
 
     
 };

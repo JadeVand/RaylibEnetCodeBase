@@ -3,7 +3,7 @@
 #include <outofgamelogic.h>
 enum StopProcessingState{
   kProcessingStateNone = 0,
-    kProcessingStateConnectionFailure = 1,
+    kProcessingStatePause = 1,
     kProcessingStateWinner = 2,
     kProcessingStateLoser = 3,
     kProcessingStateDraw = 4
@@ -26,7 +26,6 @@ public:
     bool processmovelocal(uint32_t x, uint32_t y);
     bool ishost();
     bool isprocessing();
-    StopProcessingState getprocestate();
-    
+    uint16_t getstatusforgameplay();
 };
 #endif

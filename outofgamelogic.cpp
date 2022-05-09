@@ -4,6 +4,7 @@ OutOfGameLogic::OutOfGameLogic(ENetInterface* interface, AbstractGame* game, boo
     this->interface = interface;
     this->game = game;
     this->host = host;
+    mms = kMatchMakingStatusNone;
 }
 void OutOfGameLogic::update(float deltatime){
     auto eventsuccess = [this](uint8_t* data, size_t dataLength){
@@ -62,3 +63,7 @@ bool OutOfGameLogic::hostgame(){
 bool OutOfGameLogic::join(uint64_t hostname){
     return interface->dedicatedconnect(hostname);
 }
+uint16_t OutOfGameLogic::getstatusforgameplay(){
+    return mms;
+}
+
