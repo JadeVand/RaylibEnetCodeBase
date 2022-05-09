@@ -5,13 +5,12 @@ GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid) {
     memset(map,0,sizeof(map));
     me.setxoid(myxoid);
     apponent.setxoid(apponentxoid);
-    XoGridMap2D map2d = (XoGridMap2D)map;
     for(int x = 0; x < 3; ++x){
         for(int y= 0; y < 3; ++y){
-            map2d[x][y]->x = x;
-            map2d[x][y]->y = y;
-            map2d[x][y]->occupied = false;
-            map2d[x][y]->xoid = 0;
+            map[x][y].x = x;
+            map[x][y].y = y;
+            map[x][y].occupied = false;
+            map[x][y].xoid = 0;
         }
     }
 }
@@ -28,8 +27,7 @@ bool GameState::processmove(uint32_t x, uint32_t y,Entity* e){
     if(!isxyvalid(x,y)){
         return false;
     }
-    XoGridMap2D map2d = (XoGridMap2D)map;
-    block = map2d[x][y];
+    block = &map[x][y];
     if(!block){
         return false;
     }
@@ -48,8 +46,7 @@ void GameState::rejectmove(uint32_t x, uint32_t y, uint32_t xoid){
         return;
     }
     XoGrid* block = NULL;
-    XoGridMap2D mapd = (XoGridMap2D)map;
-    block = mapd[x][y];
+    block = &map[x][y];
     block->xoid = xoid;
 }
 bool GameState::checkwinner(uint32_t xoid){
@@ -64,6 +61,17 @@ Entity* GameState::getapponent(){
 void GameState::setturn(Entity* t){
     turn = t;
 }
+/*
 XoGridMap2D GameState::getmap(){
     return (XoGridMap2D)map;
+}
+ */
+bool GameState::isoccupied(uint32_t x, uint32_t y){
+    if(map[x][y].occupied){
+        return true;
+    }
+    return false;
+}
+uint32_t GameState::getidforxy(uint32_t x,uint32_t y){
+    return map[x][y].xoid;
 }

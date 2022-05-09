@@ -67,16 +67,18 @@ void LevelGame::draw(){
         if(gl){
             std::shared_ptr<GameState> state = gl->getgamestate();
             if(state){
-                XoGridMap2D map = state->getmap();
                 for(int x = 0; x < 3; ++x){
                     for(int y = 0; y < 3; ++y){
-                        if(map[x][y]->occupied){
-                            int xpos =x*SQUARE_SIZE+offsetx-100+25;
+                        if(state->isoccupied(x,y)){
+                            int xpos = x*SQUARE_SIZE+offsetx-100+25;
                             int ypos = y*SQUARE_SIZE+offsety-100+25;
-                            if(map[x][y]->xoid==1){
+                            uint32_t xoid = state->getidforxy(x,y);
+                            if(xoid==1){
                                 DrawText("X",xpos,ypos,20,RED);
-                            }else{
+                            }else if(xoid==2){
                                 DrawText("O",xpos,ypos,20,RED);
+                            }else{
+                                
                             }
                         }
                     }
@@ -84,13 +86,8 @@ void LevelGame::draw(){
                 /*
                 for(int n = 0; n < 9 ; ++n){
                     if(map[n].occupied){
-                        int xpos = map[n].x*SQUARE_SIZE+offsetx-100+25;
-                        int ypos = map[n].y*SQUARE_SIZE+offsety-100+25;
-                        if(map[n].xoid==1){
-                            DrawText("X",xpos,ypos,20,RED);
-                        }else{
-                            DrawText("O",xpos,ypos,20,RED);
-                        }
+                        
+                        
                     }
                 }
                  */

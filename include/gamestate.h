@@ -29,12 +29,11 @@ typedef struct SRejectMovePacket{
     uint32_t y;
     uint64_t xoid;
 }RejectionMovePacket;
-typedef XoGrid (*XoGridMap2D)[3][3] ;
 class GameState{
 private:
     Entity me;
     Entity apponent;
-    XoGrid map[9];
+    XoGrid map[3][3];
     Entity* turn;
     GameLogic* logic;
 public:
@@ -53,8 +52,12 @@ public:
     Entity* getself();
     Entity* getapponent();
     void setturn(Entity* t);
+    /*
     XoGridMap2D getmap();
+     */
     bool isxyvalid(uint32_t x, uint32_t y);
     void rejectmove(uint32_t x, uint32_t y, uint32_t xoid);
+    uint32_t getidforxy(uint32_t x,uint32_t y);
+    bool isoccupied(uint32_t x, uint32_t y);
 };
 #endif
