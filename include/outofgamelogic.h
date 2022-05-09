@@ -5,6 +5,7 @@ enum MatchmakingStatus : uint16_t{
     kMatchMakingStatusNone = 0,
     kMatchMakingStatusHostName = 1,
     kMatchMakingStatusBadHostName = 2,
+    kMatchMakingStatusFailedConnection = 3,
     
 };
 class OutOfGameLogic : public GameLogic{
@@ -15,6 +16,8 @@ protected:
     bool host;
     MatchmakingStatus mms;
     uint64_t hostname ;
+    
+    uint64_t displaytickforstatus ;
 public:
     OutOfGameLogic(ENetInterface* interface,AbstractGame* game,bool host);
     virtual void update(float deltatime);
@@ -25,6 +28,7 @@ public:
     bool join(uint64_t hostname);
     uint16_t getstatusforgameplay();
     virtual uint64_t gethostname();
+    virtual bool displaystatus();
 };
 
 #endif

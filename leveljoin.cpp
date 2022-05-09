@@ -7,7 +7,6 @@ LevelJoin::LevelJoin(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(log
     index = 0;
     memset(hostnamebuffer,0,sizeof(hostnamebuffer));
     charindex = 0;
-    displaytick = 0;
 }
 void LevelJoin::input(){
     std::string hostnamestring(hostnamebuffer);
@@ -27,7 +26,6 @@ void LevelJoin::input(){
                 std::shared_ptr<OutOfGameLogic> ogl = std::dynamic_pointer_cast<OutOfGameLogic>(locked);
                 if(ogl){
                     if(!ogl->join(uhostname)){
-                        displaytick = getmstimeu64();
                     }
                 }
             }
@@ -63,7 +61,7 @@ void LevelJoin::update(){
 void LevelJoin::draw(){
     ClearBackground(RAYWHITE);
     std::vector<std::string> buffers = {"Enter hostname to join"};
-
+    
     for(size_t i = 0; i < buffers.size();++i){
         Color text = { 130, 130, 130, 255 };
         if(index == i){
@@ -74,10 +72,21 @@ void LevelJoin::draw(){
         }
     }
     DrawText((char*)hostnamebuffer, g->getscreenwidth()/2+(-1*offset*5) , g->getscreenheight()/2+50 ,20, BLACK);
-    uint64_t now = getmstimeu64();
-    if(now-displaytick<5000){
-        int offset = g->getscreenwidth()/2-150;
-        DrawText("Failed to connect try again in a bit",offset,200,20,DARKGRAY);
+    std::shared_ptr<GameLogic> locked = logic.lock();
+    if(locked->displaystatus()){
+        int offset = g->getscreenwidth()/2;
+        uint16_t status = locked->getstatusforgameplay();
+        switch(status){
+            case kMatchMakingStatusBadHostName:
+                DrawText("Invalid host name",offset-100,200,20,DARKGRAY);
+                break;
+            case kMatchMakingStatusFailedConnection:
+                DrawText("Failed to connect try again in a bit",offset-150,200,20,DARKGRAY);
+                break;
+            default:
+                
+                break;
+        }
     }
 }
 int LevelJoin::getlevel(){

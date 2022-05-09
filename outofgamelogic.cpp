@@ -6,8 +6,10 @@ OutOfGameLogic::OutOfGameLogic(ENetInterface* interface, AbstractGame* game, boo
     this->host = host;
     mms = kMatchMakingStatusNone;
     hostname = 0;
+    displaytickforstatus = 0;
 }
 void OutOfGameLogic::update(float deltatime){
+    
     auto eventsuccess = [this](uint8_t* data, size_t dataLength){
         
         if(dataLength>=sizeof(PacketHeader)){
@@ -47,8 +49,9 @@ void OutOfGameLogic::update(float deltatime){
                 }
                 
             }else if(header->signature == NATSIGNATURE && header->packettype == kBadHostName){
+                
+                displaytickforstatus = getmstimeu64();
                 mms = kMatchMakingStatusBadHostName;
-                printf("bad hostname\n");
             }
         }
         
@@ -66,13 +69,26 @@ bool OutOfGameLogic::ishost(){
     return host;
 }
 bool OutOfGameLogic::que(){
-    return interface->dedicatedconnect(false);
+    if(!interface->dedicatedconnect(false)){
+        mms = kMatchMakingStatusFailedConnection;
+        return false;
+    }
+    return true;
 }
 bool OutOfGameLogic::hostgame(){
-    return interface->dedicatedconnect(true);
+    if(!interface->dedicatedconnect(true)){
+        mms = kMatchMakingStatusFailedConnection;
+        return false;
+    }
+    return true;
 }
 bool OutOfGameLogic::join(uint64_t hostname){
-    return interface->dedicatedconnect(hostname);
+    if(!interface->dedicatedconnect(hostname)){
+        displaytickforstatus = getmstimeu64();
+        mms = kMatchMakingStatusFailedConnection;
+        return false;
+    }
+    return true;
 }
 uint16_t OutOfGameLogic::getstatusforgameplay(){
     return mms;
@@ -80,4 +96,9 @@ uint16_t OutOfGameLogic::getstatusforgameplay(){
 
 uint64_t OutOfGameLogic::gethostname(){
     return hostname;
+}
+
+bool OutOfGameLogic::displaystatus(){
+    uint64_t now = getmstimeu64();
+    return (now - displaytickforstatus < 10000);
 }

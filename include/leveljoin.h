@@ -10,7 +10,6 @@ private:
     char hostnamebuffer[32];
     int charindex;
     int offset;
-    uint64_t displaytick;
 public:
 
     LevelJoin(AbstractGame* g,std::weak_ptr<GameLogic> logic);
