@@ -8,7 +8,8 @@ InGameLogic::InGameLogic(ENetInterface* interface,AbstractGame* game,bool host) 
     }else{
         gamestate = std::make_shared<GameState>(this,2,1);
     }
-    
+    processing = true;
+    procstate = kProcessingStateNone;
 }
 
 void InGameLogic::update(float deltatime){
@@ -77,13 +78,25 @@ std::shared_ptr<GameState> InGameLogic::getgamestate(){
 void InGameLogic::creategamestate(){
     //gamestate = std::make_shared<GameState>(this,1,2);
 }
-bool InGameLogic::processwinner(){
-    return false;
-}
 bool InGameLogic::processmove(uint32_t x, uint32_t y,Entity* e){
     if(gamestate->processmove(x,y,e)){
-        ////
-        ///Check win logic here
+        //
+        //Check win logic here
+        Entity* e = gamestate->getwinner();
+        if(e){
+            processing = false;
+            if(e==gamestate->getself()){
+                procstate = kProcessingStateWinner;
+            }else{
+                procstate = kProcessingStateLoser;
+            }
+            
+        }else{
+            if(gamestate->isgameover()){
+                processing = false;
+                procstate = kProcessingStateDraw;
+            }
+        }
         gamestate->swapturn();
         return true;
     }
@@ -103,4 +116,10 @@ bool InGameLogic::processmovelocal(uint32_t x, uint32_t y){
 }
 bool InGameLogic::ishost(){
     return host;
+}
+bool InGameLogic::isprocessing(){
+    return processing;
+}
+StopProcessingState InGameLogic::getprocestate(){
+    return procstate;
 }

@@ -13,6 +13,7 @@ GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid) {
             map[x][y].xoid = 0;
         }
     }
+    winner = nullptr;
 }
 bool GameState::isxyvalid(uint32_t x, uint32_t y){
     if(x>2||y>2){//this check might result in a crash at some point bceause maybe x and y can be less than 0? idk
@@ -41,6 +42,9 @@ bool GameState::processmove(uint32_t x, uint32_t y,Entity* e){
     block->occupied = true;
     block->xoid = e->getxoid();
     
+    if(isthereawinner()){
+        winner = e;
+    }
 
     return true;
 }
@@ -58,9 +62,6 @@ void GameState::rejectmove(uint32_t x, uint32_t y, uint32_t xoid){
     XoGrid* block = NULL;
     block = &map[x][y];
     block->xoid = xoid;
-}
-bool GameState::checkwinner(uint32_t xoid){
-    return false;
 }
 Entity* GameState::getself(){
     return &me;
@@ -84,4 +85,47 @@ bool GameState::isoccupied(uint32_t x, uint32_t y){
 }
 uint32_t GameState::getidforxy(uint32_t x,uint32_t y){
     return map[x][y].xoid;
+}
+bool GameState::isthereawinner(){
+    int magicSquare[] = {4, 9, 2, 3, 5, 7, 8, 1, 6};
+    XoGrid board[9] = {0};
+    int m = 3;
+    int n = 3;
+    for (int q = 0; q < n; q++)
+    {
+        for (int t = 0; t < m; t++)
+        {
+            board[q * m + t] = map[q][t];
+        }
+    }
+    for (int i = 0; i < 9; i++){
+        for (int j = 0; j < 9; j++){
+            for (int k = 0; k < 9; k++){
+                if (i != j && i != k && j != k){
+                    if (board[i].xoid == turn->getxoid() && board[j].xoid == turn->getxoid() && board[k].xoid == turn->getxoid()){
+                        if (magicSquare[i] + magicSquare[j] + magicSquare[k] == 15)
+                            return true;
+                    }
+                        
+                }
+                    
+            }
+                
+        }
+            
+    }
+    return false;
+}
+bool GameState::isgameover(){
+    for(int x = 0; x < 3; ++x){
+        for(int y= 0; y < 3; ++y){
+            if(!map[x][y].occupied){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+Entity* GameState::getwinner(){
+    return winner;
 }

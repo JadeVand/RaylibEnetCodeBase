@@ -29,6 +29,7 @@ typedef struct SRejectMovePacket{
     uint32_t y;
     uint64_t xoid;
 }RejectionMovePacket;
+
 class GameState{
 private:
     Entity me;
@@ -36,6 +37,7 @@ private:
     XoGrid map[3][3];
     Entity* turn;
     GameLogic* logic;
+    Entity* winner;
 public:
     GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid);
     /*
@@ -48,7 +50,6 @@ public:
      if network update calls it then it passes apponententity
      */
     bool processmove(uint32_t x, uint32_t y,Entity* e);
-    bool checkwinner(uint32_t xoid);
     Entity* getself();
     Entity* getapponent();
     void setturn(Entity* t);
@@ -60,5 +61,9 @@ public:
     uint32_t getidforxy(uint32_t x,uint32_t y);
     bool isoccupied(uint32_t x, uint32_t y);
     void swapturn();
+    
+    bool isthereawinner();
+    Entity* getwinner();
+    bool isgameover();
 };
 #endif
