@@ -49,5 +49,11 @@ public:
      if
      */
     void creategamelevelasunknownlogic();
+    
+    
+    /*
+     *This can be called from game logic to render text
+     */
+    void drawtextforlogic(const std::vector<std::string>& buffers) ;
 };
 #endif

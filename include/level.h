@@ -14,6 +14,6 @@ public:
     virtual void update() = 0;
     virtual void draw() = 0;
     virtual int getlevel() = 0;
-    virtual void drawtextforlogic(std::vector<std::string> buffers) = 0;
+    virtual void drawtextforlogic(const std::vector<std::string>& buffers)  = 0;
 };
 #endif

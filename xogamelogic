@@ -1,0 +1,5 @@
+Gamelevel takes input and sends it to inputlogic-processmove(bool relay) 
+If success
+	send it to network peer
+	if has winner
+		end game

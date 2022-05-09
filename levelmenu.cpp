@@ -35,6 +35,6 @@ void LevelMenu::draw(){
 int LevelMenu::getlevel(){
     return l;
 }
-void LevelMenu::drawtextforlogic(std::vector<std::string> buffers){
+void LevelMenu::drawtextforlogic(const std::vector<std::string>& buffers){
     
 }

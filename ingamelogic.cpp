@@ -32,30 +32,10 @@ void InGameLogic::update(float deltatime){
                 
                 if(dataLength>=sizeof(XoMovePacket)){
                     XoMovePacket* mp = (XoMovePacket*)data;
-                    if(!trymoveremote(mp->x,mp->y,gamestate->getapponent())){
-                        //move rejected let them know
-                        RejectionMovePacket rmp = {0};
-                        
-                        if(gamestate->isxyvalid(mp->x,mp->y)){
-                            rmp.ph.signature = GAMESIGNATURE;
-                            rmp.ph.packettype = kRejection;
-                            rmp.x = mp->x;
-                            rmp.y = mp->y;
-                            rmp.xoid =  gamestate->getidforxy(mp->x,mp->y);
-                            
-                            interface->sendpacketnetwork((uint8_t*)&rmp,sizeof(RejectionMovePacket));
-                        }
-                    }else{
-                        //move accepted
-                        //broadcast if needed
-                    }
+                    //no authority check needs to be done
+                    processmove(mp->x,mp->y, gamestate->getapponent());
                 }else{
                     //did someone manipulate the packet? BAD
-                }
-            }else if(header->signature==GAMESIGNATURE&&header->packettype==kRejection){
-                if(dataLength>=sizeof(RejectionMovePacket)){
-                    RejectionMovePacket* rmp = (RejectionMovePacket*)data;
-                    
                 }
             }
             
@@ -65,7 +45,7 @@ void InGameLogic::update(float deltatime){
     auto eventerror = [this](void){
         
     };
-    interface->quecompletion(eventsuccess,eventerror,1);
+    interface->quecompletion(eventsuccess,eventerror,0);
 }
 void InGameLogic::draw(int screenWidth,int screenHeight){
     
@@ -97,32 +77,20 @@ std::shared_ptr<GameState> InGameLogic::getgamestate(){
 void InGameLogic::creategamestate(){
     //gamestate = std::make_shared<GameState>(this,1,2);
 }
-//this can probably just be uint32_t x, uint32_t y
-//this is called from the network callback
-bool InGameLogic::trymoveremote(uint32_t x, uint32_t y,Entity* e){
-    
-    if(!gamestate->processmove(x,y,e)){
-        //send a rejection
-        return false;
-    }
-    return true;
-}
-
-bool InGameLogic::trymovelocal(uint32_t x, uint32_t y,Entity* e){
+bool InGameLogic::processmove(uint32_t x, uint32_t y,Entity* e){
     return gamestate->processmove(x,y,e);
 }
-//this is called from the level
-void InGameLogic::movebroadcast(uint32_t x, uint32_t y){
-    
+bool InGameLogic::processmovelocal(uint32_t x, uint32_t y){
     XoMovePacket mp = {0};
     mp.ph.signature = GAMESIGNATURE;
     mp.ph.packettype = kMove;
     mp.x = x;
     mp.y = y;
-     
-    if(trymovelocal(x,y,gamestate->getself())){
+    if(processmove(x,y,gamestate->getself())){
         interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
+        return true;
     }
+    return false;
 }
 bool InGameLogic::ishost(){
     return host;

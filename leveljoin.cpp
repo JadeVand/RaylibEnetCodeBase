@@ -74,6 +74,6 @@ void LevelJoin::draw(){
 int LevelJoin::getlevel(){
     return l;
 }
-void LevelJoin::drawtextforlogic(std::vector<std::string> buffers){
+void LevelJoin::drawtextforlogic(const std::vector<std::string>& buffers){
     
 }

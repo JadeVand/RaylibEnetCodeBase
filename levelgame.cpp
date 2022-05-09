@@ -24,7 +24,7 @@ void LevelGame::input(){
                     Color c = LIGHTGRAY;
                     if(mouseposition.x>k*SQUARE_SIZE+offsetx-100 && mouseposition.x<k*SQUARE_SIZE+offsetx-100+SQUARE_SIZE){
                         if(mouseposition.y>i*SQUARE_SIZE+offsety-100 && mouseposition.y< i*SQUARE_SIZE+offsety-100 +SQUARE_SIZE){
-                            igl->movebroadcast(highlightedx,highlightedy);
+                            igl->processmovelocal(highlightedx,highlightedy);
                         }
                     }
                 }
@@ -105,6 +105,6 @@ int LevelGame::getlevel(){
     return l;
 }
 
-void LevelGame::drawtextforlogic(std::vector<std::string> buffers){
+void LevelGame::drawtextforlogic(const std::vector<std::string>& buffers){
     
 }

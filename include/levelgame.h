@@ -17,6 +17,6 @@ public:
     void update();
     void draw();
     int getlevel();
-    void drawtextforlogic(std::vector<std::string> buffers);
+    void drawtextforlogic(const std::vector<std::string>& buffers);
 };
 #endif

@@ -33,3 +33,10 @@ prediction they'll still keep pressing x
 
 draw is called:
 draw(frame==29)
+
+
+
+Peer to peer vs host
+In peer to peer all players are connected to eachother and all players share the exact same game state and the exact same game object so no authority 
+
+In a client server/host model the host contains all player objects and sends all the information that needs to be rendered by the peer ; in this case peers do not need to have individual player objects , maybe just a gamestatelcient object that can always be rendered and when a new packet arrives it replaces the previous and keeps rendering that object

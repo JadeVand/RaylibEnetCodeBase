@@ -36,6 +36,9 @@ void Game::creategamelevelasunknownlogic(){
     std::weak_ptr<InGameLogic> logic = nl.makeingamelogicaseither();
     stage = std::make_shared<LevelGame>(this,logic);
 }
+void Game::drawtextforlogic(const std::vector<std::string>& buffers){
+    stage->drawtextforlogic(buffers);
+}
 void Game::inputcallback(int action){
     switch(action){
         case 0:{

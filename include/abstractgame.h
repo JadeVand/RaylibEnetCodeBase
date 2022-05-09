@@ -10,5 +10,6 @@ public:
     virtual void creategamelevelashostlogic() = 0;
     virtual void creategamelevelasclientlogic() = 0;
     virtual void creategamelevelasunknownlogic() = 0;
+    virtual void drawtextforlogic(const std::vector<std::string>& buffers) = 0;
 };
 #endif
