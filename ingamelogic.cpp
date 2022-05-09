@@ -123,7 +123,6 @@ void InGameLogic::movebroadcast(uint32_t x, uint32_t y){
     mp.y = y;
      
     if(trymovelocal(x,y,gamestate->getself())){
-        printf("called trymovebroadcast\n");
         interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
     }
 }
