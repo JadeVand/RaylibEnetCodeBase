@@ -42,7 +42,7 @@ void LevelGame::update(){
 }
 
 void LevelGame::draw(){
-
+    ClearBackground(RAYWHITE);
     int offsetx = g->getscreenwidth()/2;
     int offsety = g->getscreenheight()/2;
     for(int i = 0; i < 3; ++i){
@@ -97,13 +97,16 @@ void LevelGame::draw(){
             uint16_t status = locked->getstatusforgameplay();
             switch(status){
                 case kProcessingStatePause:
-                    
+                    DrawText("Game Paused!",offsetx-50,200,20,DARKGRAY);
                     break;
                 case kProcessingStateWinner:
+                    DrawText("You Win!",offsetx-50,200,20,DARKGRAY);
                     break;
                 case kProcessingStateLoser:
+                    DrawText("You Lose!",offsetx-50,200,20,DARKGRAY);
                     break;
                 case kProcessingStateDraw:
+                    DrawText("Draw game!",offsetx-50,200,20,DARKGRAY);
                     break;
                     
                 default:

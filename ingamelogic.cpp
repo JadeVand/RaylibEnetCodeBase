@@ -7,7 +7,8 @@ InGameLogic::InGameLogic(ENetInterface* interface,AbstractGame* game,bool host) 
         gamestate = std::make_shared<GameState>(this,2,1);
     }
     processing = true;
-    procstate = kProcessingStateNone;
+    procstate = kProcessingStatePause;
+    displaytickforstatus = getmstimeu64();
 }
 
 void InGameLogic::update(float deltatime){
