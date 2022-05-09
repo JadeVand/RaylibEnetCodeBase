@@ -19,7 +19,6 @@ public:
     InGameLogic(ENetInterface* interface,AbstractGame* game,bool host);
     void update(float deltatime);
     void draw(int screenWidth,int screenHeight);
-    bool needstodraw();
     void handlenetforlevel(uint8_t* data,size_t length,int result);
     std::shared_ptr<GameState> getgamestate();
     void creategamestate();

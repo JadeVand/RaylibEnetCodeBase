@@ -2,7 +2,6 @@
 
 InGameLogic::InGameLogic(ENetInterface* interface,AbstractGame* game,bool host) : OutOfGameLogic(interface,game,host){
     hostname = 0;
-    failedtoconnect = false;
     if(host){
         gamestate = std::make_shared<GameState>(this,1,2);
     }else{
@@ -62,14 +61,7 @@ void InGameLogic::draw(int screenWidth,int screenHeight){
         DrawText(TextFormat("Unable to connect",hostname),screenWidth/2-100,screenHeight/2,20,RED);
     }
     */
-}
-bool InGameLogic::needstodraw(){
-    if(hostname){
-        return true;
-    }else if(failedtoconnect){
-        return true;
-    }
-    return false;
+    std::vector<std::string> Buffer = {""};
 }
 
 std::shared_ptr<GameState> InGameLogic::getgamestate(){

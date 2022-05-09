@@ -91,8 +91,6 @@ void UpdateGame(void)
 void DrawGame(void)
 {
     BeginDrawing();
-
-    ClearBackground(RAYWHITE);
     
     g->draw();
 

@@ -58,6 +58,7 @@ void LevelJoin::update(){
     
 }
 void LevelJoin::draw(){
+    ClearBackground(RAYWHITE);
     std::vector<std::string> buffers = {"Enter hostname to join"};
 
     for(size_t i = 0; i < buffers.size();++i){

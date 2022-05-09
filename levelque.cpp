@@ -17,27 +17,19 @@ void LevelQue::update(){
     
 }
 void LevelQue::draw(){
-    
-    std::shared_ptr<GameLogic> locked = logic.lock();
-    if(locked){
-        if(locked->needstodraw()){
-            locked->draw(g->getscreenwidth(),g->getscreenheight());
-        }else{
-            std::vector<std::string> buffers = {"In Queue"};
+    ClearBackground(RAYWHITE);
+    std::vector<std::string> buffers = {"In Queue"};
 
-            for(size_t i = 0; i < buffers.size();++i){
-                Color text = { 130, 130, 130, 255 };
-                if(index == i){
-                    text.r = 230;
-                    text.g = 41;
-                    text.b = 55;
-                    DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50) ,20, text);
-                }
-               
-            }
+    for(size_t i = 0; i < buffers.size();++i){
+        Color text = { 130, 130, 130, 255 };
+        if(index == i){
+            text.r = 230;
+            text.g = 41;
+            text.b = 55;
+            DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2 , g->getscreenheight()/2+(i*50) ,20, text);
         }
+       
     }
-    
 }
 int LevelQue::getlevel(){
     return l;

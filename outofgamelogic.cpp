@@ -50,9 +50,6 @@ void OutOfGameLogic::update(float deltatime){
 void OutOfGameLogic::draw(int screenWidth,int screenHeight){
     
 }
-bool OutOfGameLogic::needstodraw(){
-    return false;
-}
 bool OutOfGameLogic::ishost(){
     return host;
 }

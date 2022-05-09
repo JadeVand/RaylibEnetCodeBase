@@ -19,7 +19,7 @@ void LevelMenu::update(){
     
 }
 void LevelMenu::draw(){
-    
+    ClearBackground(RAYWHITE);
     std::vector<std::string> buffers = {"Host","Join","Queue", "LAN"};
     for(size_t i = 0; i < buffers.size();++i){
         Color text = { 130, 130, 130, 255 };

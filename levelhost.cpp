@@ -15,26 +15,15 @@ void LevelHost::update(){
     
 }
 void LevelHost::draw(){
-    
-    
-    std::shared_ptr<GameLogic> locked = logic.lock();
-    
-    if(locked){
-        locked->draw(g->getscreenwidth(),g->getscreenheight());
-        if(locked->needstodraw()){
-            locked->draw(g->getscreenwidth(),g->getscreenheight());
-        }else{
-            std::vector<std::string> buffers = {"Connecting to matchmaking server"};
-            for(size_t i = 0; i < buffers.size();++i){
-                Color text = { 130, 130, 130, 255 };
-                if(index == i){
-                    text.r = 230;
-                    text.g = 41;
-                    text.b = 55;
-                    DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2 - 200 , g->getscreenheight()/2+(i*50) ,20, text);
-                }
-                
-            }
+    ClearBackground(RAYWHITE);
+    std::vector<std::string> buffers = {"Connecting to matchmaking server"};
+    for(size_t i = 0; i < buffers.size();++i){
+        Color text = { 130, 130, 130, 255 };
+        if(index == i){
+            text.r = 230;
+            text.g = 41;
+            text.b = 55;
+            DrawText(buffers.at(i).c_str(), g->getscreenwidth()/2 - 200 , g->getscreenheight()/2+(i*50) ,20, text);
         }
         
     }

@@ -21,8 +21,7 @@ public:
         return latestpacket;
     }
      */
-    
-    virtual bool needstodraw() = 0;
+
     
     virtual bool ishost() = 0;
 

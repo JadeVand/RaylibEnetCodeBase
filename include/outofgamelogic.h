@@ -11,7 +11,6 @@ public:
     OutOfGameLogic(ENetInterface* interface,AbstractGame* game,bool host);
     virtual void update(float deltatime);
     virtual void draw(int screenWidth,int screenHeight);
-    virtual bool needstodraw();
     virtual bool ishost();
     bool que();
     bool hostgame();
