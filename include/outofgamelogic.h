@@ -2,12 +2,16 @@
 #define _outofgamelogic_h
 #include <gamestate.h>
 enum MatchmakingStatus : uint16_t{
-    kMatchMakingStatusNone = 0,
-    kMatchMakingStatusHostName = 1,
-    kMatchMakingStatusBadHostName = 2,
     kMatchMakingStatusFailedConnection = 3,
-    
+    kMatchMakingStatusBadHostName = 2,
+    kMatchMakingStatusHostName = 1,
+    kMatchMakingStatusNone = 0,
+    kMatchMakingStateWinner = 5,
+    kMatchMakingStatePause = 4,
+    kMatchMakingStateLoser = 6,
+    kMatchMakingStateDraw = 7,
 };
+
 class OutOfGameLogic : public GameLogic{
 protected:
 

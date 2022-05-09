@@ -7,8 +7,7 @@ InGameLogic::InGameLogic(ENetInterface* interface,AbstractGame* game,bool host) 
         gamestate = std::make_shared<GameState>(this,2,1);
     }
     processing = true;
-    procstate = kProcessingStatePause;
-    displaytickforstatus = getmstimeu64();
+    mms = kMatchMakingStatusNone;
 }
 
 void InGameLogic::update(float deltatime){
@@ -47,20 +46,7 @@ void InGameLogic::update(float deltatime){
     
 }
 void InGameLogic::draw(int screenWidth,int screenHeight){
-    
-/*
-    if(hostname){
-        ClearBackground(RAYWHITE);
-        std::string hostnamestring = std::to_string(hostname);
-        DrawText(TextFormat("Hostname: %p",hostname),screenWidth/2-150,screenHeight/2,20,RED);
-        DrawText(TextFormat("Give this to your apponent",hostname),screenWidth/2-150,screenHeight/2+30,20,RED);
-    }else if(failedtoconnect){
-        ClearBackground(RAYWHITE);
-        std::string hostnamestring = std::to_string(hostname);
-        DrawText(TextFormat("Unable to connect",hostname),screenWidth/2-100,screenHeight/2,20,RED);
-    }
-    */
-    std::vector<std::string> Buffer = {""};
+
 }
 
 std::shared_ptr<GameState> InGameLogic::getgamestate(){
@@ -77,15 +63,15 @@ bool InGameLogic::processmove(uint16_t x, uint16_t y,Entity* e){
         if(e){
             processing = false;
             if(e==gamestate->getself()){
-                procstate = kProcessingStateWinner;
+                mms = kMatchMakingStateWinner;
             }else{
-                procstate = kProcessingStateLoser;
+                mms = kMatchMakingStateLoser;
             }
             
         }else{
             if(gamestate->isgameover()){
                 processing = false;
-                procstate = kProcessingStateDraw;
+                mms = kMatchMakingStateDraw;
             }
         }
         gamestate->swapturn();

@@ -1,20 +1,13 @@
 #ifndef _hostlogic_h
 #define _hostlogic_h
 #include <outofgamelogic.h>
-enum StopProcessingState{
-  kProcessingStateNone = 0,
-    kProcessingStatePause = 1,
-    kProcessingStateWinner = 2,
-    kProcessingStateLoser = 3,
-    kProcessingStateDraw = 4
-};
+
 class InGameLogic : public OutOfGameLogic{
 private:
     uint64_t hostname;
     bool failedtoconnect;
     std::shared_ptr<GameState> gamestate;
     bool processing;
-    StopProcessingState procstate;
 public:
     InGameLogic(ENetInterface* interface,AbstractGame* game,bool host);
     void update(float deltatime);
