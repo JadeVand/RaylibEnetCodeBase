@@ -5,7 +5,10 @@ LevelGame::LevelGame(AbstractGame* g,std::weak_ptr<GameLogic> logic) : Level(log
     this->g = g;
     index = 0;
 }
+#define SQUARE_SIZE 50
 void LevelGame::input(){
+    int offsetx = g->getscreenwidth()/2;
+    int offsety = g->getscreenheight()/2;
     if(IsKeyReleased(KEY_ESCAPE)){
         g->destroylevel(0);
     }
@@ -16,7 +19,19 @@ void LevelGame::input(){
         std::shared_ptr<GameLogic> locked = logic.lock();
         if(locked){
             std::shared_ptr<InGameLogic> igl = std::dynamic_pointer_cast<InGameLogic>(locked);
-            igl->movebroadcast(highlightedx,highlightedy);
+            for(int i = 0; i < 3; ++i){
+                for(int k = 0; k < 3; ++k){
+                    Color c = LIGHTGRAY;
+                    if(mouseposition.x>k*SQUARE_SIZE+offsetx-100 && mouseposition.x<k*SQUARE_SIZE+offsetx-100+SQUARE_SIZE){
+                        if(mouseposition.y>i*SQUARE_SIZE+offsety-100 && mouseposition.y< i*SQUARE_SIZE+offsety-100 +SQUARE_SIZE){
+                            igl->movebroadcast(highlightedx,highlightedy);
+                        }
+                    }
+                }
+                
+            }
+            
+            
         }
     }
 }
@@ -27,7 +42,7 @@ void LevelGame::update(){
 }
 
 void LevelGame::draw(){
-#define SQUARE_SIZE 50
+
     int offsetx = g->getscreenwidth()/2;
     int offsety = g->getscreenheight()/2;
     for(int i = 0; i < 3; ++i){
@@ -52,7 +67,21 @@ void LevelGame::draw(){
         if(gl){
             std::shared_ptr<GameState> state = gl->getgamestate();
             if(state){
-                XoGrid* map = state->getmap();
+                XoGridMap2D map = state->getmap();
+                for(int x = 0; x < 3; ++x){
+                    for(int y = 0; y < 3; ++y){
+                        if(map[x][y]->occupied){
+                            int xpos =x*SQUARE_SIZE+offsetx-100+25;
+                            int ypos = y*SQUARE_SIZE+offsety-100+25;
+                            if(map[x][y]->xoid==1){
+                                DrawText("X",xpos,ypos,20,RED);
+                            }else{
+                                DrawText("O",xpos,ypos,20,RED);
+                            }
+                        }
+                    }
+                }
+                /*
                 for(int n = 0; n < 9 ; ++n){
                     if(map[n].occupied){
                         int xpos = map[n].x*SQUARE_SIZE+offsetx-100+25;
@@ -64,6 +93,7 @@ void LevelGame::draw(){
                         }
                     }
                 }
+                 */
             }
         }
     }

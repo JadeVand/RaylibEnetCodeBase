@@ -41,11 +41,9 @@ void InGameLogic::update(float deltatime){
                             rmp.ph.packettype = kRejection;
                             rmp.x = mp->x;
                             rmp.y = mp->y;
-                            typedef XoGrid map2d[3][3];
-                            
-                            XoGrid* map = gamestate->getmap();
-                            map2d* dmap = (map2d*)map;
-                            rmp.xoid =  dmap[mp->x][mp->y]->xoid;
+
+                            XoGridMap2D map = gamestate->getmap();
+                            rmp.xoid =  map[mp->x][mp->y]->xoid;
                             
                             interface->sendpacketnetwork((uint8_t*)&rmp,sizeof(RejectionMovePacket));
                         }
