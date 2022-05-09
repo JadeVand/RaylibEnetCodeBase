@@ -29,9 +29,11 @@ bool GameState::isxyvalid(uint16_t x, uint16_t y){
 bool GameState::processmove(uint16_t x, uint16_t y,Entity* e){
 
 
+    
     if(turn!=e){
         return false;
     }
+     
     XoGrid* block = NULL;
     if(!isxyvalid(x,y)){
         return false;

@@ -61,8 +61,10 @@ bool InGameLogic::processmove(uint16_t x, uint16_t y,Entity* e){
         //Check win logic here
         Entity* e = gamestate->getwinner();
         if(e){
+            displaytickforstatus = getmstimeu64();
             processing = false;
             if(e==gamestate->getself()){
+                
                 mms = kMatchMakingStateWinner;
             }else{
                 mms = kMatchMakingStateLoser;
@@ -80,16 +82,19 @@ bool InGameLogic::processmove(uint16_t x, uint16_t y,Entity* e){
     return false;
 }
 bool InGameLogic::processmovelocal(uint16_t x, uint16_t y){
-    XoMovePacket mp = {0};
-    mp.ph.signature = GAMESIGNATURE;
-    mp.ph.packettype = kMove;
-    mp.x = x;
-    mp.y = y;
-    if(processmove(x,y,gamestate->getself())){
-        interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
-        return true;
+    if(processing){
+        XoMovePacket mp = {0};
+        mp.ph.signature = GAMESIGNATURE;
+        mp.ph.packettype = kMove;
+        mp.x = x;
+        mp.y = y;
+        if(processmove(x,y,gamestate->getself())){
+            interface->sendpacketnetwork((uint8_t*)&mp,sizeof(XoMovePacket));
+            return true;
+        }
+        return false;
     }
-    return false;
+    return true;
 }
 bool InGameLogic::ishost(){
     return host;

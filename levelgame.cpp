@@ -94,20 +94,19 @@ void LevelGame::draw(){
             }
         }
         if(locked->displaystatus()){
-            printf("displaying\n");
             uint16_t status = locked->getstatusforgameplay();
             switch(status){
                 case kMatchMakingStatePause:
-                    DrawText("Game Paused!",offsetx-100,200,20,DARKGRAY);
+                    DrawText("Game Paused!",offsetx-75,200,20,DARKGRAY);
                     break;
                 case kMatchMakingStateWinner:
-                    DrawText("You Win!",offsetx-100,200,20,DARKGRAY);
+                    DrawText("You Win!",offsetx-75,200,20,DARKGRAY);
                     break;
                 case kMatchMakingStateLoser:
-                    DrawText("You Lose!",offsetx-100,200,20,DARKGRAY);
+                    DrawText("You Lose!",offsetx-75,200,20,DARKGRAY);
                     break;
                 case kMatchMakingStateDraw:
-                    DrawText("Draw game!",offsetx-100,200,20,DARKGRAY);
+                    DrawText("Draw game!",offsetx-75,200,20,DARKGRAY);
                     break;
                     
                 default:
