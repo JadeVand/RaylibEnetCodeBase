@@ -26,6 +26,6 @@ public:
     bool processmovelocal(uint16_t x, uint16_t y);
     bool ishost();
     bool isprocessing();
-    uint16_t getstatusforgameplay();
+
 };
 #endif

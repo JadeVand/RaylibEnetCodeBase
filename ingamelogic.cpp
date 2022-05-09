@@ -12,35 +12,38 @@ InGameLogic::InGameLogic(ENetInterface* interface,AbstractGame* game,bool host) 
 
 void InGameLogic::update(float deltatime){
 
-    auto eventsuccess = [this](uint8_t* data, size_t dataLength){
-        
-        if(dataLength>=sizeof(PacketHeader)){
+    if(processing){//game is running
+        auto eventsuccess = [this](uint8_t* data, size_t dataLength){
             
-            PacketHeader* header = (PacketHeader*)data;
-            if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
-                //We ignore this packet since it could be
-                //left over holepunch packets in the stream
-            }
-            else if(header->signature == GAMESIGNATURE &&
-                     header->packettype == kMove){
-                //player client sent move packet
+            if(dataLength>=sizeof(PacketHeader)){
                 
-                if(dataLength>=sizeof(XoMovePacket)){
-                    XoMovePacket* mp = (XoMovePacket*)data;
-                    //no authority check needs to be done
-                    processmove(mp->x,mp->y, gamestate->getapponent());
-                }else{
-                    //did someone manipulate the packet? BAD
+                PacketHeader* header = (PacketHeader*)data;
+                if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
+                    //We ignore this packet since it could be
+                    //left over holepunch packets in the stream
                 }
+                else if(header->signature == GAMESIGNATURE &&
+                         header->packettype == kMove){
+                    //player client sent move packet
+                    
+                    if(dataLength>=sizeof(XoMovePacket)){
+                        XoMovePacket* mp = (XoMovePacket*)data;
+                        //no authority check needs to be done
+                        processmove(mp->x,mp->y, gamestate->getapponent());
+                    }else{
+                        //did someone manipulate the packet? BAD
+                    }
+                }
+                
             }
+             
+        };
+        auto eventerror = [this](void){
             
-        }
-         
-    };
-    auto eventerror = [this](void){
-        
-    };
-    interface->quecompletion(eventsuccess,eventerror,0);
+        };
+        interface->quecompletion(eventsuccess,eventerror,0);
+    }
+    
 }
 void InGameLogic::draw(int screenWidth,int screenHeight){
     
@@ -108,6 +111,3 @@ bool InGameLogic::isprocessing(){
     return processing;
 }
 
-uint16_t InGameLogic::getstatusforgameplay(){
-    return procstate;
-}
