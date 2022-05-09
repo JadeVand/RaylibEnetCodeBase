@@ -93,6 +93,23 @@ void LevelGame::draw(){
                  */
             }
         }
+        if(locked->displaystatus()){
+            uint16_t status = locked->getstatusforgameplay();
+            switch(status){
+                case kProcessingStatePause:
+                    
+                    break;
+                case kProcessingStateWinner:
+                    break;
+                case kProcessingStateLoser:
+                    break;
+                case kProcessingStateDraw:
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
     }
     /*
     if(locked){

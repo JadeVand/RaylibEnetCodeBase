@@ -18,6 +18,7 @@ protected:
     uint64_t hostname ;
     
     uint64_t displaytickforstatus ;
+    uint64_t totaldisplaytime;
 public:
     OutOfGameLogic(ENetInterface* interface,AbstractGame* game,bool host);
     virtual void update(float deltatime);

@@ -7,6 +7,7 @@ OutOfGameLogic::OutOfGameLogic(ENetInterface* interface, AbstractGame* game, boo
     mms = kMatchMakingStatusNone;
     hostname = 0;
     displaytickforstatus = 0;
+    totaldisplaytime = 10000;
 }
 void OutOfGameLogic::update(float deltatime){
     
@@ -100,5 +101,5 @@ uint64_t OutOfGameLogic::gethostname(){
 
 bool OutOfGameLogic::displaystatus(){
     uint64_t now = getmstimeu64();
-    return (now - displaytickforstatus < 10000);
+    return (now - displaytickforstatus < totaldisplaytime);
 }
