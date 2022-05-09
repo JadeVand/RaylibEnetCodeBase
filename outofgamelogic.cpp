@@ -38,8 +38,10 @@ void OutOfGameLogic::update(float deltatime){
                 }else{
                     game->creategamelevelasclientlogic();
                 }
-            }else{
-                printf("some data was sent:%d\n",dataLength);
+            }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
+                HostPacket* hp = (HostPacket*)data;
+                
+                
             }
         }
         

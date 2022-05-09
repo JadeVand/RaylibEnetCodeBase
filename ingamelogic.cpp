@@ -1,7 +1,6 @@
 #include <ingamelogic.h>
 
 InGameLogic::InGameLogic(ENetInterface* interface,AbstractGame* game,bool host) : OutOfGameLogic(interface,game,host){
-    hostname = 0;
     if(host){
         gamestate = std::make_shared<GameState>(this,1,2);
     }else{
@@ -22,11 +21,7 @@ void InGameLogic::update(float deltatime){
                 //We ignore this packet since it could be
                 //left over holepunch packets in the stream
             }
-            else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
-                HostPacket* hp = (HostPacket*)data;
-                hostname = hp->hostname;
-                
-            }else if(header->signature == GAMESIGNATURE &&
+            else if(header->signature == GAMESIGNATURE &&
                      header->packettype == kMove){
                 //player client sent move packet
                 

@@ -42,7 +42,6 @@ typedef struct SMatchPacket{
 typedef struct SHostPacket{
     PacketHeader ph;
     uint64_t hostname;
-    uint32_t extra;
 }HostPacket;
 class PacketObject{
 public:
