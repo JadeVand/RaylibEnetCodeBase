@@ -70,7 +70,7 @@ std::shared_ptr<GameState> InGameLogic::getgamestate(){
 void InGameLogic::creategamestate(){
     //gamestate = std::make_shared<GameState>(this,1,2);
 }
-bool InGameLogic::processmove(uint32_t x, uint32_t y,Entity* e){
+bool InGameLogic::processmove(uint16_t x, uint16_t y,Entity* e){
     if(gamestate->processmove(x,y,e)){
         //
         //Check win logic here
@@ -94,7 +94,7 @@ bool InGameLogic::processmove(uint32_t x, uint32_t y,Entity* e){
     }
     return false;
 }
-bool InGameLogic::processmovelocal(uint32_t x, uint32_t y){
+bool InGameLogic::processmovelocal(uint16_t x, uint16_t y){
     XoMovePacket mp = {0};
     mp.ph.signature = GAMESIGNATURE;
     mp.ph.packettype = kMove;

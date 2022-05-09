@@ -50,8 +50,8 @@ void LevelGame::draw(){
             Color c = LIGHTGRAY;
             if(mouseposition.x>k*SQUARE_SIZE+offsetx-100 && mouseposition.x<k*SQUARE_SIZE+offsetx-100+SQUARE_SIZE){
                 if(mouseposition.y>i*SQUARE_SIZE+offsety-100 && mouseposition.y< i*SQUARE_SIZE+offsety-100 +SQUARE_SIZE){
-                    highlightedy = i;
-                    highlightedx = k;
+                    highlightedy = (uint16_t)i;
+                    highlightedx = (uint16_t)k;
                     c = DARKGRAY;
                 }
             }
@@ -70,8 +70,8 @@ void LevelGame::draw(){
                 for(int x = 0; x < 3; ++x){
                     for(int y = 0; y < 3; ++y){
                         if(state->isoccupied(x,y)){
-                            int xpos = x*SQUARE_SIZE+offsetx-100+25;
-                            int ypos = y*SQUARE_SIZE+offsety-100+25;
+                            uint16_t xpos = x*SQUARE_SIZE+offsetx-100+25;
+                            uint16_t ypos = y*SQUARE_SIZE+offsety-100+25;
                             uint32_t xoid = state->getidforxy(x,y);
                             if(xoid==1){
                                 DrawText("X",xpos,ypos,20,RED);

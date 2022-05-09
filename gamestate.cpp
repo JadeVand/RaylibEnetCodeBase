@@ -15,13 +15,13 @@ GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid) {
     }
     winner = nullptr;
 }
-bool GameState::isxyvalid(uint32_t x, uint32_t y){
+bool GameState::isxyvalid(uint16_t x, uint16_t y){
     if(x>2||y>2){//this check might result in a crash at some point bceause maybe x and y can be less than 0? idk
         return false;
     }
     return true;
 }
-bool GameState::processmove(uint32_t x, uint32_t y,Entity* e){
+bool GameState::processmove(uint16_t x, uint16_t y,Entity* e){
 
 
     if(turn!=e){
@@ -55,7 +55,7 @@ void GameState::swapturn(){
         turn = &me;
     }
 }
-void GameState::rejectmove(uint32_t x, uint32_t y, uint32_t xoid){
+void GameState::rejectmove(uint16_t x, uint16_t y, uint32_t xoid){
     if(!isxyvalid(x,y)){
         return;
     }
@@ -77,13 +77,13 @@ XoGridMap2D GameState::getmap(){
     return (XoGridMap2D)map;
 }
  */
-bool GameState::isoccupied(uint32_t x, uint32_t y){
+bool GameState::isoccupied(uint16_t x, uint16_t y){
     if(map[x][y].occupied){
         return true;
     }
     return false;
 }
-uint32_t GameState::getidforxy(uint32_t x,uint32_t y){
+uint32_t GameState::getidforxy(uint16_t x,uint16_t y){
     return map[x][y].xoid;
 }
 bool GameState::isthereawinner(){

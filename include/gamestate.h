@@ -14,19 +14,19 @@ enum XoPacketId{
 };
 typedef struct SXoMovePacket{
     PacketHeader ph;
-    uint32_t x;
-    uint32_t y;
+    uint16_t x;
+    uint16_t y;
 }XoMovePacket;
 typedef struct SXoGrid{
-    uint32_t x;
-    uint32_t y;
+    uint16_t x;
+    uint16_t y;
     bool occupied;
     uint32_t xoid;
 }XoGrid;
 typedef struct SRejectMovePacket{
     PacketHeader ph;
-    uint32_t x;
-    uint32_t y;
+    uint16_t x;
+    uint16_t y;
     uint64_t xoid;
 }RejectionMovePacket;
 
@@ -49,17 +49,17 @@ public:
      If level update calls it, then it passes selfentityh
      if network update calls it then it passes apponententity
      */
-    bool processmove(uint32_t x, uint32_t y,Entity* e);
+    bool processmove(uint16_t x, uint16_t y,Entity* e);
     Entity* getself();
     Entity* getapponent();
     void setturn(Entity* t);
     /*
     XoGridMap2D getmap();
      */
-    bool isxyvalid(uint32_t x, uint32_t y);
-    void rejectmove(uint32_t x, uint32_t y, uint32_t xoid);
-    uint32_t getidforxy(uint32_t x,uint32_t y);
-    bool isoccupied(uint32_t x, uint32_t y);
+    bool isxyvalid(uint16_t x, uint16_t y);
+    void rejectmove(uint16_t x, uint16_t y, uint32_t xoid);
+    uint32_t getidforxy(uint16_t x,uint16_t y);
+    bool isoccupied(uint16_t x, uint16_t y);
     void swapturn();
     
     bool isthereawinner();
