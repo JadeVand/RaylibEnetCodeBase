@@ -14,6 +14,11 @@ GameState::GameState(GameLogic* logic,uint32_t myxoid, uint32_t apponentxoid) {
         }
     }
     winner = nullptr;
+    if(myxoid==1){
+        turn = &me;
+    }else{
+        turn = &apponent;
+    }
 }
 bool GameState::isxyvalid(uint16_t x, uint16_t y){
     if(x>2||y>2){//this check might result in a crash at some point bceause maybe x and y can be less than 0? idk
