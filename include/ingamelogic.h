@@ -25,7 +25,5 @@ public:
     bool processmove(uint16_t x, uint16_t y,Entity* e);
     bool processmovelocal(uint16_t x, uint16_t y);
     bool ishost();
-    bool isprocessing();
-
 };
 #endif

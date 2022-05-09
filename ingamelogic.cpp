@@ -107,7 +107,3 @@ bool InGameLogic::processmovelocal(uint16_t x, uint16_t y){
 bool InGameLogic::ishost(){
     return host;
 }
-bool InGameLogic::isprocessing(){
-    return processing;
-}
-
