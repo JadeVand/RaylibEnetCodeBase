@@ -19,7 +19,7 @@ protected:
     AbstractGame* game;
     bool host;
     MatchmakingStatus mms;
-    uint64_t hostname ;
+    uint32_t peerid ;
     
     uint64_t displaytickforstatus ;
     uint64_t totaldisplaytime;
@@ -30,9 +30,9 @@ public:
     virtual bool ishost();
     bool que();
     bool hostgame();
-    bool join(uint64_t hostname);
+    bool join(uint32_t hostname);
     uint16_t getstatusforgameplay();
-    virtual uint64_t gethostname();
+    virtual uint32_t getpeerid();
     virtual bool displaystatus();
 };
 

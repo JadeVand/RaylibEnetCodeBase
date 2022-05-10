@@ -10,12 +10,17 @@
 #include <cstring>
 #include <chrono>
 uint64_t getmstimeu64();
-enum Pid : uint16_t{
-    kInvalidHost = 1,
-    kHostname = 2,
-    kPeerId = 3,
-    kMatched = 4,
-    kBadHostName = 5,
+enum MMPid : uint16_t{
+    kPidNone = 0,
+    kPidBadHostName = 1,
+    kPidHostName = 2,
+    kPidMatched = 3,
+    kPidPeerId = 4,
+};
+enum QueType : uint8_t{
+    kQueHost = 1,
+    kQueQue = 2,
+    kQueJoin = 3,
 };
 enum GamePid : uint16_t{
     
@@ -33,17 +38,12 @@ typedef struct SCustomENet{
     uint32_t host;
     uint16_t port;
 }CustomENet;
-typedef struct SMatchPacket{
+typedef struct SPacketMatchmaking{
     PacketHeader ph;//4
-    CustomENet host;//6
-    uint16_t ishost;//2
-    uint32_t extra;
-    
-}MatchPacket;
-typedef struct SHostPacket{
-    PacketHeader ph;
-    uint64_t hostname;
-}HostPacket;
+    uint32_t peerid;//4
+    CustomENet address;//6
+    uint64_t extra;//8
+}PacketMatchmaking;
 class PacketObject{
 public:
     uint8_t* data;
@@ -70,7 +70,7 @@ private:
 public:
     ENetInterface();
     void quecompletion();
-    bool dedicatedconnect(uint64_t hostname);
+    bool dedicatedconnect(uint32_t hostname);
     bool dedicatedconnect(bool ishost);
     void quecompletion(std::function<void(uint8_t* data,size_t size)> callback,
                        std::function<void(void)> errorcallback,uint32_t timeout);

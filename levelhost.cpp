@@ -19,7 +19,7 @@ void LevelHost::draw(){
     std::shared_ptr<GameLogic> gl = logic.lock();
     uint16_t status = gl->getstatusforgameplay();
     if(status == kMatchMakingStatusHostName){
-        uint64_t hostname = gl->gethostname();
+        uint32_t hostname = gl->getpeerid();
         std::string strhostname = std::to_string(hostname);
         DrawText(TextFormat("Hostname: %p",hostname),g->getscreenwidth()/2-100,g->getscreenheight()/2,20,RED);
     }else if(status == kMatchMakingStatusNone){

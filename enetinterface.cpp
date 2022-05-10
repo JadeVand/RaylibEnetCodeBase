@@ -48,14 +48,15 @@ void ENetInterface::createnet(){
     assert(c->client);
 }
 
-bool ENetInterface::dedicatedconnect(uint64_t hn){
+bool ENetInterface::dedicatedconnect(uint32_t hn){
     ENetInterfaceContainerExtended* c = (ENetInterfaceContainerExtended*)a;
-    uint64_t p = hn;
     bool ret = true;
+    PacketMatchmaking pmm = {0};
+    pmm.ph.packettype = kQueJoin;
+    pmm.peerid = hn;
     if(c->dedicatedpeer){
-        
-        ENetPacket * packet = enet_packet_create (&p,
-                                                  sizeof(p),
+        ENetPacket * packet = enet_packet_create (&pmm,
+                                                  sizeof(pmm),
                                                   ENET_PACKET_FLAG_RELIABLE);
         
         int res = enet_peer_send (c->dedicatedpeer, 0, packet);
@@ -73,8 +74,8 @@ bool ENetInterface::dedicatedconnect(uint64_t hn){
         if(result > 0){
             if(event.type == ENET_EVENT_TYPE_CONNECT){
                 
-                ENetPacket * packet = enet_packet_create (&p,
-                                                          sizeof(p),
+                ENetPacket * packet = enet_packet_create (&pmm,
+                                                          sizeof(pmm),
                                                           ENET_PACKET_FLAG_RELIABLE);
                 
                 int sr = enet_peer_send (c->dedicatedpeer, 0, packet);
@@ -107,15 +108,15 @@ bool ENetInterface::dedicatedconnect(bool ishost){
     int result = enet_host_service(c->client, &event, 1000) ;
     if(result > 0){
         if(event.type == ENET_EVENT_TYPE_CONNECT){
-            uint8_t p = 0;
+            PacketMatchmaking pmm = {0};
+            
             if(ishost){
-                p = 1;//premade host
+                pmm.ph.packettype = kQueHost;
             }else{
-                p = 2;//joining queue
-                
+                pmm.ph.packettype = kQueQue;
             }
-            ENetPacket * packet = enet_packet_create (&p,
-                                                      sizeof(p),
+            ENetPacket * packet = enet_packet_create (&pmm,
+                                                      sizeof(pmm),
                                                       ENET_PACKET_FLAG_RELIABLE);
             
             int sr = enet_peer_send (c->dedicatedpeer, 0, packet);

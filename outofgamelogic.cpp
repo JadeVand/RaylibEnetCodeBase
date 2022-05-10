@@ -5,7 +5,7 @@ OutOfGameLogic::OutOfGameLogic(ENetInterface* interface, AbstractGame* game, boo
     this->game = game;
     this->host = host;
     mms = kMatchMakingStatusNone;
-    hostname = 0;
+    peerid = 0;
     displaytickforstatus = 0;
     totaldisplaytime = 10000;
 }
@@ -13,43 +13,42 @@ void OutOfGameLogic::update(float deltatime){
     
     auto eventsuccess = [this](uint8_t* data, size_t dataLength){
         
-        if(dataLength>=sizeof(PacketHeader)){
+        if(dataLength>=sizeof(PacketMatchmaking)){
             
-            PacketHeader* header = (PacketHeader*)data;
-            if(header->signature == GAMESIGNATURE && header->packettype ==kNatReserved){
+            PacketMatchmaking* pmm = (PacketMatchmaking*)data;
+            if(pmm->ph.signature == GAMESIGNATURE && pmm->ph.packettype == kNatReserved){
                 
-            }else if(header->packettype == kPeerId&&header->signature == NATSIGNATURE){
+            }else if(pmm->ph.signature == NATSIGNATURE && pmm->ph.packettype == kPidPeerId){
+                /*
+                 *This is called in case the player hit host/join
+                 */
+                interface->donat(&pmm->address);
                 
-                CustomENet natpeeraddress = {0};
-                CustomENet remote = {0};
-                memcpy(&natpeeraddress,data+sizeof(PacketHeader),sizeof(CustomENet));
-                interface->donat(&natpeeraddress);
                 //NAT COMPLETED
                 
                 //BEGIN GGAMEPLAY
                 game->creategamelevelasunknownlogic();
-            }else if(header->signature == NATSIGNATURE && header->packettype == kMatched){
+            }else if(pmm->ph.signature == NATSIGNATURE && pmm->ph.packettype == kPidMatched){
+                /*
+                 *This is called in case the player hit queue
+                 */
+                interface->donat(&pmm->address);
                 
-                MatchPacket* mp = (MatchPacket*)data;
-                CustomENet remoteaddress = {0};
-                memcpy(&remoteaddress,&mp->host,sizeof(CustomENet));
-                interface->donat(&mp->host);
+                
+                
                 //NAT COMPLETED
                 
                 //BEGIN GGAMEPLAY
-                if(mp->ishost){
+                if(pmm->extra){
                     game->creategamelevelashostlogic();
                 }else{
                     game->creategamelevelasclientlogic();
                 }
-            }else if(header->signature == NATSIGNATURE && header->packettype == kHostname){
-                HostPacket* hp = (HostPacket*)data;
-                if(dataLength>=sizeof(HostPacket)){
-                    hostname = hp->hostname;
-                    mms = kMatchMakingStatusHostName;
-                }
+            }else if(pmm->ph.signature == NATSIGNATURE && pmm->ph.packettype == kPidHostName){
+                peerid = pmm->peerid;
+                mms = kMatchMakingStatusHostName;
                 
-            }else if(header->signature == NATSIGNATURE && header->packettype == kBadHostName){
+            }else if(pmm->ph.signature == NATSIGNATURE && pmm->ph.packettype == kPidBadHostName){
                 
                 displaytickforstatus = getmstimeu64();
                 mms = kMatchMakingStatusBadHostName;
@@ -83,7 +82,7 @@ bool OutOfGameLogic::hostgame(){
     }
     return true;
 }
-bool OutOfGameLogic::join(uint64_t hostname){
+bool OutOfGameLogic::join(uint32_t hostname){
     if(!interface->dedicatedconnect(hostname)){
         displaytickforstatus = getmstimeu64();
         mms = kMatchMakingStatusFailedConnection;
@@ -95,8 +94,9 @@ uint16_t OutOfGameLogic::getstatusforgameplay(){
     return mms;
 }
 
-uint64_t OutOfGameLogic::gethostname(){
-    return hostname;
+
+uint32_t OutOfGameLogic::getpeerid(){
+    return peerid;
 }
 
 bool OutOfGameLogic::displaystatus(){

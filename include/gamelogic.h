@@ -27,7 +27,7 @@ public:
     
     virtual uint16_t getstatusforgameplay() = 0;
 
-    virtual uint64_t gethostname() = 0;
+    virtual uint32_t getpeerid() = 0;
     
     virtual bool displaystatus() = 0;
 };

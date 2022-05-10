@@ -4,7 +4,6 @@
 
 class InGameLogic : public OutOfGameLogic{
 private:
-    uint64_t hostname;
     bool failedtoconnect;
     std::shared_ptr<GameState> gamestate;
     bool processing;
